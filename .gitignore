@@ -1,0 +1,7 @@
+.DS_Store
+.claude/
+.vscode/
+sass/
+*.log
+node_modules/
+workbench.editorAssociations.state.json
