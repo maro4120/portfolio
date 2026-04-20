@@ -1,0 +1,17 @@
+{
+  "workspaceFoldersFilePaths": [
+    "./"
+  ],
+  "symbols": [],
+  "activeFileDiagnostics": [],
+  "debugConsoleOutput": "",
+  "terminalBuffer": "",
+  "terminalSelection": "",
+  "terminalShellType": "bash",
+  "repoContexts": [],
+  "notebookDocumentFilePaths": [],
+  "textDocumentFilePaths": [
+    "sass/style.scss",
+    "index.html"
+  ]
+}
