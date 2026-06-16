@@ -55,6 +55,9 @@ body.is-fixed {
   color: #fff;
 }
 
+.main {
+  padding-top: 70px;
+}
 .header {
   background-color: #003B69;
   position: fixed;
@@ -68,7 +71,7 @@ body.is-fixed {
   width: 100%;
 }
 .header__container img {
-  max-width: 70%;
+  max-width: 130px;
   height: auto;
 }
 .header__logo {
@@ -410,6 +413,7 @@ body.is-fixed {
   .main {
     -ms-flex-preferred-size: 79.8%;
         flex-basis: 79.8%;
+    padding-top: 0;
   }
   .section__inner {
     max-width: 944px;
