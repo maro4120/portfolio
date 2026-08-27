@@ -949,7 +949,8 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
   &__thumb {
-    aspect-ratio: 16 / 10;
+    /* 差し込む画像が 1200×675（16:9）なので、比率を合わせて切り抜きを出さない */
+    aspect-ratio: 16 / 9;
     background: var(--paper-2);
     border-bottom: 1px solid var(--line);
 
