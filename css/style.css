@@ -15,6 +15,11 @@
   --mint-shadow: #0c5a51;
   --mint-pale: #e6f4f2;
   --amber: #b4650e;
+  /* ヘッダーCTA用のオレンジ。白文字とのコントラストは 5.18:1（AA達成） */
+  --orange: #c2410c;
+  --orange-dark: #a13508;
+  /* キャンペーン価格の赤。白地とのコントラストは 5.62:1 */
+  --sale: #c62828;
   --amber-pale: #fbf3e8;
   --ink: #22303a;
   --ink-2: #55666f;
@@ -23,9 +28,11 @@
   --paper-2: #f4f8f9;
   --line: #e2e9ec;
   --line-2: #c4d1d7;
-  --font: "Noto Sans JP", system-ui, sans-serif;
-  --font-display: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, sans-serif;
-  --font-en: "Archivo", "Noto Sans JP", system-ui, sans-serif;
+  /* 本文・見出しとも明朝で統一する */
+  --font: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho",
+    "MS PMincho", serif;
+  --font-display: var(--font);
+  --font-en: "Josefin Sans", var(--font);
   --wrap: 1120px;
   --header-h: 96px; /* 実際のヘッダー高さ（バー＋本体＋SPナビ） */
 }
@@ -35,15 +42,15 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.95;
-  letter-spacing: 0.025em;
+  font-size: 15.5px;
+  line-height: 2;
+  letter-spacing: 0.04em;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 60px; /* SP固定バーぶん */
 }
 @media screen and (min-width: 960px) {
   body {
-    font-size: 16px;
+    font-size: 16.5px;
     padding-bottom: 0;
   }
 }
@@ -113,22 +120,22 @@ html {
 .sec-ttl__en {
   display: block;
   font-family: var(--font-en);
-  font-weight: 700;
-  font-size: 30px;
+  font-weight: 600;
+  font-size: 32px;
   line-height: 1.2;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   color: var(--navy);
 }
 @media screen and (min-width: 960px) {
   .sec-ttl__en {
-    font-size: 40px;
+    font-size: 44px;
   }
 }
 .sec-ttl__ja {
   display: block;
-  margin-top: 8px;
-  font-size: 13px;
-  font-weight: 700;
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: 14.5px;
   letter-spacing: 0.14em;
   color: var(--mint-dark);
 }
@@ -201,7 +208,7 @@ html {
 .btn--ghost {
   border: 1px solid rgba(255, 255, 255, 0.55);
   color: #fff;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 .btn--ghost:hover {
   background: rgba(255, 255, 255, 0.1);
@@ -221,8 +228,9 @@ html {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
+  /* ロゴ画像に白地が焼き込まれているので、ヘッダーは半透明にせず白でベタ塗りする
+     （半透明だとロゴの白地だけが明るく浮いて、四角い縁が見える） */
+  background: #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 .header__bar {
@@ -241,7 +249,7 @@ html {
   padding: 4px 20px;
 }
 .header__catch {
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1.5;
   letter-spacing: 0.06em;
 }
@@ -264,18 +272,24 @@ html {
   flex: 1;
   text-align: center;
   line-height: 0;
+  /* SPは左のハンバーガー（40px＋gap12px）ぶん右に寄るので、同じ幅を右に足して真ん中に戻す */
+  padding-right: 52px;
 }
 .header__logo img {
-  width: 132px;
+  width: 168px;
   margin-inline: auto;
+  /* ロゴPNGの外周1pxに薄い青の線が焼き込まれているので、そこだけ切り落とす
+     （透過の濃色ロゴを書き出してもらえたら、この指定は不要になる） */
+  clip-path: inset(1.5px);
 }
 @media screen and (min-width: 960px) {
   .header__logo {
     flex: none;
     text-align: left;
+    padding-right: 0;
   }
   .header__logo img {
-    width: 172px;
+    width: 224px;
     margin-inline: 0;
   }
 }
@@ -288,10 +302,10 @@ html {
     align-items: center;
     gap: 7px;
     flex: none;
-    background: var(--navy);
+    background: var(--orange);
     color: #fff;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 14.5px;
     padding: 11px 20px;
     border-radius: 4px;
     white-space: nowrap;
@@ -303,7 +317,7 @@ html {
     fill: currentColor;
   }
   .header__cta:hover {
-    background: var(--mint-dark);
+    background: var(--orange-dark);
   }
 }
 
@@ -326,7 +340,7 @@ html {
   position: relative;
   display: inline-block;
   padding: 6px 0;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
@@ -406,7 +420,7 @@ html {
   display: block;
   padding: 0 12px;
   line-height: 34px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--ink-2);
   white-space: nowrap;
@@ -455,77 +469,58 @@ html {
 
 /* ---------------- メインビジュアル ---------------- */
 .mv {
-  position: relative;
-  isolation: isolate;
+  /* イラストの地は白なので、うっすら色を敷いて mix-blend-mode で馴染ませる */
+  background: var(--paper-2);
+  overflow: hidden;
 }
-.mv__img {
-  display: block;
-  height: 46vh;
-  min-height: 260px;
+.mv__inner {
+  display: grid;
+  gap: 8px;
+  padding-top: 40px;
 }
 @media screen and (min-width: 960px) {
-  .mv__img {
-    height: 44vw;
-    max-height: 620px;
-    min-height: 0;
+  .mv__inner {
+    grid-template-columns: 1fr 1.06fr;
+    align-items: center;
+    gap: 24px;
+    padding-top: 0;
+    min-height: 480px;
   }
-}
-.mv__img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.mv::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(100deg, rgba(10, 29, 51, 0.86) 0%, rgba(14, 36, 57, 0.72) 48%, rgba(22, 50, 79, 0.34) 100%);
-  z-index: 1;
-}
-.mv__text {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  max-width: var(--wrap);
-  margin-inline: auto;
-  padding: 0 24px;
-  color: #fff;
 }
 @media screen and (min-width: 960px) {
   .mv__text {
-    padding: 0 20px;
-  }
-}
-.mv__lead {
-  font-family: var(--font-en);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: #8ddfd3;
-  margin-bottom: 14px;
-}
-@media screen and (min-width: 960px) {
-  .mv__lead {
-    font-size: 13px;
+    padding-block: 40px;
   }
 }
 .mv__ttl {
   font-family: var(--font-display);
-  font-weight: 900;
-  font-size: clamp(24px, 6.6vw, 30px);
-  line-height: 1.6;
+  font-weight: 400;
+  font-size: clamp(25px, 6.8vw, 32px);
+  line-height: 1.75;
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+  color: var(--navy);
 }
 @media screen and (min-width: 960px) {
   .mv__ttl {
-    font-size: clamp(34px, 4vw, 46px);
-    line-height: 1.5;
+    font-size: clamp(34px, 3.4vw, 44px);
+    line-height: 1.7;
+  }
+}
+.mv__illust {
+  /* .inner の左右パディングを打ち消して画面幅いっぱいに置く */
+  margin-inline: -20px;
+}
+.mv__illust img {
+  width: 100%;
+  /* イラストの白地を落として背景に溶かす。
+     親に will-change / opacity が付くと重ね合わせ文脈ができて効かなくなるので、
+     この要素はスクロール表示（.fade）の対象から外してある */
+  mix-blend-mode: multiply;
+}
+@media screen and (min-width: 960px) {
+  .mv__illust {
+    margin-inline: 0;
+    margin-right: -40px;
   }
 }
 
@@ -535,7 +530,7 @@ html {
 }
 .message__ttl {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 400;
   font-size: clamp(22px, 5.6vw, 32px);
   line-height: 1.6;
   color: var(--navy);
@@ -588,7 +583,7 @@ html {
   color: var(--line-2);
 }
 .pain__a {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.9;
   color: var(--ink-2);
 }
@@ -606,14 +601,14 @@ html {
 }
 .pain__answer-ttl {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 400;
   font-size: clamp(18px, 4.4vw, 24px);
   line-height: 1.65;
   color: var(--navy);
   margin-bottom: 14px;
 }
 .pain__answer-text {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 2;
   color: var(--ink-2);
   max-width: 60ch;
@@ -651,7 +646,7 @@ html {
   border-radius: 3px 3px 0 0;
 }
 .card__text {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.95;
   color: var(--ink-2);
 }
@@ -663,7 +658,7 @@ html {
 .card__list li {
   position: relative;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.7;
   color: var(--ink);
 }
@@ -714,17 +709,51 @@ html {
   padding: 24px 18px 28px;
 }
 .plan__label {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
   margin-bottom: 6px;
 }
+.plan__was {
+  font-size: 13.5px;
+  color: var(--ink-3);
+  line-height: 1.6;
+  margin-bottom: 2px;
+  /* 値引きの無いプランと高さを揃えて、下の罫線の位置をそろえる */
+  min-height: 26px;
+}
+.plan__was s {
+  /* 二重線。取り消し線と下線を重ねて出す */
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+.plan__badge {
+  display: block;
+  width: 100%;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--sale);
+  margin-bottom: 2px;
+}
+.plan__badge--plain {
+  color: var(--ink-3);
+  font-weight: 400;
+}
 .plan__price {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: center;
   gap: 4px;
   color: var(--navy);
   line-height: 1.2;
+}
+.plan__price--sale {
+  color: var(--sale);
 }
 .plan__num {
   font-family: var(--font-en);
@@ -742,7 +771,7 @@ html {
   font-weight: 700;
 }
 .plan__tax {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--ink-3);
   margin-top: 4px;
 }
@@ -750,8 +779,17 @@ html {
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px dashed var(--line-2);
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
+}
+
+.plans__campaign {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--sale);
+  margin-bottom: 14px;
 }
 
 .freebox {
@@ -767,14 +805,14 @@ html {
   }
 }
 .freebox__label {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--mint-dark);
   letter-spacing: 0.06em;
 }
 .freebox__ttl {
   font-family: var(--font-display);
-  font-weight: 900;
+  font-weight: 400;
   font-size: clamp(20px, 4.8vw, 26px);
   line-height: 1.6;
   color: var(--navy);
@@ -785,7 +823,7 @@ html {
   color: var(--mint-dark);
 }
 .freebox__text {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 2;
   color: var(--ink-2);
   max-width: 56ch;
@@ -800,7 +838,7 @@ html {
 .note li {
   position: relative;
   padding-left: 18px;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.85;
   color: var(--ink-2);
 }
@@ -830,7 +868,8 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 .work__thumb {
-  aspect-ratio: 16/10;
+  /* 差し込む画像が 1200×675（16:9）なので、比率を合わせて切り抜きを出さない */
+  aspect-ratio: 16/9;
   background: var(--paper-2);
   border-bottom: 1px solid var(--line);
 }
@@ -844,7 +883,7 @@ html {
 }
 .work__kind {
   font-family: var(--font-en);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--ink-3);
@@ -859,7 +898,7 @@ html {
   margin-bottom: 8px;
 }
 .work__text {
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.9;
   color: var(--ink-2);
   margin-bottom: 14px;
@@ -869,7 +908,7 @@ html {
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 14.5px;
   border-bottom: 2px solid var(--mint-pale);
   padding-bottom: 2px;
 }
@@ -930,7 +969,7 @@ html {
   margin-bottom: 6px;
 }
 .flow__text {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.95;
   color: var(--ink-2);
 }
@@ -939,7 +978,7 @@ html {
   margin-top: 10px;
   background: var(--mint-pale);
   color: var(--mint-dark);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
   padding: 4px 10px;
@@ -984,7 +1023,7 @@ html {
   display: block;
   font-family: var(--font);
   font-weight: 400;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--ink-3);
   letter-spacing: 0.08em;
 }
@@ -1030,22 +1069,26 @@ html {
 }
 .about__data dt {
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--navy);
 }
 .about__data dd {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
   line-height: 1.8;
 }
 
 /* ---------------- よくある質問 ---------------- */
 .faq {
-  border-top: 1px solid var(--line-2);
+  /* 1pxの罫線は、要素の高さが小数になると環境によって消えてしまう。
+     背景色の差で区切るカード型にして、拡大率に関係なく境目が見えるようにする */
+  display: grid;
+  gap: 10px;
 }
 .faq__item {
-  border-bottom: 1px solid var(--line-2);
   background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
 }
 .faq__q {
   list-style: none;
@@ -1078,7 +1121,7 @@ html {
   background: var(--navy);
   color: #fff;
   font-family: var(--font-en);
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1;
 }
 .faq__q {
@@ -1116,11 +1159,11 @@ html {
   background: var(--mint-dark);
   color: #fff;
   font-family: var(--font-en);
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1;
 }
 .faq__a p {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 2;
   color: var(--ink-2);
 }
@@ -1154,14 +1197,14 @@ html {
 }
 .agency__box span {
   display: block;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.9;
   color: var(--ink-2);
 }
 .agency__note {
   margin-top: 22px;
   text-align: center;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
 }
 
@@ -1181,7 +1224,7 @@ html {
 }
 .contact__label {
   margin-top: 32px;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #8ddfd3;
@@ -1195,7 +1238,7 @@ html {
 }
 .contact__note {
   margin-top: 20px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: #90a4b6;
 }
 
@@ -1209,19 +1252,12 @@ html {
   text-align: center;
 }
 .footer__logo img {
-  width: 200px;
+  width: 220px;
   margin-inline: auto;
-  /* ロゴ画像は白地が焼き込まれているので、そのまま白いプレートとして置く */
-  border-radius: 6px;
-}
-.footer__tagline {
-  margin-top: 10px;
-  font-size: 12.5px;
-  letter-spacing: 0.12em;
-  color: #a9bccd;
+  /* 紺地用に白バージョン（-light）を置いているので、加工は不要 */
 }
 .footer__sns {
-  margin-top: 22px;
+  margin-top: 26px;
   display: flex;
   justify-content: center;
   gap: 18px;
@@ -1252,7 +1288,7 @@ html {
   gap: 10px 20px;
 }
 .footer__nav a {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #d3dfe9;
 }
 .footer__nav a:hover {
@@ -1267,7 +1303,7 @@ html {
 
 .copyright small {
   font-family: var(--font-en);
-  font-size: 11.5px;
+  font-size: 12.5px;
   letter-spacing: 0.06em;
   color: #a9bccd;
 }
@@ -1337,7 +1373,7 @@ html {
   gap: 7px;
   padding: 16px 8px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.4;
   text-align: center;
 }
@@ -1353,4 +1389,49 @@ html {
 .fixbar__main {
   background: var(--mint-dark);
   color: #fff;
+}
+
+/* ---------------- スクロールでふわっと表示 ---------------- */
+/* JSが動いたときだけ隠す。JSが失敗しても中身は必ず見えるようにしておく */
+.js-fade-ready .fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.js-fade-ready .fade.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* 横並びのカードは少しずつ遅らせて出す */
+.js-fade-ready .pain__item:nth-child(2),
+.js-fade-ready .card:nth-child(2),
+.js-fade-ready .plan:nth-child(2),
+.js-fade-ready .work:nth-child(2),
+.js-fade-ready .agency__box:nth-child(2) {
+  transition-delay: 0.12s;
+}
+.js-fade-ready .pain__item:nth-child(3),
+.js-fade-ready .card:nth-child(3),
+.js-fade-ready .plan:nth-child(3),
+.js-fade-ready .work:nth-child(3),
+.js-fade-ready .agency__box:nth-child(3) {
+  transition-delay: 0.24s;
+}
+.js-fade-ready .pain__item:nth-child(4),
+.js-fade-ready .card:nth-child(4),
+.js-fade-ready .plan:nth-child(4),
+.js-fade-ready .work:nth-child(4),
+.js-fade-ready .agency__box:nth-child(4) {
+  transition-delay: 0.36s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-fade-ready .fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }

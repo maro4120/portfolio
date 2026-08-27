@@ -38,12 +38,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=1" />
+    <link rel="stylesheet" href="./css/style.css?v=5" />
   </head>
 
   <body id="top">
@@ -72,7 +72,7 @@
         <p class="header__logo">
           <a href="#top">
             <img
-              src="./img/anchorbasehorizontalslim 1.png"
+              src="./img/logo-horizontal-dark.png"
               alt="Anchor Base"
               width="620"
               height="150"
@@ -130,14 +130,21 @@
     <main>
       <!-- ============ メインビジュアル ============ -->
       <div class="mv">
-        <picture class="mv__img">
-          <img src="./img/img_fv.png" alt="" width="2280" height="1238" fetchpriority="high" />
-        </picture>
-        <div class="mv__text">
-          <p class="mv__lead">大阪・高槻のホームページ制作</p>
-          <h1 class="mv__ttl">
-            「何を載せたらええか<br />分からへん」から、<br />一緒に決めます。
-          </h1>
+        <div class="mv__inner inner">
+          <div class="mv__text">
+            <h1 class="mv__ttl">
+              「ホームページって<br />どうやって作れば<br />いいんだろう」から<br />一緒に考えます。
+            </h1>
+          </div>
+          <div class="mv__illust">
+            <img
+              src="./img/img_fv_illust.png"
+              alt="ホームページに何を載せるか考えている人のイラスト"
+              width="1536"
+              height="1024"
+              fetchpriority="high"
+            />
+          </div>
         </div>
       </div>
 
@@ -148,7 +155,7 @@
             作って終わりに、<br />したくないんです。
           </h2>
           <p class="message__text">
-            ホームページで迷うのは、<br />デザインより先に「中身」やと思います。
+            ホームページで迷うのは、<br />デザインより先に「中身」だと思います。
           </p>
           <p class="message__text">
             お店や会社のことをお聞きして、<br />載せるべきことから一緒に整理します。
@@ -258,12 +265,18 @@
             ページ数や内容によって変わりますが、目安を先に出しておきます。<br />お話をうかがったうえで、正式なお見積りをお出しします。
           </p>
 
+          <p class="plans__campaign">＼ ただいま開業キャンペーン中 ／</p>
+
           <div class="plans">
             <article class="plan">
               <h3 class="plan__ttl">ホームページ制作</h3>
               <div class="plan__body">
                 <p class="plan__label">トップ＋下層4ページ程度</p>
-                <p class="plan__price"><span class="plan__num">200,000</span><span class="plan__unit">円〜</span></p>
+                <p class="plan__was">通常価格 <s>200,000円〜</s></p>
+                <p class="plan__price plan__price--sale">
+                  <span class="plan__badge">キャンペーン価格</span>
+                  <span class="plan__num">100,000</span><span class="plan__unit">円〜</span>
+                </p>
                 <p class="plan__tax">（税別／デザイン込み）</p>
                 <p class="plan__term">目安の期間：1〜2か月</p>
               </div>
@@ -272,7 +285,11 @@
               <h3 class="plan__ttl">LP（1枚もののページ）</h3>
               <div class="plan__body">
                 <p class="plan__label">縦に長い1ページ</p>
-                <p class="plan__price"><span class="plan__num">120,000</span><span class="plan__unit">円〜</span></p>
+                <p class="plan__was">通常価格 <s>120,000円〜</s></p>
+                <p class="plan__price plan__price--sale">
+                  <span class="plan__badge">キャンペーン価格</span>
+                  <span class="plan__num">30,000</span><span class="plan__unit">円〜</span>
+                </p>
                 <p class="plan__tax">（税別／デザイン込み）</p>
                 <p class="plan__term">目安の期間：3〜4週間</p>
               </div>
@@ -281,7 +298,11 @@
               <h3 class="plan__ttl">修正・表示崩れの対応</h3>
               <div class="plan__body">
                 <p class="plan__label">今あるサイトの部分的な変更</p>
-                <p class="plan__price"><span class="plan__num">10,000</span><span class="plan__unit">円〜</span></p>
+                <p class="plan__was">&nbsp;</p>
+                <p class="plan__price">
+                  <span class="plan__badge plan__badge--plain">1件あたり</span>
+                  <span class="plan__num">10,000</span><span class="plan__unit">円〜</span>
+                </p>
                 <p class="plan__tax">（税別）</p>
                 <p class="plan__term">目安の期間：数日〜</p>
               </div>
@@ -308,6 +329,7 @@
             <li>写真の撮影、文章の代筆、ロゴ制作は別途お見積りになります。</li>
             <li>公開後のサーバー代・ドメイン代は、お客様のご契約でお願いしています。名義もお客様のままです。</li>
             <li>公開後の更新は、1回ごとのご依頼で承ります。月額の契約は必須ではありません。</li>
+            <li>キャンペーン価格には適用期間があります。終了時期はお問い合わせの際にお伝えします。</li>
           </ul>
         </div>
       </section>
@@ -327,8 +349,10 @@
             <article class="work">
               <div class="work__thumb">
                 <img
-                  src="./img/img_works1.jpeg"
-                  alt="Anchor Base のポートフォリオサイト"
+                  src="./img/works-portfolio.png"
+                  alt="Anchor Base のポートフォリオサイトの表示イメージ"
+                  width="1200"
+                  height="675"
                   loading="lazy"
                 />
               </div>
@@ -346,7 +370,13 @@
 
             <article class="work">
               <div class="work__thumb">
-                <img src="./img/img_works2.jpg" alt="スイーツ店サイトの自主制作" loading="lazy" />
+                <img
+                  src="./img/works-sweets.png"
+                  alt="スイーツ店サイト Sweet Delight の表示イメージ"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
               </div>
               <div class="work__body">
                 <p class="work__kind">Shop site ／ 自主制作</p>
@@ -367,7 +397,13 @@
 
             <article class="work">
               <div class="work__thumb">
-                <img src="./img/img_work3.jpg" alt="マッチングサイトの自主制作" loading="lazy" />
+                <img
+                  src="./img/works-oha.png"
+                  alt="マッチングサイト OHA! の表示イメージ"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
               </div>
               <div class="work__body">
                 <p class="work__kind">Web app ／ 自主制作</p>
@@ -491,10 +527,10 @@
                 警察官の仕事は、事情を聞くことから始まります。相手は動揺していたり、うまく説明できなかったりします。<strong>言葉になっていないことを、順番に整理していく</strong>のが日常でした。
               </p>
               <p>
-                ホームページ制作でも、同じことが起きます。「何を載せたらいいか分からない」というご相談は、ほんまに多いです。でも実際は、載せる材料はもう手元にあります。<strong>普段お客さんに説明していることが、そのまま答え</strong>だからです。
+                ホームページ制作でも、同じことが起きます。「何を載せたらいいか分からない」というご相談は、本当に多いです。でも実際は、載せる材料はもう手元にあります。<strong>普段お客さんに説明していることが、そのまま答え</strong>だからです。
               </p>
               <p>
-                そこを聞き出して、整理して、形にする。それがいちばんお役に立てるところやと思っています。
+                そこを聞き出して、整理して、形にする。それがいちばんお役に立てるところだと思っています。
               </p>
               <p>
                 屋号の Anchor Base には「事業の土台を支える」という意味を込めました。作って終わりではなく、そのあとも使えるものをお渡しします。
@@ -524,7 +560,7 @@
               <summary class="faq__q">載せる内容が決まっていなくても相談できますか？</summary>
               <div class="faq__a">
                 <p>
-                  そこから一緒に決めるのが仕事やと思っています。むしろ、決まっていない状態でご相談いただくほうが、いいものになります。決まってから来ていただくと、こちらから提案できることが減ってしまいます。
+                  そこから一緒に決めるのが私の仕事だと思っています。むしろ、決まっていない状態でご相談いただくほうが、いいものになります。決まってから来ていただくと、こちらから提案できることが減ってしまいます。
                 </p>
               </div>
             </details>
@@ -617,10 +653,10 @@
           </h2>
 
           <p class="contact__text">
-            コストは抑えたい。<br />パソコンは得意やない。<br />でも、ちゃんとしたホームページがほしい。
+            コストは抑えたい。<br />パソコンは得意ではない。<br />でも、ちゃんとしたホームページがほしい。
           </p>
           <p class="contact__text">
-            「これって頼めるんかな」という段階で構いません。<br />まず、話を聞かせてください。
+            「これって頼めるのかな」という段階で構いません。<br />まず、話を聞かせてください。
           </p>
 
           <p class="contact__label">＼ ご相談・お見積り・現状の診断は無料 ／</p>
@@ -653,15 +689,13 @@
         <div class="inner">
           <p class="footer__logo">
             <img
-              src="./img/anchorbasehorizontalslim 1.png"
+              src="./img/logo-horizontal-light.png"
               alt="Anchor Base"
               width="620"
               height="150"
               loading="lazy"
             />
           </p>
-          <p class="footer__tagline">事業の土台を支えるWeb制作</p>
-
           <ul class="footer__sns">
             <li>
               <a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener" aria-label="X（旧Twitter）">
