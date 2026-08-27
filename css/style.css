@@ -221,8 +221,9 @@ html {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.96);
-  backdrop-filter: blur(8px);
+  /* ロゴ画像に白地が焼き込まれているので、ヘッダーは半透明にせず白でベタ塗りする
+     （半透明だとロゴの白地だけが明るく浮いて、四角い縁が見える） */
+  background: #fff;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 .header__bar {
@@ -264,18 +265,24 @@ html {
   flex: 1;
   text-align: center;
   line-height: 0;
+  /* SPは左のハンバーガー（40px＋gap12px）ぶん右に寄るので、同じ幅を右に足して真ん中に戻す */
+  padding-right: 52px;
 }
 .header__logo img {
-  width: 132px;
+  width: 168px;
   margin-inline: auto;
+  /* ロゴPNGの外周1pxに薄い青の線が焼き込まれているので、そこだけ切り落とす
+     （透過の濃色ロゴを書き出してもらえたら、この指定は不要になる） */
+  clip-path: inset(1.5px);
 }
 @media screen and (min-width: 960px) {
   .header__logo {
     flex: none;
     text-align: left;
+    padding-right: 0;
   }
   .header__logo img {
-    width: 172px;
+    width: 224px;
     margin-inline: 0;
   }
 }
@@ -1209,19 +1216,12 @@ html {
   text-align: center;
 }
 .footer__logo img {
-  width: 200px;
+  width: 220px;
   margin-inline: auto;
-  /* ロゴ画像は白地が焼き込まれているので、そのまま白いプレートとして置く */
-  border-radius: 6px;
-}
-.footer__tagline {
-  margin-top: 10px;
-  font-size: 12.5px;
-  letter-spacing: 0.12em;
-  color: #a9bccd;
+  /* 紺地用に白バージョン（-light）を置いているので、加工は不要 */
 }
 .footer__sns {
-  margin-top: 22px;
+  margin-top: 26px;
   display: flex;
   justify-content: center;
   gap: 18px;
