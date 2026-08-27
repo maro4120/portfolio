@@ -1,0 +1,1490 @@
+@charset "UTF-8";
+@use "sass:map";
+
+/* =========================================================
+   Anchor Base ポートフォリオ
+   ---------------------------------------------------------
+   設計メモ
+   - SP（375px 基準）を先に書き、PC は @include mq(lg) で上書き
+   - 色・余白は CSS カスタムプロパティに集約
+   ========================================================= */
+
+$breakpoints: (
+  sm: 600px,
+  md: 768px,
+  lg: 960px,
+  xl: 1200px,
+);
+
+@mixin mq($key) {
+  @media screen and (min-width: map.get($breakpoints, $key)) {
+    @content;
+  }
+}
+
+:root {
+  --navy: #16324f;
+  --navy-dark: #0e2439;
+  --navy-deep: #0a1d33;
+  --mint: #2bb3a3;
+  --mint-dark: #12776b;
+  --mint-shadow: #0c5a51;
+  --mint-pale: #e6f4f2;
+  --amber: #b4650e;
+  --amber-pale: #fbf3e8;
+  --ink: #22303a;
+  --ink-2: #55666f;
+  --ink-3: #8a9aa3;
+  --paper: #ffffff;
+  --paper-2: #f4f8f9;
+  --line: #e2e9ec;
+  --line-2: #c4d1d7;
+
+  --font: "Noto Sans JP", system-ui, sans-serif;
+  --font-display: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, sans-serif;
+  --font-en: "Archivo", "Noto Sans JP", system-ui, sans-serif;
+
+  --wrap: 1120px;
+  --header-h: 96px; /* 実際のヘッダー高さ（バー＋本体＋SPナビ） */
+}
+
+/* ---------------- ベース ---------------- */
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.95;
+  letter-spacing: 0.025em;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 60px; /* SP固定バーぶん */
+
+  @include mq(lg) {
+    font-size: 16px;
+    padding-bottom: 0;
+  }
+}
+
+body.is-fixed {
+  overflow: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--mint-dark);
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.inner {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: 20px;
+
+  &--narrow {
+    max-width: 860px;
+  }
+}
+
+.section {
+  padding-block: 56px;
+
+  @include mq(lg) {
+    padding-block: 88px;
+  }
+
+  &--alt {
+    background: var(--paper-2);
+  }
+}
+
+/* ---------------- 共通の見出し ---------------- */
+.sec-ttl {
+  text-align: center;
+  margin-bottom: 28px;
+
+  @include mq(lg) {
+    margin-bottom: 40px;
+  }
+
+  &__en {
+    display: block;
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.2;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+
+    @include mq(lg) {
+      font-size: 40px;
+    }
+  }
+
+  &__ja {
+    display: block;
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--mint-dark);
+  }
+
+  &--light {
+    .sec-ttl__en {
+      color: #fff;
+    }
+    .sec-ttl__ja {
+      color: #8ddfd3;
+    }
+  }
+
+  &--agency {
+    .sec-ttl__en {
+      color: var(--amber);
+    }
+    .sec-ttl__ja {
+      color: var(--ink-2);
+    }
+  }
+}
+
+.sec-lead {
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 14.5px;
+  line-height: 2;
+  margin-bottom: 32px;
+
+  @include mq(lg) {
+    font-size: 15.5px;
+    margin-bottom: 44px;
+  }
+}
+
+/* ---------------- ボタン ---------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 260px;
+  padding: 15px 26px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
+
+  svg {
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+    fill: currentColor;
+  }
+
+  &--primary {
+    background: var(--mint-dark);
+    color: #fff;
+    box-shadow: 0 4px 0 var(--mint-shadow);
+
+    &:hover {
+      background: var(--mint);
+      box-shadow: 0 4px 0 var(--mint-dark);
+    }
+
+    &:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 var(--mint-shadow);
+    }
+  }
+
+  &--navy {
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 4px 0 var(--navy-deep);
+  }
+
+  &--ghost {
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    color: #fff;
+    font-size: 14px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  &--lg {
+    font-size: 16px;
+    padding: 18px 30px;
+
+    @include mq(lg) {
+      min-width: 340px;
+    }
+  }
+}
+
+/* ---------------- ヘッダー ---------------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+
+  &__bar {
+    display: none;
+    background: var(--navy);
+    color: #fff;
+
+    @include mq(lg) {
+      display: block;
+    }
+  }
+
+  &__bar-inner {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding: 4px 20px;
+  }
+
+  &__catch {
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0.06em;
+  }
+
+  &__inner {
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+
+    @include mq(lg) {
+      padding: 10px 20px;
+      gap: 24px;
+    }
+  }
+
+  &__logo {
+    flex: 1;
+    text-align: center;
+    line-height: 0;
+
+    img {
+      width: 132px;
+      margin-inline: auto;
+    }
+
+    @include mq(lg) {
+      flex: none;
+      text-align: left;
+
+      img {
+        width: 172px;
+        margin-inline: 0;
+      }
+    }
+  }
+
+  &__cta {
+    display: none;
+
+    @include mq(lg) {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      flex: none;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 11px 20px;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: background-color 0.2s ease;
+
+      svg {
+        width: 15px;
+        height: 15px;
+        fill: currentColor;
+      }
+
+      &:hover {
+        background: var(--mint-dark);
+      }
+    }
+  }
+}
+
+/* PCナビ */
+.gnav {
+  display: none;
+
+  @include mq(lg) {
+    display: block;
+    margin-left: auto;
+  }
+
+  &__list {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  a {
+    position: relative;
+    display: inline-block;
+    padding: 6px 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    white-space: nowrap;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--mint);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    &:hover::after {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* ハンバーガー */
+.hamburger {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-content: center;
+  gap: 5px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+
+  @include mq(lg) {
+    display: none;
+  }
+
+  &__bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--navy);
+    transition: transform 0.3s ease, opacity 0.2s ease;
+  }
+
+  &.is-open {
+    .hamburger__bar:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .hamburger__bar:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger__bar:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+/* SP用の横スクロールメニュー */
+.spnav {
+  border-top: 1px solid var(--line);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include mq(lg) {
+    display: none;
+  }
+
+  &__list {
+    display: flex;
+    width: max-content;
+    margin-inline: auto;
+    padding-inline: 8px;
+  }
+
+  a {
+    display: block;
+    padding: 0 12px;
+    line-height: 34px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-2);
+    white-space: nowrap;
+  }
+}
+
+/* ドロワー */
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: var(--paper-2);
+  padding-top: var(--header-h);
+  overflow-y: auto;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__list {
+    padding: 16px 20px 40px;
+  }
+
+  a {
+    display: block;
+    padding: 15px 8px 15px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 15px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      border-top: 2px solid var(--mint);
+      border-right: 2px solid var(--mint);
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  @include mq(lg) {
+    display: none !important;
+  }
+}
+
+/* ---------------- メインビジュアル ---------------- */
+.mv {
+  position: relative;
+  isolation: isolate;
+
+  &__img {
+    display: block;
+    height: 46vh;
+    min-height: 260px;
+
+    @include mq(lg) {
+      height: 44vw;
+      max-height: 620px;
+      min-height: 0;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      rgba(10, 29, 51, 0.86) 0%,
+      rgba(14, 36, 57, 0.72) 48%,
+      rgba(22, 50, 79, 0.34) 100%
+    );
+    z-index: 1;
+  }
+
+  &__text {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: var(--wrap);
+    margin-inline: auto;
+    padding: 0 24px;
+    color: #fff;
+
+    @include mq(lg) {
+      padding: 0 20px;
+    }
+  }
+
+  &__lead {
+    font-family: var(--font-en);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: #8ddfd3;
+    margin-bottom: 14px;
+
+    @include mq(lg) {
+      font-size: 13px;
+    }
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(24px, 6.6vw, 30px);
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+
+    @include mq(lg) {
+      font-size: clamp(34px, 4vw, 46px);
+      line-height: 1.5;
+    }
+  }
+}
+
+/* ---------------- メッセージ ---------------- */
+.message {
+  text-align: center;
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(22px, 5.6vw, 32px);
+    line-height: 1.6;
+    color: var(--navy);
+    margin-bottom: 28px;
+  }
+
+  &__text {
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 2.1;
+
+    + .message__text {
+      margin-top: 22px;
+    }
+  }
+}
+
+/* ---------------- 悩み ---------------- */
+.pain {
+  &__list {
+    display: grid;
+    gap: 16px;
+
+    @include mq(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__item {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--line-2);
+    border-radius: 4px;
+    padding: 24px 22px 26px;
+  }
+
+  &__q {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--navy);
+    margin-bottom: 12px;
+    padding-left: 30px;
+    position: relative;
+
+    &::before {
+      content: "Q";
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-family: var(--font-en);
+      font-size: 20px;
+      color: var(--line-2);
+    }
+  }
+
+  &__a {
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--ink-2);
+  }
+
+  &__answer {
+    margin-top: 32px;
+    background: var(--mint-pale);
+    border-radius: 4px;
+    padding: 28px 24px;
+    text-align: center;
+
+    @include mq(lg) {
+      padding: 36px 40px;
+    }
+  }
+
+  &__answer-ttl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(18px, 4.4vw, 24px);
+    line-height: 1.65;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+
+  &__answer-text {
+    font-size: 14.5px;
+    line-height: 2;
+    color: var(--ink-2);
+    max-width: 60ch;
+    margin-inline: auto;
+  }
+}
+
+/* ---------------- サービスカード ---------------- */
+.cards {
+  display: grid;
+  gap: 18px;
+
+  @include mq(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 0 24px 26px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: center;
+    color: #fff;
+    background: var(--navy);
+    margin: 0 -24px 22px;
+    padding: 13px 16px;
+    border-radius: 3px 3px 0 0;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 1.95;
+    color: var(--ink-2);
+  }
+
+  &__list {
+    margin-top: 16px;
+    display: grid;
+    gap: 8px;
+  }
+
+  &__list li {
+    position: relative;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink);
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 0.62em;
+      width: 8px;
+      height: 8px;
+      background: var(--mint);
+      border-radius: 50%;
+    }
+  }
+}
+
+/* ---------------- 料金 ---------------- */
+.plans {
+  display: grid;
+  gap: 18px;
+
+  @include mq(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.plan {
+  background: var(--paper);
+  border: 2px solid var(--navy);
+  border-radius: 4px;
+  text-align: center;
+
+  &--pickup {
+    border-color: var(--mint-dark);
+
+    .plan__ttl {
+      background: var(--mint-dark);
+    }
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #fff;
+    background: var(--navy);
+    padding: 12px 14px;
+  }
+
+  &__body {
+    padding: 24px 18px 28px;
+  }
+
+  &__label {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+
+  &__price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 4px;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+
+  &__num {
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 34px;
+    font-variant-numeric: tabular-nums;
+
+    @include mq(lg) {
+      font-size: 38px;
+    }
+  }
+
+  &__unit {
+    font-size: 17px;
+    font-weight: 700;
+  }
+
+  &__tax {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+
+  &__term {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--line-2);
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+}
+
+.freebox {
+  margin-top: 26px;
+  background: var(--mint-pale);
+  border-radius: 4px;
+  padding: 28px 22px 30px;
+  text-align: center;
+
+  @include mq(lg) {
+    padding: 36px 40px 40px;
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mint-dark);
+    letter-spacing: 0.06em;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(20px, 4.8vw, 26px);
+    line-height: 1.6;
+    color: var(--navy);
+    margin: 8px 0 14px;
+
+    em {
+      font-style: normal;
+      color: var(--mint-dark);
+    }
+  }
+
+  &__text {
+    font-size: 14.5px;
+    line-height: 2;
+    color: var(--ink-2);
+    max-width: 56ch;
+    margin: 0 auto 24px;
+  }
+}
+
+.note {
+  margin-top: 24px;
+  display: grid;
+  gap: 8px;
+
+  li {
+    position: relative;
+    padding-left: 18px;
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+
+    &::before {
+      content: "※";
+      position: absolute;
+      left: 0;
+      color: var(--ink-3);
+    }
+  }
+}
+
+/* ---------------- 実績 ---------------- */
+.works {
+  display: grid;
+  gap: 20px;
+
+  @include mq(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.work {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  &__thumb {
+    aspect-ratio: 16 / 10;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
+    padding: 20px 20px 22px;
+  }
+
+  &__kind {
+    font-family: var(--font-en);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  &__text {
+    font-size: 13.5px;
+    line-height: 1.9;
+    color: var(--ink-2);
+    margin-bottom: 14px;
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    border-bottom: 2px solid var(--mint-pale);
+    padding-bottom: 2px;
+
+    &::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    &:hover {
+      border-bottom-color: var(--mint);
+    }
+  }
+}
+
+/* ---------------- 制作の流れ ---------------- */
+.flow {
+  max-width: 760px;
+  margin-inline: auto;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line-2);
+
+    &:first-child {
+      border-top: 1px solid var(--line-2);
+    }
+
+    @include mq(lg) {
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      padding: 26px 0;
+    }
+  }
+
+  &__num {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    margin-top: 2px;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  &__text {
+    font-size: 14px;
+    line-height: 1.95;
+    color: var(--ink-2);
+  }
+
+  &__tag {
+    display: inline-block;
+    margin-top: 10px;
+    background: var(--mint-pale);
+    color: var(--mint-dark);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 3px;
+  }
+}
+
+/* ---------------- 運営者情報 ---------------- */
+.about {
+  display: grid;
+  gap: 30px;
+
+  @include mq(lg) {
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  &__photo {
+    max-width: 260px;
+    margin-inline: auto;
+    text-align: center;
+
+    @include mq(lg) {
+      max-width: none;
+    }
+
+    img {
+      border-radius: 4px;
+      border: 1px solid var(--line);
+    }
+  }
+
+  &__name {
+    margin-top: 12px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--navy);
+    line-height: 1.5;
+
+    span {
+      display: block;
+      font-family: var(--font);
+      font-weight: 400;
+      font-size: 12.5px;
+      color: var(--ink-3);
+      letter-spacing: 0.08em;
+    }
+  }
+
+  &__body p {
+    font-size: 15px;
+    line-height: 2.05;
+    color: var(--ink-2);
+
+    + p {
+      margin-top: 16px;
+    }
+
+    strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+  }
+
+  &__pull {
+    border-left: 4px solid var(--mint);
+    background: var(--mint-pale);
+    padding: 16px 20px !important;
+    margin: 24px 0 !important;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(16px, 3.6vw, 19px) !important;
+    line-height: 1.75 !important;
+    color: var(--navy) !important;
+    border-radius: 0 4px 4px 0;
+  }
+
+  &__data {
+    margin-top: 28px;
+    border-top: 1px solid var(--line);
+
+    > div {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 12px;
+      padding: 12px 4px;
+      border-bottom: 1px solid var(--line);
+
+      @include mq(lg) {
+        grid-template-columns: 120px 1fr;
+      }
+    }
+
+    dt {
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--navy);
+    }
+
+    dd {
+      font-size: 13.5px;
+      color: var(--ink-2);
+      line-height: 1.8;
+    }
+  }
+}
+
+/* ---------------- よくある質問 ---------------- */
+.faq {
+  border-top: 1px solid var(--line-2);
+
+  &__item {
+    border-bottom: 1px solid var(--line-2);
+    background: var(--paper);
+  }
+
+  &__q {
+    list-style: none;
+    cursor: pointer;
+    position: relative;
+    display: block;
+    padding: 20px 46px 20px 44px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--navy);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Qアイコン */
+    &::before {
+      content: "Q";
+      position: absolute;
+      left: 12px;
+      top: 20px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-content: center;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-family: var(--font-en);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    /* 開閉マーク */
+    &::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      top: 30px;
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid var(--mint-dark);
+      border-bottom: 2px solid var(--mint-dark);
+      transform: translateY(-4px) rotate(45deg);
+      transition: transform 0.25s ease;
+    }
+  }
+
+  &__item[open] &__q::after {
+    transform: translateY(1px) rotate(-135deg);
+  }
+
+  &__a {
+    position: relative;
+    padding: 0 20px 22px 44px;
+
+    &::before {
+      content: "A";
+      position: absolute;
+      left: 12px;
+      top: 0;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-content: center;
+      border-radius: 50%;
+      background: var(--mint-dark);
+      color: #fff;
+      font-family: var(--font-en);
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--ink-2);
+    }
+  }
+}
+
+/* ---------------- 制作会社の方へ ---------------- */
+.agency {
+  background: var(--amber-pale);
+
+  &__grid {
+    display: grid;
+    gap: 14px;
+
+    @include mq(md) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__box {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px 22px;
+
+    b {
+      display: block;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15.5px;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+
+    span {
+      display: block;
+      font-size: 13.5px;
+      line-height: 1.9;
+      color: var(--ink-2);
+    }
+  }
+
+  &__note {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--ink-2);
+  }
+}
+
+/* ---------------- お問い合わせ ---------------- */
+.contact {
+  background: var(--navy-deep);
+  color: #fff;
+  text-align: center;
+
+  &__text {
+    color: #c8d6e2;
+    font-size: 15px;
+    line-height: 2.1;
+
+    + .contact__text {
+      margin-top: 20px;
+    }
+  }
+
+  &__label {
+    margin-top: 32px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #8ddfd3;
+  }
+
+  &__btns {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__note {
+    margin-top: 20px;
+    font-size: 12.5px;
+    color: #90a4b6;
+  }
+}
+
+/* ---------------- フッター ---------------- */
+.footer {
+  background: var(--navy);
+  color: #fff;
+
+  &__top {
+    padding: 40px 0 28px;
+    text-align: center;
+  }
+
+  &__logo img {
+    width: 200px;
+    margin-inline: auto;
+    /* ロゴ画像は白地が焼き込まれているので、そのまま白いプレートとして置く */
+    border-radius: 6px;
+  }
+
+  &__tagline {
+    margin-top: 10px;
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    color: #a9bccd;
+  }
+
+  &__sns {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+
+    a {
+      display: grid;
+      place-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.22);
+      }
+    }
+
+    img,
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
+    }
+  }
+
+  &__nav {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 20px;
+
+    a {
+      font-size: 13px;
+      color: #d3dfe9;
+
+      &:hover {
+        color: #fff;
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__foot {
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 16px 0;
+    text-align: center;
+  }
+}
+
+.copyright small {
+  font-family: var(--font-en);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: #a9bccd;
+}
+
+/* ---------------- ページトップ ---------------- */
+.pagetop {
+  position: fixed;
+  right: 14px;
+  bottom: 74px;
+  z-index: 70;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--navy);
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: #fff;
+  }
+
+  &.is-show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  &:hover {
+    background: var(--mint-dark);
+  }
+
+  @include mq(lg) {
+    right: 24px;
+    bottom: 24px;
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* ---------------- SP固定バー ---------------- */
+.fixbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  border-top: 1px solid var(--line);
+  background: var(--paper);
+
+  @include mq(lg) {
+    display: none;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 16px 8px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+    flex: none;
+  }
+
+  &__sub {
+    color: var(--navy);
+  }
+
+  &__main {
+    background: var(--mint-dark);
+    color: #fff;
+  }
+}
