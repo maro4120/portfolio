@@ -28,12 +28,11 @@
   --paper-2: #f4f8f9;
   --line: #e2e9ec;
   --line-2: #c4d1d7;
-  /* 本文は端末の標準ゴシックに任せる（読みやすさ優先・Webフォントを増やさない） */
-  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Yu Gothic",
-    "Meiryo", system-ui, sans-serif;
-  /* 見出しは明朝。イラストの線の細さに合わせる */
-  --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
-  --font-en: "Josefin Sans", "Hiragino Sans", system-ui, sans-serif;
+  /* 本文・見出しとも明朝で統一する */
+  --font: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho",
+    "MS PMincho", serif;
+  --font-display: var(--font);
+  --font-en: "Josefin Sans", var(--font);
   --wrap: 1120px;
   --header-h: 96px; /* 実際のヘッダー高さ（バー＋本体＋SPナビ） */
 }
@@ -43,15 +42,15 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.95;
-  letter-spacing: 0.025em;
+  font-size: 15.5px;
+  line-height: 2;
+  letter-spacing: 0.04em;
   -webkit-font-smoothing: antialiased;
   padding-bottom: 60px; /* SP固定バーぶん */
 }
 @media screen and (min-width: 960px) {
   body {
-    font-size: 16px;
+    font-size: 16.5px;
     padding-bottom: 0;
   }
 }
@@ -136,7 +135,7 @@ html {
   display: block;
   margin-top: 10px;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 14.5px;
   letter-spacing: 0.14em;
   color: var(--mint-dark);
 }
@@ -209,7 +208,7 @@ html {
 .btn--ghost {
   border: 1px solid rgba(255, 255, 255, 0.55);
   color: #fff;
-  font-size: 14px;
+  font-size: 14.5px;
 }
 .btn--ghost:hover {
   background: rgba(255, 255, 255, 0.1);
@@ -250,7 +249,7 @@ html {
   padding: 4px 20px;
 }
 .header__catch {
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1.5;
   letter-spacing: 0.06em;
 }
@@ -306,7 +305,7 @@ html {
     background: var(--orange);
     color: #fff;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 14.5px;
     padding: 11px 20px;
     border-radius: 4px;
     white-space: nowrap;
@@ -341,7 +340,7 @@ html {
   position: relative;
   display: inline-block;
   padding: 6px 0;
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
@@ -421,7 +420,7 @@ html {
   display: block;
   padding: 0 12px;
   line-height: 34px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--ink-2);
   white-space: nowrap;
@@ -584,7 +583,7 @@ html {
   color: var(--line-2);
 }
 .pain__a {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.9;
   color: var(--ink-2);
 }
@@ -609,7 +608,7 @@ html {
   margin-bottom: 14px;
 }
 .pain__answer-text {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 2;
   color: var(--ink-2);
   max-width: 60ch;
@@ -647,7 +646,7 @@ html {
   border-radius: 3px 3px 0 0;
 }
 .card__text {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.95;
   color: var(--ink-2);
 }
@@ -659,7 +658,7 @@ html {
 .card__list li {
   position: relative;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.7;
   color: var(--ink);
 }
@@ -710,12 +709,12 @@ html {
   padding: 24px 18px 28px;
 }
 .plan__label {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
   margin-bottom: 6px;
 }
 .plan__was {
-  font-size: 13px;
+  font-size: 13.5px;
   color: var(--ink-3);
   line-height: 1.6;
   margin-bottom: 2px;
@@ -734,7 +733,7 @@ html {
 .plan__badge {
   display: block;
   width: 100%;
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--sale);
@@ -772,7 +771,7 @@ html {
   font-weight: 700;
 }
 .plan__tax {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--ink-3);
   margin-top: 4px;
 }
@@ -780,7 +779,7 @@ html {
   margin-top: 16px;
   padding-top: 14px;
   border-top: 1px dashed var(--line-2);
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
 }
 
@@ -806,7 +805,7 @@ html {
   }
 }
 .freebox__label {
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   color: var(--mint-dark);
   letter-spacing: 0.06em;
@@ -824,7 +823,7 @@ html {
   color: var(--mint-dark);
 }
 .freebox__text {
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 2;
   color: var(--ink-2);
   max-width: 56ch;
@@ -839,7 +838,7 @@ html {
 .note li {
   position: relative;
   padding-left: 18px;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.85;
   color: var(--ink-2);
 }
@@ -883,7 +882,7 @@ html {
 }
 .work__kind {
   font-family: var(--font-en);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   color: var(--ink-3);
@@ -898,7 +897,7 @@ html {
   margin-bottom: 8px;
 }
 .work__text {
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.9;
   color: var(--ink-2);
   margin-bottom: 14px;
@@ -908,7 +907,7 @@ html {
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 14.5px;
   border-bottom: 2px solid var(--mint-pale);
   padding-bottom: 2px;
 }
@@ -969,7 +968,7 @@ html {
   margin-bottom: 6px;
 }
 .flow__text {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.95;
   color: var(--ink-2);
 }
@@ -978,7 +977,7 @@ html {
   margin-top: 10px;
   background: var(--mint-pale);
   color: var(--mint-dark);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
   padding: 4px 10px;
@@ -1023,7 +1022,7 @@ html {
   display: block;
   font-family: var(--font);
   font-weight: 400;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--ink-3);
   letter-spacing: 0.08em;
 }
@@ -1069,11 +1068,11 @@ html {
 }
 .about__data dt {
   font-weight: 700;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--navy);
 }
 .about__data dd {
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
   line-height: 1.8;
 }
@@ -1121,7 +1120,7 @@ html {
   background: var(--navy);
   color: #fff;
   font-family: var(--font-en);
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1;
 }
 .faq__q {
@@ -1159,11 +1158,11 @@ html {
   background: var(--mint-dark);
   color: #fff;
   font-family: var(--font-en);
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1;
 }
 .faq__a p {
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 2;
   color: var(--ink-2);
 }
@@ -1197,14 +1196,14 @@ html {
 }
 .agency__box span {
   display: block;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.9;
   color: var(--ink-2);
 }
 .agency__note {
   margin-top: 22px;
   text-align: center;
-  font-size: 13.5px;
+  font-size: 14px;
   color: var(--ink-2);
 }
 
@@ -1224,7 +1223,7 @@ html {
 }
 .contact__label {
   margin-top: 32px;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.06em;
   color: #8ddfd3;
@@ -1238,7 +1237,7 @@ html {
 }
 .contact__note {
   margin-top: 20px;
-  font-size: 12.5px;
+  font-size: 13px;
   color: #90a4b6;
 }
 
@@ -1288,7 +1287,7 @@ html {
   gap: 10px 20px;
 }
 .footer__nav a {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #d3dfe9;
 }
 .footer__nav a:hover {
@@ -1303,7 +1302,7 @@ html {
 
 .copyright small {
   font-family: var(--font-en);
-  font-size: 11.5px;
+  font-size: 12.5px;
   letter-spacing: 0.06em;
   color: #a9bccd;
 }
@@ -1373,7 +1372,7 @@ html {
   gap: 7px;
   padding: 16px 8px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 14.5px;
   line-height: 1.4;
   text-align: center;
 }
