@@ -40,9 +40,12 @@ $breakpoints: (
   --line: #e2e9ec;
   --line-2: #c4d1d7;
 
-  --font: "Noto Sans JP", system-ui, sans-serif;
-  --font-display: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, sans-serif;
-  --font-en: "Archivo", "Noto Sans JP", system-ui, sans-serif;
+  /* 本文は端末の標準ゴシックに任せる（読みやすさ優先・Webフォントを増やさない） */
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", "Yu Gothic",
+    "Meiryo", system-ui, sans-serif;
+  /* 見出しは明朝。イラストの線の細さに合わせる */
+  --font-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-en: "Josefin Sans", "Hiragino Sans", system-ui, sans-serif;
 
   --wrap: 1120px;
   --header-h: 96px; /* 実際のヘッダー高さ（バー＋本体＋SPナビ） */
@@ -131,22 +134,22 @@ html {
   &__en {
     display: block;
     font-family: var(--font-en);
-    font-weight: 700;
-    font-size: 30px;
+    font-weight: 600;
+    font-size: 32px;
     line-height: 1.2;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     color: var(--navy);
 
     @include mq(lg) {
-      font-size: 40px;
+      font-size: 44px;
     }
   }
 
   &__ja {
     display: block;
-    margin-top: 8px;
-    font-size: 13px;
-    font-weight: 700;
+    margin-top: 10px;
+    font-family: var(--font-display);
+    font-size: 14px;
     letter-spacing: 0.14em;
     color: var(--mint-dark);
   }
@@ -510,83 +513,72 @@ html {
 
 /* ---------------- メインビジュアル ---------------- */
 .mv {
-  position: relative;
-  isolation: isolate;
+  /* イラストの地は白なので、うっすら色を敷いて mix-blend-mode で馴染ませる */
+  background: var(--paper-2);
+  overflow: hidden;
 
-  &__img {
-    display: block;
-    height: 46vh;
-    min-height: 260px;
+  &__inner {
+    display: grid;
+    gap: 8px;
+    padding-top: 40px;
 
     @include mq(lg) {
-      height: 44vw;
-      max-height: 620px;
-      min-height: 0;
+      grid-template-columns: 1fr 1.06fr;
+      align-items: center;
+      gap: 24px;
+      padding-top: 0;
+      min-height: 480px;
     }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-    }
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      100deg,
-      rgba(10, 29, 51, 0.86) 0%,
-      rgba(14, 36, 57, 0.72) 48%,
-      rgba(22, 50, 79, 0.34) 100%
-    );
-    z-index: 1;
   }
 
   &__text {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    max-width: var(--wrap);
-    margin-inline: auto;
-    padding: 0 24px;
-    color: #fff;
-
     @include mq(lg) {
-      padding: 0 20px;
+      padding-block: 40px;
     }
   }
 
   &__lead {
-    font-family: var(--font-en);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    color: #8ddfd3;
-    margin-bottom: 14px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--mint-dark);
+    margin-bottom: 16px;
 
     @include mq(lg) {
-      font-size: 13px;
+      font-size: 14px;
+      margin-bottom: 22px;
     }
   }
 
   &__ttl {
     font-family: var(--font-display);
-    font-weight: 900;
-    font-size: clamp(24px, 6.6vw, 30px);
-    line-height: 1.6;
+    font-weight: 400;
+    font-size: clamp(25px, 6.8vw, 32px);
+    line-height: 1.75;
     letter-spacing: 0.02em;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    color: var(--navy);
 
     @include mq(lg) {
-      font-size: clamp(34px, 4vw, 46px);
-      line-height: 1.5;
+      font-size: clamp(34px, 3.4vw, 44px);
+      line-height: 1.7;
+    }
+  }
+
+  &__illust {
+    /* .inner の左右パディングを打ち消して画面幅いっぱいに置く */
+    margin-inline: -20px;
+
+    img {
+      width: 100%;
+      /* イラストの白地を落として背景に溶かす。
+         親に will-change / opacity が付くと重ね合わせ文脈ができて効かなくなるので、
+         この要素はスクロール表示（.fade）の対象から外してある */
+      mix-blend-mode: multiply;
+    }
+
+    @include mq(lg) {
+      margin-inline: 0;
+      margin-right: -40px;
     }
   }
 }
@@ -597,7 +589,7 @@ html {
 
   &__ttl {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 400;
     font-size: clamp(22px, 5.6vw, 32px);
     line-height: 1.6;
     color: var(--navy);
@@ -676,7 +668,7 @@ html {
 
   &__answer-ttl {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 400;
     font-size: clamp(18px, 4.4vw, 24px);
     line-height: 1.65;
     color: var(--navy);
@@ -858,7 +850,7 @@ html {
 
   &__ttl {
     font-family: var(--font-display);
-    font-weight: 900;
+    font-weight: 400;
     font-size: clamp(20px, 4.8vw, 26px);
     line-height: 1.6;
     color: var(--navy);
@@ -1485,5 +1477,46 @@ html {
   &__main {
     background: var(--mint-dark);
     color: #fff;
+  }
+}
+
+/* ---------------- スクロールでふわっと表示 ---------------- */
+/* JSが動いたときだけ隠す。JSが失敗しても中身は必ず見えるようにしておく */
+.js-fade-ready .fade {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.js-fade-ready .fade.is-shown {
+  opacity: 1;
+  transform: none;
+}
+
+/* 横並びのカードは少しずつ遅らせて出す */
+.js-fade-ready {
+  .pain__item,
+  .card,
+  .plan,
+  .work,
+  .agency__box {
+    &:nth-child(2) {
+      transition-delay: 0.12s;
+    }
+    &:nth-child(3) {
+      transition-delay: 0.24s;
+    }
+    &:nth-child(4) {
+      transition-delay: 0.36s;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-fade-ready .fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

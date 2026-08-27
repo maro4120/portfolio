@@ -1,6 +1,7 @@
 /* =========================================================
    Anchor Base ポートフォリオ
    - ハンバーガー＋ドロワー
+   - スクロールに合わせたふわっと表示
    - ページトップボタンの表示切り替え
    ========================================================= */
 (function () {
@@ -48,6 +49,56 @@
     } else {
       mq.addListener(onChange);
     }
+  }
+
+  /* ---------- スクロールでふわっと表示 ---------- */
+  var FADE_TARGETS = [
+    ".mv__lead",
+    ".mv__ttl",
+    ".sec-ttl",
+    ".sec-lead",
+    ".message__ttl",
+    ".message__text",
+    ".pain__item",
+    ".pain__answer",
+    ".card",
+    ".plan",
+    ".freebox",
+    ".note",
+    ".work",
+    ".flow__item",
+    ".about__photo",
+    ".about__body",
+    ".faq__item",
+    ".agency__box",
+    ".agency__note",
+    ".contact__text",
+    ".contact__label",
+    ".contact__btns",
+    ".contact__note"
+  ].join(",");
+
+  var items = document.querySelectorAll(FADE_TARGETS);
+
+  if (items.length && "IntersectionObserver" in window) {
+    // JSが動くと分かった時点で初めて隠す（JSが落ちても中身は見えたまま）
+    document.documentElement.classList.add("js-fade-ready");
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-shown");
+          observer.unobserve(entry.target); // 一度出したら戻さない
+        });
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.08 }
+    );
+
+    items.forEach(function (el) {
+      el.classList.add("fade");
+      observer.observe(el);
+    });
   }
 
   /* ---------- ページトップ ---------- */
