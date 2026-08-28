@@ -47,7 +47,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=12" />
+    <link rel="stylesheet" href="./css/style.css?v=13" />
   </head>
 
   <body id="top">
@@ -691,8 +691,12 @@
                 method="POST"
                 hidden
               >
-                <!-- ▼ ここに Web3Forms のアクセスキーを入れると、このフォームが有効になります -->
-                <input type="hidden" name="access_key" value="" />
+                <!-- Web3Forms の公開キー。クライアント側に置く前提のもの -->
+                <input
+                  type="hidden"
+                  name="access_key"
+                  value="619b7cff-a9e6-48e4-a81a-3940b60f8962"
+                />
                 <input type="hidden" name="subject" value="Anchor Base サイトからのお問い合わせ" />
                 <input type="hidden" name="from_name" value="Anchor Base" />
                 <!-- 迷惑メール除け。人には見えない -->
