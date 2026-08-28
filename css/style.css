@@ -1020,7 +1020,7 @@ html {
 }
 @media screen and (min-width: 768px) {
   .profile {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 36px;
     align-items: start;
   }
@@ -1034,7 +1034,7 @@ html {
   margin-bottom: 36px;
 }
 .profile__photo {
-  max-width: 240px;
+  max-width: 280px;
   margin-inline: auto;
   text-align: center;
 }

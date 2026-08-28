@@ -1115,7 +1115,7 @@ html {
   margin-top: 8px;
 
   @include mq(md) {
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 36px;
     align-items: start;
   }
@@ -1130,7 +1130,7 @@ html {
   }
 
   &__photo {
-    max-width: 240px;
+    max-width: 280px;
     margin-inline: auto;
     text-align: center;
 
