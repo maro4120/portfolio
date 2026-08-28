@@ -1080,23 +1080,61 @@ html {
   }
 }
 
-/* ---------------- 運営者情報 ---------------- */
-.about {
-  display: grid;
-  gap: 30px;
+/* ---------------- 下層ページの見出し ---------------- */
+.pagehead {
+  background: var(--paper-2);
+  padding: 34px 0 36px;
+  text-align: center;
 
   @include mq(lg) {
-    grid-template-columns: 280px 1fr;
-    gap: 48px;
+    padding: 52px 0 54px;
+  }
+
+  &__en {
+    font-family: var(--font-en);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--mint-dark);
+    margin-bottom: 8px;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 5vw, 30px);
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    color: var(--navy);
+  }
+}
+
+/* ---------------- 運営者情報（下層ページ） ---------------- */
+.profile {
+  display: grid;
+  gap: 26px;
+  margin-top: 8px;
+
+  @include mq(md) {
+    grid-template-columns: 240px 1fr;
+    gap: 36px;
     align-items: start;
   }
 
+  &__catch {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(19px, 4.4vw, 25px);
+    line-height: 1.8;
+    color: var(--navy);
+    margin-bottom: 36px;
+  }
+
   &__photo {
-    max-width: 260px;
+    max-width: 240px;
     margin-inline: auto;
     text-align: center;
 
-    @include mq(lg) {
+    @include mq(md) {
       max-width: none;
     }
 
@@ -1116,16 +1154,15 @@ html {
 
     span {
       display: block;
-      font-family: var(--font);
       font-weight: 400;
-      font-size: 13px;
+      font-size: 12.5px;
       color: var(--ink-3);
       letter-spacing: 0.08em;
     }
   }
 
   &__body p {
-    font-size: 15px;
+    font-size: 15.5px;
     line-height: 2.05;
     color: var(--ink-2);
 
@@ -1139,45 +1176,188 @@ html {
     }
   }
 
-  &__pull {
-    border-left: 4px solid var(--mint);
-    background: var(--mint-pale);
-    padding: 16px 20px !important;
-    margin: 24px 0 !important;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(16px, 3.6vw, 19px) !important;
-    line-height: 1.75 !important;
-    color: var(--navy) !important;
-    border-radius: 0 4px 4px 0;
+  &__body--full {
+    margin-top: 26px;
   }
 
-  &__data {
-    margin-top: 28px;
-    border-top: 1px solid var(--line);
+  &__pull {
+    margin: 30px 0;
+    border-left: 4px solid var(--mint);
+    background: var(--mint-pale);
+    border-radius: 0 4px 4px 0;
+    padding: 20px 22px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(16px, 3.6vw, 19px);
+    line-height: 1.8;
+    color: var(--navy);
+  }
+}
 
-    > div {
-      display: grid;
-      grid-template-columns: 96px 1fr;
-      gap: 12px;
-      padding: 12px 4px;
-      border-bottom: 1px solid var(--line);
+/* ---------------- 3つの約束 ---------------- */
+.promise {
+  display: grid;
+  gap: 16px;
 
-      @include mq(lg) {
-        grid-template-columns: 120px 1fr;
-      }
+  &__item {
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 16px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px 22px 26px;
+
+    @include mq(lg) {
+      grid-template-columns: 56px 1fr;
+      gap: 22px;
+      padding: 30px 32px 32px;
+    }
+  }
+
+  &__num {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    font-family: var(--font-en);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--navy);
+    margin-bottom: 10px;
+
+    @include mq(lg) {
+      font-size: 19px;
+    }
+  }
+
+  &__body p {
+    font-size: 14.5px;
+    line-height: 1.95;
+    color: var(--ink-2);
+
+    + p {
+      margin-top: 12px;
     }
 
-    dt {
+    strong {
+      color: var(--ink);
       font-weight: 700;
-      font-size: 14px;
-      color: var(--navy);
     }
+  }
+}
 
-    dd {
-      font-size: 14px;
-      color: var(--ink-2);
-      line-height: 1.8;
+/* ---------------- 運営者データの表 ---------------- */
+.datatable {
+  border-top: 1px solid var(--line-2);
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: left;
+    vertical-align: top;
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
+    line-height: 1.9;
+  }
+
+  th {
+    width: 92px;
+    font-weight: 700;
+    color: var(--navy);
+    white-space: nowrap;
+
+    @include mq(md) {
+      width: 140px;
+      padding-left: 14px;
+    }
+  }
+
+  td {
+    color: var(--ink-2);
+  }
+}
+
+/* ---------------- おわりに ---------------- */
+.closing {
+  text-align: center;
+
+  p {
+    font-size: 15.5px;
+    line-height: 2.1;
+    color: var(--ink-2);
+
+    + p {
+      margin-top: 18px;
+    }
+  }
+
+  &__sign {
+    margin-top: 26px !important;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--navy) !important;
+  }
+
+  &__label {
+    margin-top: 34px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--mint-dark);
+  }
+
+  &__btns {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* ---------------- パンくず ---------------- */
+.breadcrumb {
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding-block: 12px;
+    font-size: 12.5px;
+    color: var(--ink-3);
+  }
+
+  li + li::before {
+    content: "／";
+    margin-right: 8px;
+    color: var(--line-2);
+  }
+
+  a {
+    color: var(--ink-2);
+
+    &:hover {
+      color: var(--mint-dark);
+      text-decoration: underline;
     }
   }
 }

@@ -985,33 +985,69 @@ html {
   border-radius: 3px;
 }
 
-/* ---------------- 運営者情報 ---------------- */
-.about {
-  display: grid;
-  gap: 30px;
-}
-@media screen and (min-width: 960px) {
-  .about {
-    grid-template-columns: 280px 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-}
-.about__photo {
-  max-width: 260px;
-  margin-inline: auto;
+/* ---------------- 下層ページの見出し ---------------- */
+.pagehead {
+  background: var(--paper-2);
+  padding: 34px 0 36px;
   text-align: center;
 }
 @media screen and (min-width: 960px) {
-  .about__photo {
+  .pagehead {
+    padding: 52px 0 54px;
+  }
+}
+.pagehead__en {
+  font-family: var(--font-en);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  color: var(--mint-dark);
+  margin-bottom: 8px;
+}
+.pagehead__ttl {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 5vw, 30px);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+}
+
+/* ---------------- 運営者情報（下層ページ） ---------------- */
+.profile {
+  display: grid;
+  gap: 26px;
+  margin-top: 8px;
+}
+@media screen and (min-width: 768px) {
+  .profile {
+    grid-template-columns: 240px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+}
+.profile__catch {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: clamp(19px, 4.4vw, 25px);
+  line-height: 1.8;
+  color: var(--navy);
+  margin-bottom: 36px;
+}
+.profile__photo {
+  max-width: 240px;
+  margin-inline: auto;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .profile__photo {
     max-width: none;
   }
 }
-.about__photo img {
+.profile__photo img {
   border-radius: 4px;
   border: 1px solid var(--line);
 }
-.about__name {
+.profile__name {
   margin-top: 12px;
   font-family: var(--font-display);
   font-weight: 700;
@@ -1019,63 +1055,191 @@ html {
   color: var(--navy);
   line-height: 1.5;
 }
-.about__name span {
+.profile__name span {
   display: block;
-  font-family: var(--font);
   font-weight: 400;
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--ink-3);
   letter-spacing: 0.08em;
 }
-.about__body p {
-  font-size: 15px;
+.profile__body p {
+  font-size: 15.5px;
   line-height: 2.05;
   color: var(--ink-2);
 }
-.about__body p + p {
+.profile__body p + p {
   margin-top: 16px;
 }
-.about__body p strong {
+.profile__body p strong {
   color: var(--ink);
   font-weight: 700;
 }
-.about__pull {
+.profile__body--full {
+  margin-top: 26px;
+}
+.profile__pull {
+  margin: 30px 0;
   border-left: 4px solid var(--mint);
   background: var(--mint-pale);
-  padding: 16px 20px !important;
-  margin: 24px 0 !important;
+  border-radius: 0 4px 4px 0;
+  padding: 20px 22px;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(16px, 3.6vw, 19px) !important;
-  line-height: 1.75 !important;
-  color: var(--navy) !important;
-  border-radius: 0 4px 4px 0;
-}
-.about__data {
-  margin-top: 28px;
-  border-top: 1px solid var(--line);
-}
-.about__data > div {
-  display: grid;
-  grid-template-columns: 96px 1fr;
-  gap: 12px;
-  padding: 12px 4px;
-  border-bottom: 1px solid var(--line);
-}
-@media screen and (min-width: 960px) {
-  .about__data > div {
-    grid-template-columns: 120px 1fr;
-  }
-}
-.about__data dt {
-  font-weight: 700;
-  font-size: 14px;
+  font-size: clamp(16px, 3.6vw, 19px);
+  line-height: 1.8;
   color: var(--navy);
 }
-.about__data dd {
-  font-size: 14px;
+
+/* ---------------- 3つの約束 ---------------- */
+.promise {
+  display: grid;
+  gap: 16px;
+}
+.promise__item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 16px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 24px 22px 26px;
+}
+@media screen and (min-width: 960px) {
+  .promise__item {
+    grid-template-columns: 56px 1fr;
+    gap: 22px;
+    padding: 30px 32px 32px;
+  }
+}
+.promise__num {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-content: center;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-en);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+}
+.promise__ttl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+@media screen and (min-width: 960px) {
+  .promise__ttl {
+    font-size: 19px;
+  }
+}
+.promise__body p {
+  font-size: 14.5px;
+  line-height: 1.95;
   color: var(--ink-2);
-  line-height: 1.8;
+}
+.promise__body p + p {
+  margin-top: 12px;
+}
+.promise__body p strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ---------------- 運営者データの表 ---------------- */
+.datatable {
+  border-top: 1px solid var(--line-2);
+}
+.datatable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.datatable th,
+.datatable td {
+  text-align: left;
+  vertical-align: top;
+  padding: 15px 10px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+  line-height: 1.9;
+}
+.datatable th {
+  width: 92px;
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+}
+@media screen and (min-width: 768px) {
+  .datatable th {
+    width: 140px;
+    padding-left: 14px;
+  }
+}
+.datatable td {
+  color: var(--ink-2);
+}
+
+/* ---------------- おわりに ---------------- */
+.closing {
+  text-align: center;
+}
+.closing p {
+  font-size: 15.5px;
+  line-height: 2.1;
+  color: var(--ink-2);
+}
+.closing p + p {
+  margin-top: 18px;
+}
+.closing__sign {
+  margin-top: 26px !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--navy) !important;
+}
+.closing__label {
+  margin-top: 34px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--mint-dark);
+}
+.closing__btns {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ---------------- パンくず ---------------- */
+.breadcrumb {
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+}
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-block: 12px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.breadcrumb li + li::before {
+  content: "／";
+  margin-right: 8px;
+  color: var(--line-2);
+}
+.breadcrumb a {
+  color: var(--ink-2);
+}
+.breadcrumb a:hover {
+  color: var(--mint-dark);
+  text-decoration: underline;
 }
 
 /* ---------------- よくある質問 ---------------- */
