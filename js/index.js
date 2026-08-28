@@ -4,6 +4,7 @@
    - スクロールに合わせたふわっと表示
    - 制作実績のスライダー（Swiper）
    - よくある質問の開閉アニメーション
+   - お問い合わせフォームの送信
    - ページトップボタンの表示切り替え
    ========================================================= */
 (function () {
@@ -86,10 +87,8 @@
     ".faq__item",
     ".agency__box",
     ".agency__note",
-    ".contact__text",
-    ".contact__label",
-    ".contact__btns",
-    ".contact__note"
+    ".contact__intro",
+    ".contact__body"
   ].join(",");
 
   var items = document.querySelectorAll(FADE_TARGETS);
@@ -182,6 +181,68 @@
       setTimeout(finish, CLOSE_DURATION + 60);
     });
   });
+
+  /* ---------- お問い合わせフォーム ---------- */
+  /* 送信先（アクセスキー）が入っていないあいだは、
+     フォームを出さずにボタンのままにしておく。
+     壊れたフォームを表に出さないための切り替え */
+  var cform = document.getElementById("js-contact-form");
+  var cfallback = document.getElementById("js-contact-fallback");
+
+  if (cform) {
+    var keyField = cform.querySelector('[name="access_key"]');
+    var hasKey = keyField && keyField.value.trim() !== "";
+
+    if (hasKey) {
+      cform.hidden = false;
+      if (cfallback) cfallback.hidden = true;
+
+      var result = document.getElementById("js-contact-result");
+      var submit = cform.querySelector(".cform__submit");
+
+      cform.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (result) {
+          result.textContent = "送信しています…";
+          result.className = "cform__result";
+        }
+        if (submit) submit.disabled = true;
+
+        fetch(cform.action, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(cform)
+        })
+          .then(function (res) {
+            return res.json().catch(function () {
+              return { success: res.ok };
+            });
+          })
+          .then(function (data) {
+            if (data && data.success) {
+              cform.reset();
+              if (result) {
+                result.textContent =
+                  "送信しました。2営業日以内にお返事します。届かない場合は、迷惑メールもご確認ください。";
+                result.className = "cform__result is-ok";
+              }
+            } else {
+              throw new Error("failed");
+            }
+          })
+          .catch(function () {
+            if (result) {
+              result.textContent =
+                "送信できませんでした。お手数ですが、X のDMからご連絡ください。";
+              result.className = "cform__result is-ng";
+            }
+          })
+          .then(function () {
+            if (submit) submit.disabled = false;
+          });
+      });
+    }
+  }
 
   /* ---------- ページトップ ---------- */
   var pagetop = document.getElementById("js-pagetop");

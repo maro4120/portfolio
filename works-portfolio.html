@@ -34,7 +34,7 @@
     />
 
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=10" />
+    <link rel="stylesheet" href="./css/style.css?v=11" />
   </head>
 
   <body id="top">
@@ -92,17 +92,6 @@
         </a>
       </div>
 
-      <!-- スマホ用の横スクロールメニュー -->
-      <div class="spnav">
-        <ul class="spnav__list">
-          <li><a href="./index.html#service">できること</a></li>
-          <li><a href="./index.html#price">料金</a></li>
-          <li><a href="./index.html#works">制作実績</a></li>
-          <li><a href="./index.html#flow">制作の流れ</a></li>
-          <li><a href="./profile.html">運営者情報</a></li>
-          <li><a href="./index.html#faq">よくある質問</a></li>
-        </ul>
-      </div>
     </header>
 
     <div class="drawer" id="js-drawer" hidden>
@@ -297,6 +286,7 @@
               loading="lazy"
             />
           </p>
+          <!-- 公式LINE・Instagram を開設したら、ここに <li> を足す -->
           <ul class="footer__sns">
             <li>
               <a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener" aria-label="X（旧Twitter）">
@@ -318,16 +308,28 @@
             </li>
           </ul>
 
-          <ul class="footer__nav">
-            <li><a href="./index.html">ホーム</a></li>
-            <li><a href="./index.html#service">できること</a></li>
-            <li><a href="./index.html#price">料金の目安</a></li>
-            <li><a href="./index.html#works">制作実績</a></li>
-            <li><a href="./index.html#flow">制作の流れ</a></li>
-            <li><a href="./profile.html">運営者情報</a></li>
-            <li><a href="./index.html#agency">制作会社の方へ</a></li>
-            <li><a href="./index.html#contact">お問い合わせ</a></li>
-          </ul>
+          <nav class="footer__sitemap" aria-label="サイト内のページ一覧">
+            <ul class="footer__nav">
+              <li><a href="./index.html">ホーム</a></li>
+              <li><a href="./index.html#service">できること</a></li>
+              <li><a href="./index.html#price">料金の目安</a></li>
+              <li><a href="./index.html#works">制作実績</a></li>
+              <li><a href="./index.html#flow">制作の流れ</a></li>
+              <li><a href="./index.html#faq">よくある質問</a></li>
+              <li><a href="./profile.html">運営者情報</a></li>
+              <li><a href="./index.html#agency">制作会社の方へ</a></li>
+              <li><a href="./index.html#contact">お問い合わせ</a></li>
+            </ul>
+
+            <p class="footer__navttl">制作実績</p>
+            <ul class="footer__nav footer__nav--sub">
+              <li><a href="./works-onomichi.html">尾道レトロ キャンペーンLP</a></li>
+              <li><a href="./works-moofc.html">MOO FC</a></li>
+              <li><a href="./works-portfolio.html" aria-current="page">このサイト</a></li>
+              <li><a href="./works-sweets.html">Sweet Delight</a></li>
+              <li><a href="./works-oha.html">OHA!</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
 

@@ -47,7 +47,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=10" />
+    <link rel="stylesheet" href="./css/style.css?v=12" />
   </head>
 
   <body id="top">
@@ -105,17 +105,6 @@
         </a>
       </div>
 
-      <!-- スマホ用の横スクロールメニュー -->
-      <div class="spnav">
-        <ul class="spnav__list">
-          <li><a href="#service">できること</a></li>
-          <li><a href="#price">料金</a></li>
-          <li><a href="#works">制作実績</a></li>
-          <li><a href="#flow">制作の流れ</a></li>
-          <li><a href="./profile.html">運営者情報</a></li>
-          <li><a href="#faq">よくある質問</a></li>
-        </ul>
-      </div>
     </header>
 
     <div class="drawer" id="js-drawer" hidden>
@@ -659,41 +648,119 @@
 
       <!-- ============ お問い合わせ ============ -->
       <section class="section contact" id="contact">
-        <div class="inner inner--narrow">
-          <h2 class="sec-ttl sec-ttl--light">
-            <span class="sec-ttl__en">CONTACT</span>
-            <span class="sec-ttl__ja">お問い合わせ</span>
-          </h2>
+        <div class="inner">
+          <div class="contact__grid">
+            <div class="contact__intro">
+              <p class="contact__en">CONTACT</p>
+              <h2 class="contact__ttl">
+                まずは、お話を<br />聞かせてください。
+              </h2>
+              <p class="contact__text">
+                コストは抑えたい。<br />パソコンは得意ではない。<br />でも、ちゃんとしたホームページがほしい。
+              </p>
+              <p class="contact__text">
+                「これって頼めるのかな」という段階で構いません。<br />まだ内容が決まっていなくても大丈夫です。
+              </p>
+              <p class="contact__note">
+                ご相談・お見積り・現状の診断は無料です。<br />その場で契約をお願いすることはありません。
+              </p>
+            </div>
 
-          <p class="contact__text">
-            コストは抑えたい。<br />パソコンは得意ではない。<br />でも、ちゃんとしたホームページがほしい。
-          </p>
-          <p class="contact__text">
-            「これって頼めるのかな」という段階で構いません。<br />まず、話を聞かせてください。
-          </p>
+            <div class="contact__body">
+              <!-- 送信先が設定されるまでは、こちらのボタンを表示する -->
+              <div class="contact__fallback" id="js-contact-fallback">
+                <a
+                  class="btn btn--primary btn--lg"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfyfy8RYl7qI9R_3O8GrLhsq2XVcguIFVHH3YR24XFDjb_arQ/viewform"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <svg class="icon-bubble" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                    <path
+                      d="M24 3.6c-12.2 0-22 9-22 20 0 4.3 1.5 8.2 4 11.5l-2 8.1c-.2.8.6 1.5 1.4 1.1l7.8-3.4c3.2 1.6 6.9 2.6 10.8 2.6 12.2 0 22-9 22-20S36.2 3.6 24 3.6z"
+                    />
+                  </svg>
+                  <span>お問い合わせフォーム</span>
+                </a>
+              </div>
 
-          <p class="contact__label">＼ ご相談・お見積り・現状の診断は無料 ／</p>
-          <div class="contact__btns">
-            <a
-              class="btn btn--primary btn--lg"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfyfy8RYl7qI9R_3O8GrLhsq2XVcguIFVHH3YR24XFDjb_arQ/viewform"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg class="icon-bubble" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-                <path
-                  d="M24 3.6c-12.2 0-22 9-22 20 0 4.3 1.5 8.2 4 11.5l-2 8.1c-.2.8.6 1.5 1.4 1.1l7.8-3.4c3.2 1.6 6.9 2.6 10.8 2.6 12.2 0 22-9 22-20S36.2 3.6 24 3.6z"
-                />
-              </svg>
-              <span>お問い合わせフォーム</span>
-            </a>
-            <a class="btn btn--ghost" href="https://x.com/GOSAKAY7" target="_blank" rel="noopener">
-              <span>X（@GOSAKAY7）でも受け付けています</span>
-            </a>
+              <form
+                class="cform"
+                id="js-contact-form"
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                hidden
+              >
+                <!-- ▼ ここに Web3Forms のアクセスキーを入れると、このフォームが有効になります -->
+                <input type="hidden" name="access_key" value="" />
+                <input type="hidden" name="subject" value="Anchor Base サイトからのお問い合わせ" />
+                <input type="hidden" name="from_name" value="Anchor Base" />
+                <!-- 迷惑メール除け。人には見えない -->
+                <input type="checkbox" name="botcheck" class="cform__botcheck" tabindex="-1" autocomplete="off" />
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-name">お名前</label>
+                  <input
+                    class="cform__input"
+                    id="cf-name"
+                    type="text"
+                    name="name"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-email">メールアドレス</label>
+                  <input
+                    class="cform__input"
+                    id="cf-email"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    inputmode="email"
+                    required
+                  />
+                </div>
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-message">
+                    ご相談の内容
+                    <span class="cform__opt">まだ決まっていなくても大丈夫です</span>
+                  </label>
+                  <textarea
+                    class="cform__input cform__input--area"
+                    id="cf-message"
+                    name="message"
+                    rows="6"
+                    required
+                  ></textarea>
+                </div>
+
+                <p class="cform__privacy">
+                  いただいた内容は、ご相談への回答にのみ使用します。
+                </p>
+
+                <button class="cform__submit" type="submit">
+                  <span>送信する</span>
+                  <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                    <path
+                      d="m33 25.1-13.1 13c-.8.8-2 .8-2.8 0-.8-.8-.8-2 0-2.8L28.4 24 17.1 12.7c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l13.1 13c.6.6.6 1.6 0 2.2z"
+                    />
+                  </svg>
+                </button>
+
+                <p class="cform__result" id="js-contact-result" role="status" aria-live="polite"></p>
+              </form>
+
+              <p class="contact__sns">
+                X（<a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener">@GOSAKAY7</a>）のDMからでも受け付けています。
+              </p>
+            </div>
           </div>
-          <p class="contact__note">その場で契約をお願いすることはありません。</p>
         </div>
       </section>
+
     </main>
 
     <!-- ============ フッター ============ -->
@@ -709,6 +776,7 @@
               loading="lazy"
             />
           </p>
+          <!-- 公式LINE・Instagram を開設したら、ここに <li> を足す -->
           <ul class="footer__sns">
             <li>
               <a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener" aria-label="X（旧Twitter）">
@@ -730,16 +798,28 @@
             </li>
           </ul>
 
-          <ul class="footer__nav">
-            <li><a href="#top">ホーム</a></li>
-            <li><a href="#service">できること</a></li>
-            <li><a href="#price">料金の目安</a></li>
-            <li><a href="#works">制作実績</a></li>
-            <li><a href="#flow">制作の流れ</a></li>
-            <li><a href="./profile.html">運営者情報</a></li>
-            <li><a href="#agency">制作会社の方へ</a></li>
-            <li><a href="#contact">お問い合わせ</a></li>
-          </ul>
+          <nav class="footer__sitemap" aria-label="サイト内のページ一覧">
+            <ul class="footer__nav">
+              <li><a href="#top">ホーム</a></li>
+              <li><a href="#service">できること</a></li>
+              <li><a href="#price">料金の目安</a></li>
+              <li><a href="#works">制作実績</a></li>
+              <li><a href="#flow">制作の流れ</a></li>
+              <li><a href="#faq">よくある質問</a></li>
+              <li><a href="./profile.html">運営者情報</a></li>
+              <li><a href="#agency">制作会社の方へ</a></li>
+              <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+
+            <p class="footer__navttl">制作実績</p>
+            <ul class="footer__nav footer__nav--sub">
+              <li><a href="./works-onomichi.html">尾道レトロ キャンペーンLP</a></li>
+              <li><a href="./works-moofc.html">MOO FC</a></li>
+              <li><a href="./works-portfolio.html">このサイト</a></li>
+              <li><a href="./works-sweets.html">Sweet Delight</a></li>
+              <li><a href="./works-oha.html">OHA!</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
 
