@@ -2,6 +2,7 @@
    Anchor Base ポートフォリオ
    - ハンバーガー＋ドロワー
    - スクロールに合わせたふわっと表示
+   - よくある質問の開閉アニメーション
    - ページトップボタンの表示切り替え
    ========================================================= */
 (function () {
@@ -100,6 +101,40 @@
       observer.observe(el);
     });
   }
+
+  /* ---------- よくある質問の開閉 ---------- */
+  /* details は閉じた瞬間に中身を消してしまうので、閉じるときだけ
+     open を外すのを CSS のアニメーション（0.3秒）ぶん待たせる */
+  var CLOSE_DURATION = 300;
+
+  document.querySelectorAll(".faq__item").forEach(function (item) {
+    var summary = item.querySelector("summary");
+    var body = item.querySelector(".faq__body");
+    if (!summary || !body) return;
+
+    summary.addEventListener("click", function (e) {
+      // 開くときは details にそのまま任せる（0fr → 1fr が動く）
+      if (!item.open) return;
+      // 動きを減らす設定のときは、すぐ閉じる
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      if (item.classList.contains("is-closing")) return;
+
+      e.preventDefault();
+      item.classList.add("is-closing");
+
+      var done = false;
+      var finish = function () {
+        if (done) return;
+        done = true;
+        item.open = false;
+        item.classList.remove("is-closing");
+      };
+
+      body.addEventListener("transitionend", finish, { once: true });
+      // grid-template-rows の遷移に対応していない環境でも閉じられるように
+      setTimeout(finish, CLOSE_DURATION + 60);
+    });
+  });
 
   /* ---------- ページトップ ---------- */
   var pagetop = document.getElementById("js-pagetop");

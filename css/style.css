@@ -1139,12 +1139,36 @@ html {
   transform: translateY(-4px) rotate(45deg);
   transition: transform 0.25s ease;
 }
-.faq__item[open] .faq__q::after {
+.faq__item[open]:not(.is-closing) .faq__a {
+  opacity: 1;
+  transform: none;
+}
+.faq__item[open]:not(.is-closing) .faq__q::after {
   transform: translateY(1px) rotate(-135deg);
+}
+.faq {
+  /* 開閉のアニメーション。
+     grid-template-rows を 0fr → 1fr に動かすと、中身の高さを測らずに伸縮できる。
+     閉じるときは details が即 display:none にしてしまうので、
+     JS側で open を外すのを 0.3 秒だけ待たせている（js/index.js 参照）。 */
+}
+.faq__body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+.faq__item[open]:not(.is-closing) .faq__body {
+  grid-template-rows: 1fr;
 }
 .faq__a {
   position: relative;
-  padding: 0 20px 22px 44px;
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  /* padding をここに置くと、閉じたときに 0 まで縮まず余白だけ残る
+     （高さ0でも padding は残るため）。余白は中の <p> 側で取る */
 }
 .faq__a::before {
   content: "A";
@@ -1163,6 +1187,7 @@ html {
   line-height: 1;
 }
 .faq__a p {
+  padding: 0 20px 22px 44px;
   font-size: 14.5px;
   line-height: 2;
   color: var(--ink-2);
@@ -1433,5 +1458,15 @@ html {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq__body,
+  .faq__a {
+    transition: none !important;
+  }
+  .faq__item[open] .faq__a {
+    opacity: 1;
+    transform: none;
   }
 }
