@@ -2,6 +2,7 @@
    Anchor Base ポートフォリオ
    - ハンバーガー＋ドロワー
    - スクロールに合わせたふわっと表示
+   - 制作実績のスライダー（Swiper）
    - よくある質問の開閉アニメーション
    - ページトップボタンの表示切り替え
    ========================================================= */
@@ -66,13 +67,17 @@
     ".plan",
     ".freebox",
     ".note",
-    ".work",
+    ".works",
     ".flow__item",
     ".pagehead__ttl",
     ".profile__catch",
     ".profile__photo",
     ".profile__body",
     ".profile__pull",
+    ".workmain",
+    ".worklead",
+    ".forwho",
+    ".workbtns",
     ".promise__item",
     ".datatable",
     ".closing",
@@ -108,6 +113,40 @@
       el.classList.add("fade");
       observer.observe(el);
     });
+  }
+
+  /* ---------- 制作実績のスライダー ---------- */
+  var worksEl = document.getElementById("js-works");
+
+  if (worksEl && typeof Swiper !== "undefined") {
+    new Swiper(worksEl, {
+      slidesPerView: 1.1,
+      spaceBetween: 16,
+      // 端まで来たら止める（無限ループにしない）
+      loop: false,
+      // 枚数が表示数以下のときは操作を無効にする
+      watchOverflow: true,
+      a11y: {
+        prevSlideMessage: "前の実績",
+        nextSlideMessage: "次の実績"
+      },
+      navigation: {
+        prevEl: "#js-works-prev",
+        nextEl: "#js-works-next"
+      },
+      pagination: {
+        el: "#js-works-pagination",
+        clickable: true
+      },
+      breakpoints: {
+        600: { slidesPerView: 2, spaceBetween: 20 },
+        960: { slidesPerView: 3, spaceBetween: 24 }
+      }
+    });
+
+    // 動くと分かってから矢印とドットを出す
+    var ctrl = document.getElementById("js-works-ctrl");
+    if (ctrl) ctrl.hidden = false;
   }
 
   /* ---------- よくある質問の開閉 ---------- */

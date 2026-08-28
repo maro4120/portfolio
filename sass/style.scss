@@ -931,17 +931,98 @@ html {
   }
 }
 
-/* ---------------- 実績 ---------------- */
+/* ---------------- 実績（スライダー） ---------------- */
 .works {
-  display: grid;
-  gap: 20px;
+  overflow: hidden;
 
-  @include mq(md) {
-    grid-template-columns: repeat(3, 1fr);
+  /* Swiperが読み込めなかったときの受け皿。
+     CDNが落ちても、以前と同じ格子並びで全件表示される */
+  &:not(.swiper-initialized) .swiper-wrapper {
+    display: grid;
+    gap: 20px;
+
+    @include mq(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__ctrl {
+    margin-top: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  &__arrow {
+    width: 44px;
+    height: 44px;
+    flex: none;
+    display: grid;
+    place-content: center;
+    border: 1px solid var(--line-2);
+    border-radius: 50%;
+    background: var(--paper);
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--navy);
+      transition: fill 0.2s ease;
+    }
+
+    &:hover {
+      background: var(--navy);
+      border-color: var(--navy);
+
+      svg {
+        fill: #fff;
+      }
+    }
+
+    /* 端まで来たら押せないことを示す */
+    &.swiper-button-disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  /* 矢印とドットは、スライダーが動いたときだけ出す */
+  &__ctrl[hidden] {
+    display: none;
+  }
+
+  &__pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    .swiper-pagination-bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line-2);
+      opacity: 1;
+      cursor: pointer;
+      transition: background-color 0.2s ease, width 0.2s ease;
+    }
+
+    .swiper-pagination-bullet-active {
+      width: 22px;
+      border-radius: 4px;
+      background: var(--mint-dark);
+    }
   }
 }
 
 .work {
+  display: flex;
+  flex-direction: column;
+  height: auto;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -949,19 +1030,88 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
   &__thumb {
+    position: relative;
+    display: block;
     /* 差し込む画像が 1200×675（16:9）なので、比率を合わせて切り抜きを出さない */
     aspect-ratio: 16 / 9;
     background: var(--paper-2);
     border-bottom: 1px solid var(--line);
+    overflow: hidden;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    /* 画像の上に出るラベル。クリックできることを伝える */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(14, 36, 57, 0.55);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 1;
+    }
+
+    &:hover img,
+    &:focus-visible img {
+      transform: scale(1.06);
+    }
+
+    &:hover::before,
+    &:focus-visible::before {
+      opacity: 1;
+    }
+
+    &:hover .work__hint,
+    &:focus-visible .work__hint {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, calc(-50% + 8px));
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 3px;
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 700;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+
+    &::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-top: 2px solid currentColor;
+      border-right: 2px solid currentColor;
+      transform: rotate(45deg);
+    }
+  }
+
+  /* 指で操作する端末では、ホバーの演出を出さない（触れないため） */
+  @media (hover: none) {
+    &__thumb::before,
+    &__hint {
+      display: none;
     }
   }
 
   &__body {
+    flex: 1;
     padding: 20px 20px 22px;
   }
 
@@ -979,8 +1129,15 @@ html {
     font-weight: 700;
     font-size: 17px;
     line-height: 1.5;
-    color: var(--navy);
     margin-bottom: 8px;
+
+    a {
+      color: var(--navy);
+
+      &:hover {
+        color: var(--mint-dark);
+      }
+    }
   }
 
   &__text {
@@ -995,7 +1152,7 @@ html {
     align-items: center;
     gap: 6px;
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: 14px;
     border-bottom: 2px solid var(--mint-pale);
     padding-bottom: 2px;
 
@@ -1727,6 +1884,117 @@ html {
   &__main {
     background: var(--mint-dark);
     color: #fff;
+  }
+}
+
+/* ---------------- 制作実績の詳細ページ ---------------- */
+.pagehead__kind {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.workmain {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--paper-2);
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.worklead {
+  margin-top: 30px;
+
+  p {
+    font-size: 15.5px;
+    line-height: 2.05;
+    color: var(--ink-2);
+
+    + p {
+      margin-top: 16px;
+    }
+
+    strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+  }
+}
+
+.forwho {
+  margin-top: 32px;
+  background: var(--mint-pale);
+  border-radius: 4px;
+  padding: 24px 22px 26px;
+
+  @include mq(lg) {
+    padding: 28px 32px 30px;
+  }
+
+  &__ttl {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16.5px;
+    color: var(--navy);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  &__list {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__list li {
+    position: relative;
+    padding-left: 24px;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--ink-2);
+
+    /* チェックの印 */
+    &::before {
+      content: "";
+      position: absolute;
+      left: 3px;
+      top: 0.5em;
+      width: 10px;
+      height: 6px;
+      border-left: 2px solid var(--mint-dark);
+      border-bottom: 2px solid var(--mint-dark);
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.workbtns {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+
+  &:empty {
+    margin-top: 0;
+  }
+}
+
+.workback {
+  margin-top: 30px;
+  text-align: center;
+
+  a {
+    font-weight: 700;
+    font-size: 14.5px;
+    border-bottom: 2px solid var(--mint-pale);
+    padding-bottom: 2px;
+
+    &:hover {
+      border-bottom-color: var(--mint);
+    }
   }
 }
 

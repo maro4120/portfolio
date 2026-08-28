@@ -849,18 +849,92 @@ html {
   color: var(--ink-3);
 }
 
-/* ---------------- 実績 ---------------- */
+/* ---------------- 実績（スライダー） ---------------- */
 .works {
+  overflow: hidden;
+  /* Swiperが読み込めなかったときの受け皿。
+     CDNが落ちても、以前と同じ格子並びで全件表示される */
+}
+.works:not(.swiper-initialized) .swiper-wrapper {
   display: grid;
   gap: 20px;
 }
 @media screen and (min-width: 768px) {
-  .works {
+  .works:not(.swiper-initialized) .swiper-wrapper {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+.works__ctrl {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.works__arrow {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-content: center;
+  border: 1px solid var(--line-2);
+  border-radius: 50%;
+  background: var(--paper);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.works__arrow svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--navy);
+  transition: fill 0.2s ease;
+}
+.works__arrow:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.works__arrow:hover svg {
+  fill: #fff;
+}
+.works__arrow {
+  /* 端まで来たら押せないことを示す */
+}
+.works__arrow.swiper-button-disabled {
+  opacity: 0.35;
+  cursor: default;
+  pointer-events: none;
+}
+.works {
+  /* 矢印とドットは、スライダーが動いたときだけ出す */
+}
+.works__ctrl[hidden] {
+  display: none;
+}
+.works__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.works__pagination .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-2);
+  opacity: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, width 0.2s ease;
+}
+.works__pagination .swiper-pagination-bullet-active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--mint-dark);
+}
 
 .work {
+  display: flex;
+  flex-direction: column;
+  height: auto;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -868,17 +942,79 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 .work__thumb {
+  position: relative;
+  display: block;
   /* 差し込む画像が 1200×675（16:9）なので、比率を合わせて切り抜きを出さない */
   aspect-ratio: 16/9;
   background: var(--paper-2);
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 .work__thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.work__thumb {
+  /* 画像の上に出るラベル。クリックできることを伝える */
+}
+.work__thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 36, 57, 0.55);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+.work__thumb:hover img, .work__thumb:focus-visible img {
+  transform: scale(1.06);
+}
+.work__thumb:hover::before, .work__thumb:focus-visible::before {
+  opacity: 1;
+}
+.work__thumb:hover .work__hint, .work__thumb:focus-visible .work__hint {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+.work__hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, calc(-50% + 8px));
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 3px;
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.work__hint::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-top: 2px solid currentColor;
+  border-right: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+.work {
+  /* 指で操作する端末では、ホバーの演出を出さない（触れないため） */
+}
+@media (hover: none) {
+  .work__thumb::before, .work__hint {
+    display: none;
+  }
 }
 .work__body {
+  flex: 1;
   padding: 20px 20px 22px;
 }
 .work__kind {
@@ -894,8 +1030,13 @@ html {
   font-weight: 700;
   font-size: 17px;
   line-height: 1.5;
-  color: var(--navy);
   margin-bottom: 8px;
+}
+.work__ttl a {
+  color: var(--navy);
+}
+.work__ttl a:hover {
+  color: var(--mint-dark);
 }
 .work__text {
   font-size: 14px;
@@ -908,7 +1049,7 @@ html {
   align-items: center;
   gap: 6px;
   font-weight: 700;
-  font-size: 14.5px;
+  font-size: 14px;
   border-bottom: 2px solid var(--mint-pale);
   padding-bottom: 2px;
 }
@@ -1578,6 +1719,107 @@ html {
 .fixbar__main {
   background: var(--mint-dark);
   color: #fff;
+}
+
+/* ---------------- 制作実績の詳細ページ ---------------- */
+.pagehead__kind {
+  margin-top: 10px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: var(--ink-3);
+}
+
+.workmain {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.workmain img {
+  width: 100%;
+  height: auto;
+}
+
+.worklead {
+  margin-top: 30px;
+}
+.worklead p {
+  font-size: 15.5px;
+  line-height: 2.05;
+  color: var(--ink-2);
+}
+.worklead p + p {
+  margin-top: 16px;
+}
+.worklead p strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.forwho {
+  margin-top: 32px;
+  background: var(--mint-pale);
+  border-radius: 4px;
+  padding: 24px 22px 26px;
+}
+@media screen and (min-width: 960px) {
+  .forwho {
+    padding: 28px 32px 30px;
+  }
+}
+.forwho__ttl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 16.5px;
+  color: var(--navy);
+  margin-bottom: 14px;
+  text-align: center;
+}
+.forwho__list {
+  display: grid;
+  gap: 10px;
+}
+.forwho__list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ink-2);
+  /* チェックの印 */
+}
+.forwho__list li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.5em;
+  width: 10px;
+  height: 6px;
+  border-left: 2px solid var(--mint-dark);
+  border-bottom: 2px solid var(--mint-dark);
+  transform: rotate(-45deg);
+}
+
+.workbtns {
+  margin-top: 26px;
+  display: flex;
+  justify-content: center;
+}
+.workbtns:empty {
+  margin-top: 0;
+}
+
+.workback {
+  margin-top: 30px;
+  text-align: center;
+}
+.workback a {
+  font-weight: 700;
+  font-size: 14.5px;
+  border-bottom: 2px solid var(--mint-pale);
+  padding-bottom: 2px;
+}
+.workback a:hover {
+  border-bottom-color: var(--mint);
 }
 
 /* ---------------- スクロールでふわっと表示 ---------------- */

@@ -42,8 +42,12 @@
       rel="stylesheet"
     />
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=9" />
+    <link rel="stylesheet" href="./css/style.css?v=10" />
   </head>
 
   <body id="top">
@@ -345,85 +349,130 @@
             <span class="sec-ttl__ja">制作実績</span>
           </h2>
           <p class="sec-lead">
-            現在は、自主制作を中心に公開しています。<br />お受けした実案件から、順に掲載していきます。
+            現在は、自主制作を中心に公開しています。<br />それぞれ「何を狙って、どう作ったか」をまとめました。
           </p>
 
-          <div class="works">
-            <article class="work">
-              <div class="work__thumb">
+          <div class="works swiper" id="js-works">
+            <div class="swiper-wrapper">
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-onomichi.html">
+                <img
+                  src="./img/works-onomichi.webp"
+                  alt="「#見つけて尾道レトロキャンペーン」LPのパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">LP ／ 学習用の模写</p>
+                <h3 class="work__ttl">
+                  <a href="./works-onomichi.html">#見つけて尾道レトロ キャンペーンLP</a>
+                </h3>
+                <p class="work__text">全10セクションの縦長LPです。スマホを基準に作り、実機で確認しながら仕上げました。</p>
+                <a class="work__link" href="./works-onomichi.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-moofc.html">
+                <img
+                  src="./img/works-moofc.webp"
+                  alt="架空のサッカークラブ MOO FC のサイトのパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">ホームページ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-moofc.html">MOO FC（サッカークラブ）</a>
+                </h3>
+                <p class="work__text">架空の少年サッカークラブのサイトです。保護者が体験の申し込みまで迷わない導線にしました。</p>
+                <a class="work__link" href="./works-moofc.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-portfolio.html">
                 <img
                   src="./img/works-portfolio.webp"
-                  alt="Anchor Base のポートフォリオサイトの表示イメージ"
+                  alt="Anchor Base のポートフォリオサイトのパソコンとスマートフォンでの表示"
                   width="1200"
                   height="675"
                   loading="lazy"
                 />
-              </div>
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
               <div class="work__body">
-                <p class="work__kind">Portfolio ／ 自主制作</p>
-                <h3 class="work__ttl">このサイト</h3>
-                <p class="work__text">
-                  設計から公開まで、すべて自分で行っています。料金の見せ方や導線も、実際に試している最中です。
-                </p>
-                <a class="work__link" href="https://anchorbase-web.com/" target="_blank" rel="noopener">
-                  見てみる
-                </a>
+                <p class="work__kind">ポートフォリオ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-portfolio.html">このサイト</a>
+                </h3>
+                <p class="work__text">設計から公開まで、すべて自分で行っています。料金の見せ方や導線も、実際に試している最中です。</p>
+                <a class="work__link" href="./works-portfolio.html">制作の詳細を見る</a>
               </div>
             </article>
-
-            <article class="work">
-              <div class="work__thumb">
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-sweets.html">
                 <img
                   src="./img/works-sweets.webp"
-                  alt="スイーツ店サイト Sweet Delight の表示イメージ"
+                  alt="スイーツ店サイト Sweet Delight のパソコンとスマートフォンでの表示"
                   width="1200"
                   height="675"
                   loading="lazy"
                 />
-              </div>
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
               <div class="work__body">
-                <p class="work__kind">Shop site ／ 自主制作</p>
-                <h3 class="work__ttl">スイーツ店のサイト</h3>
-                <p class="work__text">
-                  実在のお店ではなく、練習として作ったものです。商品の見せ方とスマホでの読みやすさを重視しました。
-                </p>
-                <a
-                  class="work__link"
-                  href="https://maro4120.github.io/sweets-site/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  見てみる
-                </a>
+                <p class="work__kind">ショップサイト ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-sweets.html">スイーツ店のサイト</a>
+                </h3>
+                <p class="work__text">実在のお店ではなく、練習として作ったものです。商品の見せ方とスマホでの読みやすさを重視しました。</p>
+                <a class="work__link" href="./works-sweets.html">制作の詳細を見る</a>
               </div>
             </article>
-
-            <article class="work">
-              <div class="work__thumb">
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-oha.html">
                 <img
                   src="./img/works-oha.webp"
-                  alt="マッチングサイト OHA! の表示イメージ"
+                  alt="マッチングサイト OHA! のパソコンとスマートフォンでの表示"
                   width="1200"
                   height="675"
                   loading="lazy"
                 />
-              </div>
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
               <div class="work__body">
-                <p class="work__kind">Web app ／ 自主制作</p>
-                <h3 class="work__ttl">OHA! マッチングサイト</h3>
-                <p class="work__text">
-                  こちらも練習として作ったものです。入力から結果表示までの動きを実装しています。
-                </p>
-                <a
-                  class="work__link"
-                  href="https://maro4120.github.io/oha-app/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  見てみる
-                </a>
+                <p class="work__kind">Webアプリ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-oha.html">OHA! マッチングサイト</a>
+                </h3>
+                <p class="work__text">こちらも練習として作ったものです。入力から結果表示までの動きを実装しています。</p>
+                <a class="work__link" href="./works-oha.html">制作の詳細を見る</a>
               </div>
             </article>
+            </div>
+          </div>
+
+          <div class="works__ctrl" id="js-works-ctrl" hidden>
+            <button class="works__arrow" id="js-works-prev" type="button" aria-label="前の実績を見る">
+              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                <path
+                  d="M30.9 35.3 17.8 22.2c-.6-.6-.6-1.6 0-2.2l13.1-13c.8-.8 2-.8 2.8 0 .8.8.8 2 0 2.8L22.4 21.1l11.3 11.3c.8.8.8 2 0 2.8-.8.9-2 .9-2.8.1z"
+                />
+              </svg>
+            </button>
+            <div class="works__pagination" id="js-works-pagination"></div>
+            <button class="works__arrow" id="js-works-next" type="button" aria-label="次の実績を見る">
+              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                <path
+                  d="m33 25.1-13.1 13c-.8.8-2 .8-2.8 0-.8-.8-.8-2 0-2.8L28.4 24 17.1 12.7c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l13.1 13c.6.6.6 1.6 0 2.2z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -719,6 +768,7 @@
       </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.js" defer></script>
     <script src="./js/index.js" defer></script>
   </body>
 </html>
