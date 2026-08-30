@@ -42,8 +42,12 @@
       rel="stylesheet"
     />
 
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=5" />
+    <link rel="stylesheet" href="./css/style.css?v=15" />
   </head>
 
   <body id="top">
@@ -72,7 +76,7 @@
         <p class="header__logo">
           <a href="#top">
             <img
-              src="./img/logo-horizontal-dark.png"
+              src="./img/logo-horizontal-dark.webp"
               alt="Anchor Base"
               width="620"
               height="150"
@@ -86,7 +90,7 @@
             <li><a href="#price">料金</a></li>
             <li><a href="#works">制作実績</a></li>
             <li><a href="#flow">制作の流れ</a></li>
-            <li><a href="#about">運営者情報</a></li>
+            <li><a href="./profile.html">運営者情報</a></li>
             <li><a href="#faq">よくある質問</a></li>
           </ul>
         </nav>
@@ -101,17 +105,6 @@
         </a>
       </div>
 
-      <!-- スマホ用の横スクロールメニュー -->
-      <div class="spnav">
-        <ul class="spnav__list">
-          <li><a href="#service">できること</a></li>
-          <li><a href="#price">料金</a></li>
-          <li><a href="#works">制作実績</a></li>
-          <li><a href="#flow">制作の流れ</a></li>
-          <li><a href="#about">運営者情報</a></li>
-          <li><a href="#faq">よくある質問</a></li>
-        </ul>
-      </div>
     </header>
 
     <div class="drawer" id="js-drawer" hidden>
@@ -120,7 +113,7 @@
         <li><a href="#price">料金の目安</a></li>
         <li><a href="#works">制作実績</a></li>
         <li><a href="#flow">制作の流れ</a></li>
-        <li><a href="#about">運営者情報</a></li>
+        <li><a href="./profile.html">運営者情報</a></li>
         <li><a href="#faq">よくある質問</a></li>
         <li><a href="#agency">制作会社の方へ</a></li>
         <li><a href="#contact">お問い合わせ</a></li>
@@ -138,7 +131,7 @@
           </div>
           <div class="mv__illust">
             <img
-              src="./img/img_fv_illust.png"
+              src="./img/img_fv_illust.webp"
               alt="ホームページに何を載せるか考えている人のイラスト"
               width="1536"
               height="1024"
@@ -200,6 +193,9 @@
             </p>
             <p class="pain__answer-text">
               警察官として10年間、聞き取りを仕事にしてきました。うまく言葉にできない話を整理して、形にするところから始めます。
+            </p>
+            <p class="pain__answer-link">
+              <a href="./profile.html">わたしについて、くわしく</a>
             </p>
           </div>
         </div>
@@ -342,85 +338,130 @@
             <span class="sec-ttl__ja">制作実績</span>
           </h2>
           <p class="sec-lead">
-            現在は、自主制作を中心に公開しています。<br />お受けした実案件から、順に掲載していきます。
+            現在は、自主制作を中心に公開しています。<br />それぞれ「何を狙って、どう作ったか」をまとめました。
           </p>
 
-          <div class="works">
-            <article class="work">
-              <div class="work__thumb">
+          <div class="works swiper" id="js-works">
+            <div class="swiper-wrapper">
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-onomichi.html">
                 <img
-                  src="./img/works-portfolio.png"
-                  alt="Anchor Base のポートフォリオサイトの表示イメージ"
+                  src="./img/works-onomichi.webp"
+                  alt="「#見つけて尾道レトロキャンペーン」LPのパソコンとスマートフォンでの表示"
                   width="1200"
                   height="675"
                   loading="lazy"
                 />
-              </div>
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
               <div class="work__body">
-                <p class="work__kind">Portfolio ／ 自主制作</p>
-                <h3 class="work__ttl">このサイト</h3>
-                <p class="work__text">
-                  設計から公開まで、すべて自分で行っています。料金の見せ方や導線も、実際に試している最中です。
-                </p>
-                <a class="work__link" href="https://anchorbase-web.com/" target="_blank" rel="noopener">
-                  見てみる
-                </a>
+                <p class="work__kind">LP ／ 学習用の模写</p>
+                <h3 class="work__ttl">
+                  <a href="./works-onomichi.html">#見つけて尾道レトロ キャンペーンLP</a>
+                </h3>
+                <p class="work__text">全10セクションの縦長LPです。スマホを基準に作り、実機で確認しながら仕上げました。</p>
+                <a class="work__link" href="./works-onomichi.html">制作の詳細を見る</a>
               </div>
             </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-moofc.html">
+                <img
+                  src="./img/works-moofc.webp"
+                  alt="架空のサッカークラブ MOO FC のサイトのパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">ホームページ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-moofc.html">MOO FC（サッカークラブ）</a>
+                </h3>
+                <p class="work__text">架空の少年サッカークラブのサイトです。保護者が体験の申し込みまで迷わない導線にしました。</p>
+                <a class="work__link" href="./works-moofc.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-portfolio.html">
+                <img
+                  src="./img/works-portfolio.webp"
+                  alt="Anchor Base のポートフォリオサイトのパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">ポートフォリオ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-portfolio.html">このサイト</a>
+                </h3>
+                <p class="work__text">設計から公開まで、すべて自分で行っています。料金の見せ方や導線も、実際に試している最中です。</p>
+                <a class="work__link" href="./works-portfolio.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-sweets.html">
+                <img
+                  src="./img/works-sweets.webp"
+                  alt="スイーツ店サイト Sweet Delight のパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">ショップサイト ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-sweets.html">スイーツ店のサイト</a>
+                </h3>
+                <p class="work__text">実在のお店ではなく、練習として作ったものです。商品の見せ方とスマホでの読みやすさを重視しました。</p>
+                <a class="work__link" href="./works-sweets.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            <article class="work swiper-slide">
+              <a class="work__thumb" href="./works-oha.html">
+                <img
+                  src="./img/works-oha.webp"
+                  alt="マッチングサイト OHA! のパソコンとスマートフォンでの表示"
+                  width="1200"
+                  height="675"
+                  loading="lazy"
+                />
+                <span class="work__hint">制作の詳細を見る</span>
+              </a>
+              <div class="work__body">
+                <p class="work__kind">Webアプリ ／ 自主制作</p>
+                <h3 class="work__ttl">
+                  <a href="./works-oha.html">OHA! マッチングサイト</a>
+                </h3>
+                <p class="work__text">こちらも練習として作ったものです。入力から結果表示までの動きを実装しています。</p>
+                <a class="work__link" href="./works-oha.html">制作の詳細を見る</a>
+              </div>
+            </article>
+            </div>
+          </div>
 
-            <article class="work">
-              <div class="work__thumb">
-                <img
-                  src="./img/works-sweets.png"
-                  alt="スイーツ店サイト Sweet Delight の表示イメージ"
-                  width="1200"
-                  height="675"
-                  loading="lazy"
+          <div class="works__ctrl" id="js-works-ctrl" hidden>
+            <button class="works__arrow" id="js-works-prev" type="button" aria-label="前の実績を見る">
+              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                <path
+                  d="M30.9 35.3 17.8 22.2c-.6-.6-.6-1.6 0-2.2l13.1-13c.8-.8 2-.8 2.8 0 .8.8.8 2 0 2.8L22.4 21.1l11.3 11.3c.8.8.8 2 0 2.8-.8.9-2 .9-2.8.1z"
                 />
-              </div>
-              <div class="work__body">
-                <p class="work__kind">Shop site ／ 自主制作</p>
-                <h3 class="work__ttl">スイーツ店のサイト</h3>
-                <p class="work__text">
-                  実在のお店ではなく、練習として作ったものです。商品の見せ方とスマホでの読みやすさを重視しました。
-                </p>
-                <a
-                  class="work__link"
-                  href="https://maro4120.github.io/sweets-site/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  見てみる
-                </a>
-              </div>
-            </article>
-
-            <article class="work">
-              <div class="work__thumb">
-                <img
-                  src="./img/works-oha.png"
-                  alt="マッチングサイト OHA! の表示イメージ"
-                  width="1200"
-                  height="675"
-                  loading="lazy"
+              </svg>
+            </button>
+            <div class="works__pagination" id="js-works-pagination"></div>
+            <button class="works__arrow" id="js-works-next" type="button" aria-label="次の実績を見る">
+              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                <path
+                  d="m33 25.1-13.1 13c-.8.8-2 .8-2.8 0-.8-.8-.8-2 0-2.8L28.4 24 17.1 12.7c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l13.1 13c.6.6.6 1.6 0 2.2z"
                 />
-              </div>
-              <div class="work__body">
-                <p class="work__kind">Web app ／ 自主制作</p>
-                <h3 class="work__ttl">OHA! マッチングサイト</h3>
-                <p class="work__text">
-                  こちらも練習として作ったものです。入力から結果表示までの動きを実装しています。
-                </p>
-                <a
-                  class="work__link"
-                  href="https://maro4120.github.io/oha-app/"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  見てみる
-                </a>
-              </div>
-            </article>
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -496,59 +537,8 @@
         </div>
       </section>
 
-      <!-- ============ 運営者情報 ============ -->
-      <section class="section" id="about">
-        <div class="inner">
-          <h2 class="sec-ttl">
-            <span class="sec-ttl__en">ABOUT</span>
-            <span class="sec-ttl__ja">運営者情報</span>
-          </h2>
-
-          <div class="about">
-            <div class="about__photo">
-              <img src="./img/img_about.png" alt="ほめまろ" width="600" height="600" loading="lazy" />
-              <p class="about__name">
-                ほめまろ<span>Anchor Base 代表</span>
-              </p>
-            </div>
-            <div class="about__body">
-              <p>
-                Anchor Base の <strong>ほめまろ</strong> です。1990年生まれ、大阪府高槻市を拠点にしています。
-              </p>
-              <p>
-                大学を出てから <strong>10年間、警察官</strong> をしていました。そのあと営業職を経て、今はホームページを作っています。
-              </p>
-
-              <p class="about__pull">
-                10年間、人の話を聞き出すことを仕事にしてきました。<br />それがそのまま、この仕事の役に立っています。
-              </p>
-
-              <p>
-                警察官の仕事は、事情を聞くことから始まります。相手は動揺していたり、うまく説明できなかったりします。<strong>言葉になっていないことを、順番に整理していく</strong>のが日常でした。
-              </p>
-              <p>
-                ホームページ制作でも、同じことが起きます。「何を載せたらいいか分からない」というご相談は、本当に多いです。でも実際は、載せる材料はもう手元にあります。<strong>普段お客さんに説明していることが、そのまま答え</strong>だからです。
-              </p>
-              <p>
-                そこを聞き出して、整理して、形にする。それがいちばんお役に立てるところだと思っています。
-              </p>
-              <p>
-                屋号の Anchor Base には「事業の土台を支える」という意味を込めました。作って終わりではなく、そのあとも使えるものをお渡しします。
-              </p>
-
-              <dl class="about__data">
-                <div><dt>屋号</dt><dd>Anchor Base（アンカーベース）</dd></div>
-                <div><dt>所在地</dt><dd>大阪府高槻市</dd></div>
-                <div><dt>対応エリア</dt><dd>大阪府内は訪問可／全国オンライン対応</dd></div>
-                <div><dt>できること</dt><dd>HTML / CSS / JavaScript / Sass / WordPress</dd></div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- ============ よくある質問 ============ -->
-      <section class="section section--alt" id="faq">
+      <section class="section" id="faq">
         <div class="inner inner--narrow">
           <h2 class="sec-ttl">
             <span class="sec-ttl__en">Q&amp;A</span>
@@ -558,50 +548,62 @@
           <div class="faq">
             <details class="faq__item">
               <summary class="faq__q">載せる内容が決まっていなくても相談できますか？</summary>
-              <div class="faq__a">
-                <p>
-                  そこから一緒に決めるのが私の仕事だと思っています。むしろ、決まっていない状態でご相談いただくほうが、いいものになります。決まってから来ていただくと、こちらから提案できることが減ってしまいます。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    そこから一緒に決めるのが私の仕事だと思っています。むしろ、決まっていない状態でご相談いただくほうが、いいものになります。決まってから来ていただくと、こちらから提案できることが減ってしまいます。
+                  </p>
+                </div>
               </div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">写真がありません。用意が必要ですか？</summary>
-              <div class="faq__a">
-                <p>
-                  お持ちのスマホで撮った写真で十分なことが多いです。足りない分は、商用利用が認められた素材で補います。撮影が必要な場合は、別途お見積りのうえ手配します。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    お持ちのスマホで撮った写真で十分なことが多いです。足りない分は、商用利用が認められた素材で補います。撮影が必要な場合は、別途お見積りのうえ手配します。
+                  </p>
+                </div>
               </div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">公開したあと、自分で更新できますか？</summary>
-              <div class="faq__a">
-                <p>
-                  ご希望があれば、更新できる仕組みを入れられます。ただ、実際には「入れたけれど誰も触らない」ケースがとても多いです。更新の頻度が年に数回であれば、更新のいらない作り方にして、必要なときにご依頼いただくほうが、費用も手間も少なく済みます。ご相談のうえ決めましょう。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    ご希望があれば、更新できる仕組みを入れられます。ただ、実際には「入れたけれど誰も触らない」ケースがとても多いです。更新の頻度が年に数回であれば、更新のいらない作り方にして、必要なときにご依頼いただくほうが、費用も手間も少なく済みます。ご相談のうえ決めましょう。
+                  </p>
+                </div>
               </div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">ドメインやサーバーの名義はどうなりますか？</summary>
-              <div class="faq__a">
-                <p>
-                  必ずお客様の名義で取得していただきます。管理の代行はしますが、名義はお渡ししたままです。制作者の名義になっていると、その人と連絡がつかなくなったときにサイトごと動かせなくなるためです。いつでも他社に移せる状態でお渡しします。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    必ずお客様の名義で取得していただきます。管理の代行はしますが、名義はお渡ししたままです。制作者の名義になっていると、その人と連絡がつかなくなったときにサイトごと動かせなくなるためです。いつでも他社に移せる状態でお渡しします。
+                  </p>
+                </div>
               </div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">高槻以外でも対応できますか？</summary>
-              <div class="faq__a">
-                <p>
-                  できます。オンラインでのお打ち合わせで進められます。ただ、直接お会いしたほうが聞き出せることが多いので、大阪府内であれば伺います。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    できます。オンラインでのお打ち合わせで進められます。ただ、直接お会いしたほうが聞き出せることが多いので、大阪府内であれば伺います。
+                  </p>
+                </div>
               </div>
             </details>
             <details class="faq__item">
               <summary class="faq__q">実績が少ないようですが、大丈夫ですか？</summary>
-              <div class="faq__a">
-                <p>
-                  正直に申し上げると、独立したばかりです。だからこそ、1件ごとに時間をかけて向き合います。ご不安であれば、まず無料の診断や小さな修正のご依頼から試していただくこともできます。
-                </p>
+              <div class="faq__body">
+                <div class="faq__a">
+                  <p>
+                    正直に申し上げると、独立したばかりです。だからこそ、1件ごとに時間をかけて向き合います。ご不安であれば、まず無料の診断や小さな修正のご依頼から試していただくこともできます。
+                  </p>
+                </div>
               </div>
             </details>
           </div>
@@ -646,41 +648,126 @@
 
       <!-- ============ お問い合わせ ============ -->
       <section class="section contact" id="contact">
-        <div class="inner inner--narrow">
-          <h2 class="sec-ttl sec-ttl--light">
-            <span class="sec-ttl__en">CONTACT</span>
-            <span class="sec-ttl__ja">お問い合わせ</span>
-          </h2>
+        <div class="inner">
+          <div class="contact__grid">
+            <div class="contact__intro">
+              <p class="contact__en">CONTACT</p>
+              <h2 class="contact__ttl">
+                まずは、お話を<br />聞かせてください。
+              </h2>
+              <p class="contact__text">
+                コストは抑えたい。<br />パソコンは得意ではない。<br />でも、ちゃんとしたホームページがほしい。
+              </p>
+              <p class="contact__text">
+                「これって頼めるのかな」という段階で構いません。<br />まだ内容が決まっていなくても大丈夫です。
+              </p>
+              <p class="contact__note">
+                ご相談・お見積り・現状の診断は無料です。<br />その場で契約をお願いすることはありません。
+              </p>
+            </div>
 
-          <p class="contact__text">
-            コストは抑えたい。<br />パソコンは得意ではない。<br />でも、ちゃんとしたホームページがほしい。
-          </p>
-          <p class="contact__text">
-            「これって頼めるのかな」という段階で構いません。<br />まず、話を聞かせてください。
-          </p>
+            <div class="contact__body">
+              <!-- 送信先が設定されるまでは、こちらのボタンを表示する -->
+              <div class="contact__fallback" id="js-contact-fallback">
+                <a
+                  class="btn btn--primary btn--lg"
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSfyfy8RYl7qI9R_3O8GrLhsq2XVcguIFVHH3YR24XFDjb_arQ/viewform"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <svg class="icon-bubble" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                    <path
+                      d="M24 3.6c-12.2 0-22 9-22 20 0 4.3 1.5 8.2 4 11.5l-2 8.1c-.2.8.6 1.5 1.4 1.1l7.8-3.4c3.2 1.6 6.9 2.6 10.8 2.6 12.2 0 22-9 22-20S36.2 3.6 24 3.6z"
+                    />
+                  </svg>
+                  <span>お問い合わせフォーム</span>
+                </a>
+              </div>
 
-          <p class="contact__label">＼ ご相談・お見積り・現状の診断は無料 ／</p>
-          <div class="contact__btns">
-            <a
-              class="btn btn--primary btn--lg"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSfyfy8RYl7qI9R_3O8GrLhsq2XVcguIFVHH3YR24XFDjb_arQ/viewform"
-              target="_blank"
-              rel="noopener"
-            >
-              <svg class="icon-bubble" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-                <path
-                  d="M24 3.6c-12.2 0-22 9-22 20 0 4.3 1.5 8.2 4 11.5l-2 8.1c-.2.8.6 1.5 1.4 1.1l7.8-3.4c3.2 1.6 6.9 2.6 10.8 2.6 12.2 0 22-9 22-20S36.2 3.6 24 3.6z"
+              <form
+                class="cform"
+                id="js-contact-form"
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                hidden
+              >
+                <!-- Web3Forms の公開キー。クライアント側に置く前提のもの -->
+                <input
+                  type="hidden"
+                  name="access_key"
+                  value="619b7cff-a9e6-48e4-a81a-3940b60f8962"
                 />
-              </svg>
-              <span>お問い合わせフォーム</span>
-            </a>
-            <a class="btn btn--ghost" href="https://x.com/GOSAKAY7" target="_blank" rel="noopener">
-              <span>X（@GOSAKAY7）でも受け付けています</span>
-            </a>
+                <input type="hidden" name="subject" value="Anchor Base サイトからのお問い合わせ" />
+                <!-- 受信メールの Reply-To を、入力されたメールアドレスにする。
+                     これが無いと、Gmailで「返信」を押しても送信者に届かない -->
+                <input type="hidden" name="replyto" value="email" />
+                <input type="hidden" name="from_name" value="Anchor Base" />
+                <!-- 迷惑メール除け。人には見えない -->
+                <input type="checkbox" name="botcheck" class="cform__botcheck" tabindex="-1" autocomplete="off" />
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-name">お名前</label>
+                  <input
+                    class="cform__input"
+                    id="cf-name"
+                    type="text"
+                    name="name"
+                    autocomplete="name"
+                    required
+                  />
+                </div>
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-email">メールアドレス</label>
+                  <input
+                    class="cform__input"
+                    id="cf-email"
+                    type="email"
+                    name="email"
+                    autocomplete="email"
+                    inputmode="email"
+                    required
+                  />
+                </div>
+
+                <div class="cform__row">
+                  <label class="cform__label" for="cf-message">
+                    ご相談の内容
+                    <span class="cform__opt">まだ決まっていなくても大丈夫です</span>
+                  </label>
+                  <textarea
+                    class="cform__input cform__input--area"
+                    id="cf-message"
+                    name="message"
+                    rows="6"
+                    required
+                  ></textarea>
+                </div>
+
+                <p class="cform__privacy">
+                  いただいた内容は、ご相談への回答にのみ使用します。
+                </p>
+
+                <button class="cform__submit" type="submit">
+                  <span>送信する</span>
+                  <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+                    <path
+                      d="m33 25.1-13.1 13c-.8.8-2 .8-2.8 0-.8-.8-.8-2 0-2.8L28.4 24 17.1 12.7c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l13.1 13c.6.6.6 1.6 0 2.2z"
+                    />
+                  </svg>
+                </button>
+
+                <p class="cform__result" id="js-contact-result" role="status" aria-live="polite"></p>
+              </form>
+
+              <p class="contact__sns">
+                X（<a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener">@GOSAKAY7</a>）のDMからでも受け付けています。
+              </p>
+            </div>
           </div>
-          <p class="contact__note">その場で契約をお願いすることはありません。</p>
         </div>
       </section>
+
     </main>
 
     <!-- ============ フッター ============ -->
@@ -689,13 +776,14 @@
         <div class="inner">
           <p class="footer__logo">
             <img
-              src="./img/logo-horizontal-light.png"
+              src="./img/logo-horizontal-light.webp"
               alt="Anchor Base"
               width="620"
               height="150"
               loading="lazy"
             />
           </p>
+          <!-- 公式LINE・Instagram を開設したら、ここに <li> を足す -->
           <ul class="footer__sns">
             <li>
               <a href="https://x.com/GOSAKAY7" target="_blank" rel="noopener" aria-label="X（旧Twitter）">
@@ -717,16 +805,28 @@
             </li>
           </ul>
 
-          <ul class="footer__nav">
-            <li><a href="#top">ホーム</a></li>
-            <li><a href="#service">できること</a></li>
-            <li><a href="#price">料金の目安</a></li>
-            <li><a href="#works">制作実績</a></li>
-            <li><a href="#flow">制作の流れ</a></li>
-            <li><a href="#about">運営者情報</a></li>
-            <li><a href="#agency">制作会社の方へ</a></li>
-            <li><a href="#contact">お問い合わせ</a></li>
-          </ul>
+          <nav class="footer__sitemap" aria-label="サイト内のページ一覧">
+            <ul class="footer__nav">
+              <li><a href="#top">ホーム</a></li>
+              <li><a href="#service">できること</a></li>
+              <li><a href="#price">料金の目安</a></li>
+              <li><a href="#works">制作実績</a></li>
+              <li><a href="#flow">制作の流れ</a></li>
+              <li><a href="#faq">よくある質問</a></li>
+              <li><a href="./profile.html">運営者情報</a></li>
+              <li><a href="#agency">制作会社の方へ</a></li>
+              <li><a href="#contact">お問い合わせ</a></li>
+            </ul>
+
+            <p class="footer__navttl">制作実績</p>
+            <ul class="footer__nav footer__nav--sub">
+              <li><a href="./works-onomichi.html">尾道レトロ キャンペーンLP</a></li>
+              <li><a href="./works-moofc.html">MOO FC</a></li>
+              <li><a href="./works-portfolio.html">このサイト</a></li>
+              <li><a href="./works-sweets.html">Sweet Delight</a></li>
+              <li><a href="./works-oha.html">OHA!</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
 
@@ -755,6 +855,7 @@
       </a>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.js" defer></script>
     <script src="./js/index.js" defer></script>
   </body>
 </html>
