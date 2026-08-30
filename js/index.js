@@ -208,10 +208,19 @@
         }
         if (submit) submit.disabled = true;
 
+        var fd = new FormData(cform);
+        // 返信先を、入力されたメールアドレスそのものに差し替える。
+        // hidden の value="email"（項目名を渡す書き方）が効かない場合の保険。
+        // JSが動かないときは hidden の値がそのまま使われる
+        var emailField = cform.querySelector('[name="email"]');
+        if (emailField && emailField.value) {
+          fd.set("replyto", emailField.value);
+        }
+
         fetch(cform.action, {
           method: "POST",
           headers: { Accept: "application/json" },
-          body: new FormData(cform)
+          body: fd
         })
           .then(function (res) {
             return res.json().catch(function () {
