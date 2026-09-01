@@ -5,6 +5,7 @@
    - 制作実績のスライダー（Swiper）
    - よくある質問の開閉アニメーション
    - お問い合わせフォームの送信
+   - 公式LINEのQRコード拡大
    - ページトップボタンの表示切り替え
    ========================================================= */
 (function () {
@@ -251,6 +252,80 @@
           });
       });
     }
+  }
+
+  /* ---------- 公式LINEのQRコード拡大 ----------
+     JSが落ちてもリンクとして画像が開くよう、<a> のまま置いて
+     クリックを横取りする作りにしている */
+  var qrLinks = document.querySelectorAll(".js-qr-zoom");
+
+  if (qrLinks.length) {
+    var qrModal = null;
+    var qrOpener = null;
+
+    var closeQr = function () {
+      if (!qrModal) return;
+      qrModal.remove();
+      qrModal = null;
+      document.body.classList.remove("is-fixed");
+      if (qrOpener) qrOpener.focus();
+    };
+
+    var onQrKeydown = function (e) {
+      if (e.key === "Escape" || e.key === "Esc") closeQr();
+    };
+
+    var openQr = function (src) {
+      closeQr();
+
+      qrModal = document.createElement("div");
+      qrModal.className = "qr-modal";
+      qrModal.setAttribute("role", "dialog");
+      qrModal.setAttribute("aria-modal", "true");
+      qrModal.setAttribute("aria-label", "公式LINEのQRコード");
+
+      var fig = document.createElement("div");
+      fig.className = "qr-modal__fig";
+      var img = document.createElement("img");
+      img.src = src;
+      img.alt = "公式LINEの友だち追加QRコード";
+      fig.appendChild(img);
+
+      var cap = document.createElement("p");
+      cap.className = "qr-modal__cap";
+      cap.innerHTML =
+        'カメラで読み取ってください<br />' +
+        '<a href="https://lin.ee/Nz4a6vG" target="_blank" rel="noopener">https://lin.ee/Nz4a6vG</a>';
+
+      var close = document.createElement("button");
+      close.className = "qr-modal__close";
+      close.type = "button";
+      close.textContent = "閉じる";
+      close.addEventListener("click", closeQr);
+
+      qrModal.appendChild(fig);
+      qrModal.appendChild(cap);
+      qrModal.appendChild(close);
+
+      /* 背景（QRとキャプション以外）を押したら閉じる */
+      qrModal.addEventListener("click", function (e) {
+        if (e.target === qrModal) closeQr();
+      });
+
+      document.body.appendChild(qrModal);
+      document.body.classList.add("is-fixed");
+      close.focus();
+    };
+
+    document.addEventListener("keydown", onQrKeydown);
+
+    Array.prototype.forEach.call(qrLinks, function (link) {
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        qrOpener = link;
+        openQr(link.getAttribute("href"));
+      });
+    });
   }
 
   /* ---------- ページトップ ---------- */
