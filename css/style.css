@@ -1729,7 +1729,10 @@ html {
   text-align: center;
 }
 .footer__logo img {
-  width: 220px;
+  /* 元のPNGは左右の余白が非対称（左37px・右112px）で、中央に置いても
+     ロゴだけ左にずれて見えた。画像側の余白を切り落としたので、
+     見た目の大きさが変わらないよう幅を 220px→167px にしている */
+  width: 167px;
   margin-inline: auto;
   /* 紺地用に白バージョン（-light）を置いているので、加工は不要 */
 }
