@@ -38,7 +38,8 @@ $breakpoints: (
   --sale: #c62828;
   --amber-pale: #fbf3e8;
   --ink: #22303a;
-  --ink-2: #55666f;
+  /* 本文まわりの説明文。明朝は線が細いので、白地とのコントラストを 7.6:1 まで上げている */
+  --ink-2: #46565f;
   --ink-3: #8a9aa3;
   --paper: #ffffff;
   --paper-2: #f4f8f9;
@@ -63,7 +64,8 @@ body {
   font-size: 15.5px;
   line-height: 2;
   letter-spacing: 0.04em;
-  -webkit-font-smoothing: antialiased;
+  /* -webkit-font-smoothing: antialiased は入れない。
+     Macで文字の輪郭が痩せるため、線の細い明朝だとかすれて見える */
   padding-bottom: 60px; /* SP固定バーぶん */
 
   @include mq(lg) {
