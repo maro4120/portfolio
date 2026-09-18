@@ -537,14 +537,37 @@ html {
   &__ttl {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(25px, 6.8vw, 32px);
+    /* 下限を 22px にしているのは、320px幅でも字下げを足した3行目
+       （いいんだろう」から＋2文字ぶん）が折り返さないようにするため。
+       375px 以上では 6.8vw が効くので見た目は変わらない */
+    font-size: clamp(22px, 6.8vw, 32px);
     line-height: 1.75;
     letter-spacing: 0.02em;
     color: var(--navy);
+    /* 1行につき1文字ぶんの送り幅。全角1文字＝1em に字間 0.02em を足したぶん */
+    --step: 1.02em;
 
     @include mq(lg) {
       font-size: clamp(34px, 3.4vw, 44px);
       line-height: 1.7;
+    }
+  }
+
+  /* 2行目から1文字ずつ右へずらして階段状に見せる。
+     <br> ではなく行ごとの <span> にしているのは、行単位で字下げを付けるため */
+  &__ttl-line {
+    display: block;
+
+    &:nth-child(2) {
+      margin-left: var(--step);
+    }
+
+    &:nth-child(3) {
+      margin-left: calc(var(--step) * 2);
+    }
+
+    &:nth-child(4) {
+      margin-left: calc(var(--step) * 3);
     }
   }
 
