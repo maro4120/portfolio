@@ -304,6 +304,11 @@ html {
 
     @include mq(lg) {
       padding: 10px 20px;
+      /* lg〜xl はロゴ＋ナビ＋CTAで横幅がぎりぎりなので、間隔を詰めて収める */
+      gap: 16px;
+    }
+
+    @include mq(xl) {
       gap: 24px;
     }
   }
@@ -329,8 +334,14 @@ html {
       padding-right: 0;
 
       img {
-        width: 224px;
+        width: 196px;
         margin-inline: 0;
+      }
+    }
+
+    @include mq(xl) {
+      img {
+        width: 224px;
       }
     }
   }
@@ -347,7 +358,7 @@ html {
       color: #fff;
       font-weight: 700;
       font-size: 14.5px;
-      padding: 11px 20px;
+      padding: 11px 16px;
       border-radius: 4px;
       white-space: nowrap;
       transition: background-color 0.2s ease;
@@ -361,6 +372,10 @@ html {
       &:hover {
         background: var(--orange-dark);
       }
+    }
+
+    @include mq(xl) {
+      padding: 11px 20px;
     }
   }
 }
@@ -377,7 +392,11 @@ html {
   &__list {
     display: flex;
     align-items: center;
-    gap: 22px;
+    gap: 14px;
+
+    @include mq(xl) {
+      gap: 22px;
+    }
   }
 
   a {
