@@ -32,6 +32,7 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://anchorbase-web.com/" />
+    <link rel="canonical" href="https://anchorbase-web.com/" />
     <meta property="og:image" content="https://anchorbase-web.com/img/ogp.jpeg" />
     <meta property="og:site_name" content="Anchor Base" />
     <meta property="og:locale" content="ja_JP" />
@@ -46,17 +47,46 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" /></noscript>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" /></noscript>
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css?v=22" />
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Anchor Base",
+      "alternateName": "アンカーベース",
+      "description": "大阪・高槻のホームページ制作。「何を載せたらいいか分からない」というところから一緒に決めます。WordPressの防犯設定やホームページの小さな修正にも対応します。",
+      "url": "https://anchorbase-web.com/",
+      "logo": "https://anchorbase-web.com/img/logo-emblem.png",
+      "image": "https://anchorbase-web.com/img/ogp.jpeg",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "高槻市",
+        "addressRegion": "大阪府",
+        "addressCountry": "JP"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "高槻市"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "大阪府"
+        }
+      ],
+      "sameAs": [
+        "https://x.com/GOSAKAY7",
+        "https://www.instagram.com/anchorbase_web/"
+      ]
+    }
+    </script>
   </head>
 
   <body id="top">
