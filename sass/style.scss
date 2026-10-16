@@ -2013,6 +2013,20 @@ html {
   }
 }
 
+.footer__note {
+  max-width: 720px;
+  margin: 0 auto 10px;
+  padding: 0 16px;
+  font-size: 11.5px;
+  line-height: 1.7;
+  color: #a9bccd;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
 .copyright small {
   font-family: var(--font-en);
   font-size: 12.5px;
