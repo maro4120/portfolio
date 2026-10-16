@@ -118,7 +118,7 @@
   var worksEl = document.getElementById("js-works");
 
   if (worksEl && typeof Swiper !== "undefined") {
-    new Swiper(worksEl, {
+    var worksSwiper = new Swiper(worksEl, {
       slidesPerView: 1.1,
       spaceBetween: 16,
       // 端まで来たら止める（無限ループにしない）
@@ -141,6 +141,12 @@
         600: { slidesPerView: 2, spaceBetween: 20 },
         960: { slidesPerView: 3, spaceBetween: 24 }
       }
+    });
+
+    // Swiper の CSS は表示を止めないように後から読み込むので、
+    // 読み込み終わった時点で幅を計算し直す
+    window.addEventListener("load", function () {
+      worksSwiper.update();
     });
 
     // 動くと分かってから矢印とドットを出す
