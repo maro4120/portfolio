@@ -57,7 +57,6 @@
   /* ---------- スクロールでふわっと表示 ---------- */
   var FADE_TARGETS = [
     ".mv__lead",
-    ".mv__ttl",
     ".sec-ttl",
     ".sec-lead",
     ".message__ttl",
@@ -112,6 +111,77 @@
       el.classList.add("fade");
       observer.observe(el);
     });
+  }
+
+
+  /* ---------- 動き（11/20 追加） ---------- */
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!reduce) {
+    // 最初の画面の見出し：1行ずつせり上げる（JSが動いた時だけ隠す）
+    var lines = document.querySelectorAll(".mv__ttl-line");
+    if (lines.length) {
+      lines.forEach(function (line, i) {
+        var inner = document.createElement("span");
+        while (line.firstChild) inner.appendChild(line.firstChild);
+        line.appendChild(inner);
+        inner.style.setProperty("--i", i);
+      });
+      document.documentElement.classList.add("js-motion");
+    }
+
+    // 料金の数字を、見えたときに0から数え上げる
+    var nums = document.querySelectorAll(".plan__num");
+    if (nums.length && "IntersectionObserver" in window) {
+      var countObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            countObserver.unobserve(entry.target);
+            var el = entry.target;
+            var goal = parseInt(el.textContent.replace(/[^0-9]/g, ""), 10);
+            if (!goal) return;
+            var start = null;
+            var DURATION = 1100;
+            function step(t) {
+              if (start === null) start = t;
+              var r = Math.min((t - start) / DURATION, 1);
+              var eased = 1 - Math.pow(1 - r, 3);
+              el.textContent = Math.round(goal * eased).toLocaleString("ja-JP");
+              if (r < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+          });
+        },
+        { threshold: 0.6 }
+      );
+      nums.forEach(function (n) {
+        countObserver.observe(n);
+      });
+    }
+
+    // どこまで読んだかの線
+    var bar = document.createElement("div");
+    bar.className = "progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+    var ticking = false;
+    function updateBar() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = "scaleX(" + (max > 0 ? window.scrollY / max : 0) + ")";
+      ticking = false;
+    }
+    window.addEventListener(
+      "scroll",
+      function () {
+        if (!ticking) {
+          requestAnimationFrame(updateBar);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    updateBar();
   }
 
   /* ---------- 制作実績のスライダー ---------- */
