@@ -22,36 +22,36 @@ p, h1, h2 { margin: 0; }
   content: ""; position: absolute; inset: 0; z-index: 6; pointer-events: none; opacity: .055;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%2316324f' filter='url(%23n)' opacity='.6' d='M0 0h160v160H0z'/%3E%3C/svg%3E");
 }
-.header { position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 24px; }
+.header { background: var(--paper); position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 24px; }
 .logo { display: block; width: 144px; }
-.logo img { display: block; width: 100%; height: auto; clip-path: inset(1.5px); }
+.logo img { display: block; width: 100%; height: auto; clip-path: inset(1.5px); mix-blend-mode: multiply; }
 .menu { position: relative; }
 .menu summary { display: flex; gap: 14px; align-items: center; min-height: 44px; cursor: pointer; list-style: none; font: 14px "Josefin Sans", sans-serif; }
 .menu summary::-webkit-details-marker { display: none; }
 .menu-icon { width: 24px; height: 8px; border-block: 1px solid var(--navy); }
 .menu[open] .menu-icon { height: 1px; }
 .menu nav { position: absolute; top: 56px; right: 0; width: 220px; padding: 16px 24px; background: var(--paper); border: 1px solid #16324f25; box-shadow: 0 16px 40px #0a1d3310; }
-.menu nav a { display: block; padding: 12px 0; font-size: 14px; }
+.menu nav a { display: block; padding: 12px 0; font-size: 15px; }
 .menu nav a:hover { color: var(--green); }
 .particles { display: none; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .intro { padding: 0 24px 64px; }
-.static-anchor { display: block; width: 220px; height: 260px; margin: 16px auto 32px; color: var(--green); }
-.eyebrow { font: 12px "Josefin Sans", sans-serif; letter-spacing: .24em; }
+.static-anchor { display: block; width: 78vw; max-width: 360px; height: auto; margin: 16px auto 32px; color: var(--green); }
+.eyebrow { font: 15px "Josefin Sans", sans-serif; letter-spacing: .24em; }
 h1 { margin-top: 20px; font-size: clamp(28px, 7.4vw, 54px); font-weight: 400; line-height: 1.85; letter-spacing: .04em; }
 .copy-rule { display: block; margin-top: 24px; width: 48px; height: 1px; background: var(--green); }
 .message { padding: 56px 24px 88px; text-align: center; }
 .message-lead { font-size: clamp(21px, 5.7vw, 38px); line-height: 2; }
-.message-body { margin-top: 28px; font-size: 15.5px; line-height: 2.2; letter-spacing: .02em; }
+.message-body { margin-top: 28px; font-size: 17px; line-height: 2.2; letter-spacing: .02em; }
 .arch { position: relative; margin: 0 16px; padding: 100px 28px 64px; border-radius: 50% 50% 0 0 / 150px 150px 0 0; background: var(--deep); color: var(--paper); text-align: center; }
 .arch-inner { max-width: 600px; margin: auto; }
 .arch .eyebrow { color: #90d8cb; }
 .arch-line { display: block; height: 28px; width: 1px; margin: 18px auto; background: #2bb3a380; }
 .arch h2 { font-size: clamp(22px, 6vw, 38px); font-weight: 400; line-height: 1.85; }
-.arch-body { max-width: 420px; margin: 24px auto 0; font-size: 15.5px; line-height: 2.1; text-align: left; }
+.arch-body { max-width: 420px; margin: 24px auto 0; font-size: 17px; line-height: 2.1; text-align: left; }
 .scene-controls { display: none; }
 .ticker { position: relative; z-index: 7; padding: 18px 0; overflow: hidden; background: var(--paper); border-top: 1px solid #16324f20; }
 .ticker-track { display: flex; width: max-content; }
-.ticker-track > span { flex: none; white-space: nowrap; font-size: 14px; }
+.ticker-track > span { flex: none; white-space: nowrap; font-size: 15px; }
 .ticker i { font-style: normal; color: var(--green); padding: 0 22px; }
 .progress { display: none; }
 /* All content is readable by default. Only successfully initialized JS opts in. */
@@ -60,14 +60,20 @@ h1 { margin-top: 20px; font-size: clamp(28px, 7.4vw, 54px); font-weight: 400; li
 .enhanced .particles { display: block; }
 .enhanced .static-anchor { display: none; }
 .enhanced .intro { position: absolute; inset: 0; padding: 0; pointer-events: none; }
-.enhanced .intro-copy { position: absolute; left: 24px; bottom: 130px; }
-.enhanced .message { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 75px 20px 100px; pointer-events: none; opacity: var(--message-opacity, 0); transform: translateY(var(--message-y, 24px)); }
-.enhanced .arch { position: absolute; inset: 100px 16px 57px; margin: 0; padding: clamp(65px, 12svh, 130px) 28px 24px; transform: translateY(var(--arch-y, 120%)); }
+.enhanced .intro-copy { position: absolute; left: 24px; bottom: 150px; }
+.enhanced .message { isolation: isolate; position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 75px 20px 100px; pointer-events: none; opacity: var(--message-opacity, 0); transform: translateY(var(--message-y, 24px)); }
+.enhanced .message::before {
+  content: ""; position: absolute; z-index: -1; left: 50%; top: 50%;
+  width: min(94%, 820px); height: 390px; transform: translate(-50%, -54%);
+  background: radial-gradient(ellipse, #f3f6f4f5 0%, #f3f6f4eb 42%, #f3f6f4aa 62%, #f3f6f400 74%);
+}
+.enhanced .message-lead, .enhanced .message-body { text-shadow: 0 1px 8px var(--paper); }
+.enhanced .arch { position: absolute; inset: 100px 16px 145px; overflow-y: auto; margin: 0; padding: clamp(65px, 12svh, 130px) 28px 24px; transform: translateY(var(--arch-y, 120%)); }
 .enhanced .intro-copy { opacity: var(--intro-opacity, 0); transform: translateY(var(--intro-y, 12px)); }
-.enhanced .scene-controls { position: absolute; inset: auto 24px 80px; display: flex; justify-content: space-between; align-items: center; z-index: 8; }
-.scroll-cue { display: flex; align-items: center; gap: 12px; font: 12px "Josefin Sans", sans-serif; letter-spacing: .14em; opacity: var(--cue-opacity, 1); }
+.enhanced .scene-controls { position: absolute; inset: auto 0 58px; min-height: 72px; padding: 12px 24px; background: var(--paper); display: flex; justify-content: space-between; align-items: center; z-index: 8; }
+.scroll-cue { display: flex; align-items: center; gap: 12px; font: 15px "Josefin Sans", sans-serif; letter-spacing: .14em; opacity: var(--cue-opacity, 1); }
 .scroll-cue > span { height: 28px; width: 1px; background: var(--green); }
-.motion-toggle { border: 0; border-bottom: 1px solid #16324f40; background: var(--paper); padding: 8px; font-size: 12px; cursor: pointer; }
+.motion-toggle { border: 0; border-bottom: 1px solid #16324f40; background: var(--paper); min-height: 44px; padding: 8px; font-size: 15px; cursor: pointer; }
 .enhanced .ticker { position: absolute; bottom: 0; width: 100%; }
 .enhanced .ticker-track { animation: drift 45s linear infinite; }
 .paused .ticker-track, .offscreen .ticker-track { animation-play-state: paused; }
@@ -85,19 +91,19 @@ h1 { margin-top: 20px; font-size: clamp(28px, 7.4vw, 54px); font-weight: 400; li
   .logo { width: 190px; }
   .menu summary { font-size: 16px; gap: 22px; }
   .intro { padding: 40px 9vw 100px; }
-  .static-anchor { width: 320px; height: 370px; }
+  .static-anchor { width: 420px; max-width: none; height: auto; }
   .enhanced .intro-copy { left: 9vw; bottom: 29%; }
   h1 { line-height: 1.8; letter-spacing: .08em; }
-  .eyebrow { font-size: 14px; }
+  .eyebrow { font-size: 15px; }
   .copy-rule { margin-top: 36px; width: 64px; }
   .message-body { font-size: 18px; line-height: 2.3; margin-top: 32px; }
   .mobile-break { display: none; }
   .arch { margin-inline: 10vw; border-radius: 50% 50% 0 0 / 240px 240px 0 0; }
-  .enhanced .arch { inset: 100px 10vw 57px; padding-top: clamp(65px, 10svh, 110px); }
+  .enhanced .arch { inset: 100px 10vw 145px; padding-top: clamp(65px, 10svh, 110px); }
   .arch-line { height: 32px; margin: 18px auto; }
   .arch h2 { font-size: clamp(26px, 4svh, 38px); line-height: 1.7; }
-  .arch-body { font-size: 16px; }
-  .enhanced .scene-controls { left: 52px; right: 52px; }
+  .arch-body { font-size: 18px; }
+  .enhanced .scene-controls { padding-inline: 52px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

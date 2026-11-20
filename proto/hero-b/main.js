@@ -11,7 +11,7 @@
   const staticMode = matchMedia('(prefers-reduced-motion: reduce), (max-height: 639px)');
   const toggle = document.querySelector('.motion-toggle');
   const menu = document.querySelector('.menu');
-  const palette = ['#16324f', '#16324f', '#0a1d33', '#12776b', '#12776b', '#2bb3a3', '#2bb3a3', '#ffd23f'];
+  const palette = ['#16324f', '#16324f', '#0a1d33', '#12776b', '#12776b', '#2bb3a3', '#2bb3a3', '#bb9238'];
   const silhouette = new Path2D();
   silhouette.arc(200, 76, 40, 0, Math.PI * 2);
   silhouette.moveTo(200, 116); silhouette.lineTo(200, 409);
@@ -23,7 +23,7 @@
   const mask = document.createElement('canvas').getContext('2d');
   if (!mask) return;
   mask.lineWidth = 30; mask.lineCap = 'round'; mask.lineJoin = 'round';
-  let particles = [], width = 0, height = 0, progress = 0;
+  let particles = [], batches = [], width = 0, height = 0, progress = 0;
   let frame = 0, last = 0, elapsed = 0, introTime = 0;
   let inView = true, paused = false, enabled = false;
   const clamp = value => Math.max(0, Math.min(1, value));
@@ -35,22 +35,23 @@
 
   function resize() {
     width = stage.clientWidth; height = stage.clientHeight;
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, width < 960 ? 1.5 : 2);
     canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // Fixed seed preserves particle identity on resize and backward scrolling.
     let seed = 731;
     const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const count = width < 600 ? 720 : width < 960 ? 1150 : 1900;
+    const count = width < 600 ? 2400 : width < 960 ? 3600 : 6200;
     particles = [];
     while (particles.length < count) {
       const x = 10 + random() * 380, y = 20 + random() * 430;
       if (!mask.isPointInStroke(silhouette, x, y)) continue;
       const tone = random();
       particles.push({ x, y, u: random(), v: random(), phase: random() * Math.PI * 2,
-        size: .7 + random() * 1.5, alpha: .35 + random() * .6,
+        band: particles.length % 5, size: 1.4 + random() * 2.1, alpha: .72 + random() * .28,
         color: tone > .985 ? 7 : Math.floor(tone * 7) });
     }
+    batches = palette.map((_, color) => particles.filter(p => p.color === color));
     updateScroll();
   }
 
@@ -79,10 +80,10 @@
   function draw() {
     ctx.clearRect(0, 0, width, height);
     const dissolve = smooth(.16, .43, progress);
-    const fade = 1 - smooth(.68, .82, progress);
+    const fade = 1 - smooth(.80, .97, progress);
     if (fade <= 0) return;
     const desktop = width >= 960;
-    const scale = desktop ? Math.min(width * .00105, height * .00128, 1.32) : Math.min(width * .00165, height * .0008);
+    const scale = desktop ? Math.min(width * .0012, height * .00155, 1.65) : Math.min(width * .00195, height * .00115);
     const cx = width * (desktop ? .72 : .5);
     const cy = height * (desktop ? .45 : .335);
     const angle = Math.sin(elapsed * .32) * .055;
@@ -90,21 +91,23 @@
     // Batch by color, avoiding per-particle fillStyle changes.
     for (let color = 0; color < palette.length; color++) {
       ctx.fillStyle = palette[color];
-      for (const p of particles) {
-        if (p.color !== color) continue;
+      for (const p of batches[color]) {
         const ax = (p.x - 200) * scale, ay = (p.y - 230) * scale;
         const anchorX = cx + ax * cos - ay * sin + Math.sin(elapsed * .6 + p.phase) * 1.2;
         const anchorY = cy + ax * sin + ay * cos + Math.sin(elapsed * .42) * 7;
-        const waveX = p.u * (width + 100) - 50 + Math.sin(elapsed * .22 + p.phase) * 24;
-        const ribbon = Math.sin(p.u * Math.PI * 2.4 + elapsed * .3 + progress * 5);
-        const waveY = height * (.5 + ribbon * .18) + (p.v - .5) * height * .65;
+        // Five distinct ribbons: shared curves keep particles in coherent bands.
+        // Wrap beyond both edges so horizontal travel has no visible seam.
+        const travel = (p.u + elapsed * (.025 + p.band * .003)) % 1;
+        const waveX = travel * (width + 160) - 80;
+        const ribbon = Math.sin(travel * Math.PI * 2 + elapsed * .24 + p.band * .72);
+        const curl = Math.sin(travel * Math.PI * 4 - elapsed * .18 + p.band) * .035;
+        const waveY = height * (.08 + p.band * .205 + ribbon * .13 + curl)
+          + (p.v - .5) * height * .105;
         const spread = Math.sin(dissolve * Math.PI) * Math.sin(p.phase + elapsed * .2) * 65;
         const x = mix(anchorX, waveX, dissolve) + spread;
         const y = mix(anchorY, waveY, dissolve);
-        // A quiet center keeps the message legible as the wave flows around it.
-        const center = (1 - smooth(.12, .38, Math.abs(y / height - .47))) * dissolve;
-        ctx.globalAlpha = p.alpha * fade * (1 - center * .8);
-        ctx.beginPath(); ctx.arc(x, y, p.size * (desktop ? 1.1 : .85), 0, Math.PI * 2); ctx.fill();
+        ctx.globalAlpha = p.alpha * fade;
+        ctx.beginPath(); ctx.arc(x, y, p.size * mix(.8, desktop ? 1.3 : 1, dissolve), 0, Math.PI * 2); ctx.fill();
       }
     }
     ctx.globalAlpha = 1;
