@@ -110,3 +110,17 @@ h1 { margin-top: 20px; font-size: clamp(28px, 7.4vw, 54px); font-weight: 400; li
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Opt-in Safari diagnostics (query switches in main.js). */
+.debug-nofx .header { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.debug-nofx .stage::after { content: none; background-image: none; }
+.debug-nofx .logo img { mix-blend-mode: normal; }
+.debug-nofx .stage { isolation: auto; }
+/* Keep the scene's text timeline visible while removing sticky compositing. */
+.enhanced.debug-nosticky .stage { position: fixed; top: 0; left: 0; width: 100%; }
+.enhanced.debug-nosticky .particles { position: fixed; }
+.debug-meter {
+  position: fixed; top: max(4px, env(safe-area-inset-top)); right: 4px; z-index: 10000;
+  padding: 4px 6px; border-radius: 3px; background: #0a1d33; color: #fff;
+  font: 11px/1.4 monospace; letter-spacing: 0; white-space: nowrap; pointer-events: none;
+}

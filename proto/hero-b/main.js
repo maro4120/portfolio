@@ -1,6 +1,35 @@
 (() => {
   'use strict';
   const root = document.documentElement;
+  // Presence-only query switches; no query leaves the original rendering path intact.
+  const params = new URLSearchParams(window.location.search);
+  const debug = Object.fromEntries(['fps', 'nofx', 'lowres', 'nodraw', 'nosticky', 'noresize']
+    .map(name => [name, params.has(name)]));
+  if (debug.nofx) root.classList.add('debug-nofx');
+  if (debug.nosticky) root.classList.add('debug-nosticky');
+  let resizeCalls = 0, measured = false;
+  if (debug.fps) {
+    const meter = document.createElement('div');
+    meter.className = 'debug-meter';
+    meter.textContent = 'fps: — | ≥50ms: — | resize: 0';
+    document.body.append(meter);
+    // Monitor browser frame callbacks, independently of the 30fps particle cap.
+    let samples = [], previous = 0, lastReport = 0;
+    function measureFrame(now) {
+      if (previous) samples.push({ time: now, slow: now - previous >= 50 });
+      previous = now;
+      while (samples.length && samples[0].time <= now - 1000) samples.shift();
+      if (now - lastReport >= 250) {
+        meter.textContent = `fps: ${samples.length} | ≥50ms: ${samples.filter(sample => sample.slow).length} | resize: ${resizeCalls}`;
+        lastReport = now;
+      }
+      requestAnimationFrame(measureFrame);
+    }
+    document.addEventListener('visibilitychange', () => {
+      samples = []; previous = 0; lastReport = 0;
+    });
+    requestAnimationFrame(measureFrame);
+  }
   const journey = document.querySelector('.journey');
   const stage = document.querySelector('.stage');
   const header = document.querySelector('.header');
@@ -52,12 +81,15 @@
   const mix = (a, b, t) => a + (b - a) * t;
 
   function resize() {
+    resizeCalls++;
+    if (debug.noresize && measured) { updateScroll(); return; }
+    measured = true;
     const nextWidth = stage.clientWidth, nextHeight = stage.clientHeight;
     const nextHeaderHeight = header.getBoundingClientRect().height;
     stage.style.setProperty('--content-top', `${nextHeaderHeight + 16}px`);
     // Layout position excludes the intro's animated translateY.
     const nextCopyTop = introCopy.offsetTop;
-    const dpr = Math.min(window.devicePixelRatio || 1, nextWidth < 960 ? 1.5 : 2);
+    const dpr = debug.lowres ? 1 : Math.min(window.devicePixelRatio || 1, nextWidth < 960 ? 1.5 : 2);
     // iPhone browser chrome can resize the window without changing the svh stage.
     if (width === nextWidth && height === nextHeight && pixelRatio === dpr && headerHeight === nextHeaderHeight && copyTop === nextCopyTop) {
       updateScroll();
@@ -82,7 +114,7 @@
     // Fixed seed preserves particle identity on resize and backward scrolling.
     let seed = 731;
     const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const count = width < 600 ? 1200 : width < 960 ? 1800 : 3100;
+    const count = (width < 600 ? 1200 : width < 960 ? 1800 : 3100) / (debug.lowres ? 2 : 1);
     particles = [];
     while (particles.length < count) {
       const x = 10 + random() * 380, y = 20 + random() * 430;
@@ -121,6 +153,7 @@
   }
 
   function draw() {
+    if (debug.nodraw) return;
     ctx.clearRect(0, 0, width, height);
     const dissolve = smooth(.16, .43, progress);
     const fade = 1 - smooth(.80, .97, progress);
