@@ -681,6 +681,18 @@ html {
   padding: 13px 16px;
   border-radius: 3px 3px 0 0;
 }
+@media screen and (min-width: 768px) {
+  .card__ttl {
+    min-height: calc(3em + 26px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+.card__ttl-part {
+  display: inline-block;
+  white-space: nowrap;
+}
 .card__text {
   font-size: 16px;
   line-height: 1.95;

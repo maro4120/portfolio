@@ -738,6 +738,18 @@ html {
     margin: 0 -24px 22px;
     padding: 13px 16px;
     border-radius: 3px 3px 0 0;
+
+    @include mq(md) {
+      min-height: calc(3em + 26px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__ttl-part {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   &__text {
