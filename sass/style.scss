@@ -2296,22 +2296,16 @@ html {
    ========================================================= */
 
 /* 最初の画面：見出しが1行ずつ下からせり上がる */
-.js-motion .mv__ttl-line {
-  display: block;
-  overflow: hidden;
-}
-
+/* 画像の開きが終わってから、文字だけを横方向のマスクで描く。 */
 .js-motion .mv__ttl-line > span {
   display: inline-block;
-  transform: translateY(110%);
-  animation: lineUp 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-  animation-delay: calc(0.25s + var(--i, 0) * 0.14s);
+  animation: titleReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(1.65s + var(--i, 0) * 0.13s);
 }
 
-@keyframes lineUp {
-  to {
-    transform: none;
-  }
+@keyframes titleReveal {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to { clip-path: inset(0); opacity: 1; }
 }
 
 /* 見出しの下に、ミントの線が中央から伸びる */
@@ -2409,6 +2403,8 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .js-motion .mv__ttl-line > span {
     transform: none;
+    clip-path: none;
+    opacity: 1;
     animation: none;
   }
 
@@ -2461,7 +2457,7 @@ td {
    トップの最初の画面（11/20 ほめまろの参考：major-scale.jp/life-edit-renovation）
    1. イラストが小さく現れて、画面いっぱいに広がる
    2. 最初の画面はその場に止まり、メッセージがアーチ形のカードになってせり上がって重なる
-   3. 見出しがぼかしから、くっきり出てくる
+   3. 画像が開いてから、見出しを横方向のマスクで描く
    どれも JS が動いたときだけ（.js-motion）。動きを減らす設定の人には出さない
    ========================================================= */
 .hero {
@@ -2495,21 +2491,77 @@ td {
     }
   }
 
-  /* イラストは img 自体を動かす（親を動かすと mix-blend-mode が効かなくなるため） */
-  .mv__illust img {
-    animation: illustOpen 1.5s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+/* 紙面全体を舞台にし、文字とイラストを独立したレイヤーにする。
+   イラストの祖先には opacity / filter / will-change を付けない。 */
+.mv {
+  position: relative;
+  min-height: 560px;
+  height: calc(100svh - var(--header-h));
+  max-height: 920px;
+
+  &__inner {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    display: block;
+    padding-top: 32px;
+  }
+
+  &__text {
+    position: relative;
+    z-index: 1;
+    padding-block: 0;
+  }
+
+  &__illust {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    pointer-events: none;
+
+    img {
+      width: 145%;
+      max-width: none;
+      margin-left: -22.5%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center 85%;
+      transform-origin: 50% 70%;
+    }
+  }
+
+  @include mq(lg) {
+    min-height: 560px;
+
+    &__inner { display: flex; align-items: center; padding-top: 0; }
+    &__text { width: 58%; }
+    &__illust { left: 30%; right: -60px; }
+    &__illust img { width: 100%; margin-left: 0; object-position: center; }
   }
 }
 
+.js-motion .hero .mv__illust img {
+  animation: illustOpen 1.45s cubic-bezier(0.65, 0, 0.25, 1) both,
+    illustDrift 3.4s ease-out 1.45s forwards;
+}
+
 @keyframes illustOpen {
-  from {
-    clip-path: inset(22% 26% round 24px);
-    transform: scale(1.12);
+  0%, 12% {
+    clip-path: inset(calc(50% - 48px) calc(50% - 48px));
+    transform: scale(1);
   }
-  to {
-    clip-path: inset(0 round 0);
-    transform: none;
+  100% {
+    clip-path: inset(0);
+    transform: scale(1);
   }
+}
+
+/* ごく小さな余韻。自動再生を5秒以内で終え、読み続ける際は静止する。 */
+@keyframes illustDrift {
+  from { transform: scale(1); }
+  to { transform: scale(1.025); }
 }
 
 /* 見出しは、ぼかしからくっきり */
@@ -2527,7 +2579,11 @@ td {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .js-motion .hero .mv { position: relative; top: auto; }
+
   .js-motion .hero .mv__illust img {
+    clip-path: none;
+    transform: none;
     animation: none;
   }
 

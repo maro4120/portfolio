@@ -118,7 +118,7 @@
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   if (!reduce) {
-    // 最初の画面の見出し：1行ずつせり上げる（JSが動いた時だけ隠す）
+    // 最初の画面の見出し：画像が開いてから横方向に描く（JSが動いた時だけ隠す）
     var lines = document.querySelectorAll(".mv__ttl-line");
     if (lines.length) {
       lines.forEach(function (line, i) {
@@ -127,7 +127,18 @@
         line.appendChild(inner);
         inner.style.setProperty("--i", i);
       });
-      document.documentElement.classList.add("js-motion");
+      // 画像が未取得なら隠さず、取得できたときだけ演出を開始する。
+      var illustration = document.querySelector(".mv__illust img");
+      var startMotion = function () {
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+            illustration.naturalWidth && window.scrollY < 40) {
+          document.documentElement.classList.add("js-motion");
+        }
+      };
+      if (illustration) {
+        if (illustration.complete) startMotion();
+        else illustration.addEventListener("load", startMotion, { once: true });
+      }
     }
 
     // 最初の画面を止める位置＝上のメニューの高さ（画面幅で変わるので、幅が変わるたびに測り直す）
