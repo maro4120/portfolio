@@ -54,7 +54,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" /></noscript>
     <link rel="stylesheet" href="./css/reset.css" />
-    <link rel="stylesheet" href="./css/style.css?v=22" />
+    <link rel="stylesheet" href="./css/style.css?v=29" />
     <script type="application/ld+json">
 {
       "@context": "https://schema.org",
@@ -160,10 +160,13 @@
     </div>
 
     <main>
+      <!-- 最初の画面とメッセージを1つにまとめる（スクロールでメッセージが最初の画面の上に重なってくる） -->
+      <div class="hero">
       <!-- ============ メインビジュアル ============ -->
       <div class="mv">
         <div class="mv__inner inner">
           <div class="mv__text">
+            <p class="mv__intro">元警察官のWeb制作者、ほめまろです。<br />「Webの防犯係」として、<br />制作から公開後の安心までお手伝いします。</p>
             <h1 class="mv__ttl">
               <span class="mv__ttl-line">「ホームページって</span>
               <span class="mv__ttl-line">どうやって作れば</span>
@@ -190,16 +193,21 @@
             作って終わりに、<br />したくないんです。
           </h2>
           <p class="message__text">
-            ホームページで迷うのは、<br />デザインより先に「中身」だと思います。
+            <span class="nb">ホームページで迷うのは、</span><br />
+<span class="nb">デザインより先に</span><span class="nb">「中身」だと思います。</span>
           </p>
           <p class="message__text">
-            お店や会社のことをお聞きして、<br />載せるべきことから一緒に整理します。
+            <span class="nb">お店や会社のことを</span><span class="nb">お聞きして、</span><br />
+<span class="nb">載せるべきことから</span><span class="nb">一緒に整理します。</span>
           </p>
           <p class="message__text">
-            そのために、ご相談とお見積りは無料です。<br />その場で契約をお願いすることはありません。
+            <span class="nb">そのために、</span><span class="nb">ご相談とお見積りは無料です。</span><br />
+<span class="nb">その場で契約を</span><span class="nb">お願いすることはありません。</span>
           </p>
         </div>
       </section>
+
+      </div>
 
       <!-- ============ 悩み ============ -->
       <section class="section section--alt pain">
@@ -251,7 +259,8 @@
             <span class="sec-ttl__ja">できること</span>
           </h2>
           <p class="sec-lead">
-            お店や小さな会社のホームページを作っています。<br />今あるサイトの修正だけでも承ります。
+            <span class="nb">お店や小さな会社の</span><span class="nb">ホームページを作っています。</span><br />
+<span class="nb">今あるサイトの</span><span class="nb">修正だけでも承ります。</span>
           </p>
 
           <div class="cards">
@@ -259,6 +268,7 @@
               <h3 class="card__ttl">ホームページ制作</h3>
               <p class="card__text">
                 会社やお店の顔になるサイトを、構成から作ります。スマホでの見え方を最優先に設計します。
+                作ったサイトは、元警察官の目で「戸締まり」まで点検してからお渡しします。
               </p>
               <ul class="card__list">
                 <li>載せる内容の整理</li>
@@ -267,7 +277,7 @@
               </ul>
             </article>
             <article class="card">
-              <h3 class="card__ttl">LP（1枚もののページ）</h3>
+              <h3 class="card__ttl"><span><span class="card__ttl-part">LP</span><wbr /><span class="card__ttl-part">（1枚もののページ）</span></span></h3>
               <p class="card__text">
                 キャンペーンや募集など、目的が1つに絞られている場合に向いています。縦に長い1ページの形です。
               </p>
@@ -288,6 +298,17 @@
                 <li>現状の診断</li>
               </ul>
             </article>
+            <article class="card">
+              <h3 class="card__ttl"><span><span class="card__ttl-part">販売ページ・</span><wbr /><span class="card__ttl-part">画像・図解</span></span></h3>
+              <p class="card__text">
+                講座や商品をネットで売っている方へ。商品ページの説明文と、商品画像・図解を作ります。AI を使うので、小回りよく作れます。
+              </p>
+              <ul class="card__list">
+                <li>商品ページの説明文の整理</li>
+                <li>商品画像・図解</li>
+                <li>ショート動画</li>
+              </ul>
+            </article>
           </div>
         </div>
       </section>
@@ -300,7 +321,8 @@
             <span class="sec-ttl__ja">料金の目安</span>
           </h2>
           <p class="sec-lead">
-            ページ数や内容によって変わりますが、目安を先に出しておきます。<br />お話をうかがったうえで、正式なお見積りをお出しします。
+            <span class="nb">ページ数や内容によって</span><span class="nb">変わりますが、</span><span class="nb">目安を先に出しておきます。</span><br />
+<span class="nb">お話をうかがったうえで、</span><span class="nb">正式なお見積りをお出しします。</span>
           </p>
 
           <p class="plans__campaign">＼ ただいま開業キャンペーン中 ／</p>
@@ -372,6 +394,21 @@
         </div>
       </section>
 
+      <!-- ============ 掲載 ============ -->
+      <!-- TODO: note の記事URLが決まったら href を差し替え、hidden を外す -->
+      <section class="section media" id="media" hidden>
+        <div class="inner inner--narrow">
+          <h2 class="sec-ttl">
+            <span class="sec-ttl__en">MEDIA</span>
+            <span class="sec-ttl__ja">掲載</span>
+          </h2>
+          <p class="sec-lead">ツバメ編集室さんに取材していただきました</p>
+          <h3 class="media__title">元警察官のWeb制作者——個人サイトをやさしくガード</h3>
+          <p class="media__credit">取材・文：ツバメ編集室</p>
+          <a class="btn btn--primary" href="#">取材記事をご覧いただけます</a>
+        </div>
+      </section>
+
       <!-- ============ 実績 ============ -->
       <section class="section" id="works">
         <div class="inner">
@@ -380,7 +417,8 @@
             <span class="sec-ttl__ja">制作実績</span>
           </h2>
           <p class="sec-lead">
-            現在は、自主制作を中心に公開しています。<br />それぞれ「何を狙って、どう作ったか」をまとめました。
+            <span class="nb">現在は、</span><span class="nb">自主制作を中心に</span><span class="nb">公開しています。</span><br />
+<span class="nb">それぞれ</span><span class="nb">「何を狙って、どう作ったか」を</span><span class="nb">まとめました。</span>
           </p>
 
           <div class="works swiper" id="js-works">
@@ -556,7 +594,8 @@
             <span class="sec-ttl__ja">制作の流れ</span>
           </h2>
           <p class="sec-lead">
-            ご相談から公開までの流れです。<br />状況に応じて柔軟に対応します。
+            <span class="nb">ご相談から公開までの流れです。</span><br />
+<span class="nb">状況に応じて</span><span class="nb">柔軟に対応します。</span>
           </p>
 
           <ol class="flow">
@@ -700,7 +739,8 @@
             <span class="sec-ttl__ja">制作会社・デザイナーの方へ</span>
           </h2>
           <p class="sec-lead">
-            デザインカンプからのコーディングを承っています。<br />ここから下は、同業の方に向けた内容です。
+            <span class="nb">デザインカンプからの</span><span class="nb">コーディングを承っています。</span><br />
+<span class="nb">ここから下は、</span><span class="nb">同業の方に向けた内容です。</span>
           </p>
 
           <div class="agency__grid">

@@ -63,7 +63,7 @@ body {
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font);
-  font-size: 15.5px;
+  font-size: 17px;
   line-height: 2;
   letter-spacing: 0.04em;
   /* -webkit-font-smoothing: antialiased は入れない。
@@ -71,7 +71,7 @@ body {
   padding-bottom: 60px; /* SP固定バーぶん */
 
   @include mq(lg) {
-    font-size: 16.5px;
+    font-size: 18px;
     padding-bottom: 0;
   }
 }
@@ -164,7 +164,7 @@ html {
     display: block;
     margin-top: 10px;
     font-family: var(--font-display);
-    font-size: 14.5px;
+    font-size: 16px;
     letter-spacing: 0.14em;
     color: var(--mint-dark);
   }
@@ -191,12 +191,12 @@ html {
 .sec-lead {
   text-align: center;
   color: var(--ink-2);
-  font-size: 14.5px;
+  font-size: 16px;
   line-height: 2;
   margin-bottom: 32px;
 
   @include mq(lg) {
-    font-size: 15.5px;
+    font-size: 17px;
     margin-bottom: 44px;
   }
 }
@@ -211,7 +211,7 @@ html {
   padding: 15px 26px;
   border-radius: 4px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 16.5px;
   line-height: 1.5;
   text-align: center;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
@@ -248,7 +248,7 @@ html {
   &--ghost {
     border: 1px solid rgba(255, 255, 255, 0.55);
     color: #fff;
-    font-size: 14.5px;
+    font-size: 16px;
 
     &:hover {
       background: rgba(255, 255, 255, 0.1);
@@ -256,7 +256,7 @@ html {
   }
 
   &--lg {
-    font-size: 16px;
+    font-size: 17.5px;
     padding: 18px 30px;
 
     @include mq(lg) {
@@ -292,7 +292,7 @@ html {
   }
 
   &__catch {
-    font-size: 12.5px;
+    font-size: 14px;
     line-height: 1.5;
     letter-spacing: 0.06em;
   }
@@ -361,7 +361,7 @@ html {
       background: var(--orange);
       color: #fff;
       font-weight: 700;
-      font-size: 14.5px;
+      font-size: 16px;
       padding: 11px 16px;
       border-radius: 4px;
       white-space: nowrap;
@@ -407,7 +407,7 @@ html {
     position: relative;
     display: inline-block;
     padding: 6px 0;
-    font-size: 14.5px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--ink);
     white-space: nowrap;
@@ -491,7 +491,7 @@ html {
     border-bottom: 1px solid var(--line);
     color: var(--ink);
     font-weight: 700;
-    font-size: 15px;
+    font-size: 16.5px;
     position: relative;
 
     &::before {
@@ -536,6 +536,15 @@ html {
     @include mq(lg) {
       padding-block: 40px;
     }
+  }
+
+  &__intro {
+    margin-bottom: 16px;
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    line-height: 1.8;
+    letter-spacing: 0.04em;
+    color: var(--navy);
   }
 
   &__ttl {
@@ -609,7 +618,7 @@ html {
 
   &__text {
     color: var(--ink-2);
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 2.1;
 
     + .message__text {
@@ -641,7 +650,7 @@ html {
     display: block;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.6;
     color: var(--navy);
     margin-bottom: 12px;
@@ -654,13 +663,13 @@ html {
       left: 0;
       top: 0;
       font-family: var(--font-en);
-      font-size: 20px;
+      font-size: 21.5px;
       color: var(--line-2);
     }
   }
 
   &__a {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.9;
     color: var(--ink-2);
   }
@@ -687,7 +696,7 @@ html {
   }
 
   &__answer-text {
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 2;
     color: var(--ink-2);
     max-width: 60ch;
@@ -701,11 +710,16 @@ html {
   gap: 18px;
 
   @include mq(md) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mq(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 .card {
+  min-width: 0;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -713,9 +727,10 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
   &__ttl {
+    width: calc(100% + 48px);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.5;
     text-align: center;
     color: #fff;
@@ -723,10 +738,22 @@ html {
     margin: 0 -24px 22px;
     padding: 13px 16px;
     border-radius: 3px 3px 0 0;
+
+    @include mq(md) {
+      min-height: calc(3em + 26px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__ttl-part {
+    display: inline-block;
+    white-space: nowrap;
   }
 
   &__text {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.95;
     color: var(--ink-2);
   }
@@ -740,7 +767,7 @@ html {
   &__list li {
     position: relative;
     padding-left: 20px;
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.7;
     color: var(--ink);
 
@@ -784,7 +811,7 @@ html {
   &__ttl {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 17.5px;
     line-height: 1.5;
     color: #fff;
     background: var(--navy);
@@ -796,13 +823,13 @@ html {
   }
 
   &__label {
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink-2);
     margin-bottom: 6px;
   }
 
   &__was {
-    font-size: 13.5px;
+    font-size: 15px;
     color: var(--ink-3);
     line-height: 1.6;
     margin-bottom: 2px;
@@ -815,7 +842,7 @@ html {
       text-decoration-thickness: 1px;
       border-bottom: 1px solid currentColor;
       padding-bottom: 1px;
-      font-size: 15px;
+      font-size: 16.5px;
       letter-spacing: 0.02em;
     }
   }
@@ -823,7 +850,7 @@ html {
   &__badge {
     display: block;
     width: 100%;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.08em;
     color: var(--sale);
@@ -861,12 +888,12 @@ html {
   }
 
   &__unit {
-    font-size: 17px;
+    font-size: 18.5px;
     font-weight: 700;
   }
 
   &__tax {
-    font-size: 13px;
+    font-size: 14.5px;
     color: var(--ink-3);
     margin-top: 4px;
   }
@@ -875,14 +902,14 @@ html {
     margin-top: 16px;
     padding-top: 14px;
     border-top: 1px dashed var(--line-2);
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink-2);
   }
 }
 
 .plans__campaign {
   text-align: center;
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--sale);
@@ -901,7 +928,7 @@ html {
   }
 
   &__label {
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 700;
     color: var(--mint-dark);
     letter-spacing: 0.06em;
@@ -922,7 +949,7 @@ html {
   }
 
   &__text {
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 2;
     color: var(--ink-2);
     max-width: 56ch;
@@ -938,7 +965,7 @@ html {
   li {
     position: relative;
     padding-left: 18px;
-    font-size: 14px;
+    font-size: 15.5px;
     line-height: 1.85;
     color: var(--ink-2);
 
@@ -1106,7 +1133,7 @@ html {
     border: 1px solid rgba(255, 255, 255, 0.85);
     border-radius: 3px;
     color: #fff;
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 700;
     white-space: nowrap;
     opacity: 0;
@@ -1137,7 +1164,7 @@ html {
 
   &__kind {
     font-family: var(--font-en);
-    font-size: 12px;
+    font-size: 13.5px;
     font-weight: 600;
     letter-spacing: 0.1em;
     color: var(--ink-3);
@@ -1147,7 +1174,7 @@ html {
   &__ttl {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.5;
     margin-bottom: 8px;
 
@@ -1161,7 +1188,7 @@ html {
   }
 
   &__text {
-    font-size: 14px;
+    font-size: 15.5px;
     line-height: 1.9;
     color: var(--ink-2);
     margin-bottom: 14px;
@@ -1172,7 +1199,7 @@ html {
     align-items: center;
     gap: 6px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 15.5px;
     border-bottom: 2px solid var(--mint-pale);
     padding-bottom: 2px;
 
@@ -1224,7 +1251,7 @@ html {
     color: #fff;
     font-family: var(--font-en);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 17.5px;
     line-height: 1;
     margin-top: 2px;
   }
@@ -1232,14 +1259,14 @@ html {
   &__ttl {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.5;
     color: var(--navy);
     margin-bottom: 6px;
   }
 
   &__text {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.95;
     color: var(--ink-2);
   }
@@ -1249,7 +1276,7 @@ html {
     margin-top: 10px;
     background: var(--mint-pale);
     color: var(--mint-dark);
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 700;
     letter-spacing: 0.06em;
     padding: 4px 10px;
@@ -1269,7 +1296,7 @@ html {
 
   &__en {
     font-family: var(--font-en);
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.2em;
     color: var(--mint-dark);
@@ -1325,21 +1352,21 @@ html {
     margin-top: 12px;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     color: var(--navy);
     line-height: 1.5;
 
     span {
       display: block;
       font-weight: 400;
-      font-size: 12.5px;
+      font-size: 14px;
       color: var(--ink-3);
       letter-spacing: 0.08em;
     }
   }
 
   &__body p {
-    font-size: 15.5px;
+    font-size: 17px;
     line-height: 2.05;
     color: var(--ink-2);
 
@@ -1402,25 +1429,25 @@ html {
     color: #fff;
     font-family: var(--font-en);
     font-weight: 700;
-    font-size: 16px;
+    font-size: 17.5px;
     line-height: 1;
   }
 
   &__ttl {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.6;
     color: var(--navy);
     margin-bottom: 10px;
 
     @include mq(lg) {
-      font-size: 19px;
+      font-size: 20.5px;
     }
   }
 
   &__body p {
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.95;
     color: var(--ink-2);
 
@@ -1450,7 +1477,7 @@ html {
     vertical-align: top;
     padding: 15px 10px;
     border-bottom: 1px solid var(--line);
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.9;
   }
 
@@ -1476,7 +1503,7 @@ html {
   text-align: center;
 
   p {
-    font-size: 15.5px;
+    font-size: 17px;
     line-height: 2.1;
     color: var(--ink-2);
 
@@ -1495,7 +1522,7 @@ html {
   &__label {
     margin-top: 34px;
     text-align: center;
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 700;
     letter-spacing: 0.06em;
     color: var(--mint-dark);
@@ -1519,7 +1546,7 @@ html {
     align-items: center;
     gap: 8px;
     padding-block: 12px;
-    font-size: 12.5px;
+    font-size: 14px;
     color: var(--ink-3);
   }
 
@@ -1560,7 +1587,7 @@ html {
     padding: 20px 46px 20px 44px;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 15.5px;
+    font-size: 17px;
     line-height: 1.65;
     color: var(--navy);
 
@@ -1582,7 +1609,7 @@ html {
       background: var(--navy);
       color: #fff;
       font-family: var(--font-en);
-      font-size: 12.5px;
+      font-size: 14px;
       line-height: 1;
     }
 
@@ -1647,13 +1674,13 @@ html {
       background: var(--mint-dark);
       color: #fff;
       font-family: var(--font-en);
-      font-size: 12.5px;
+      font-size: 14px;
       line-height: 1;
     }
 
     p {
       padding: 0 20px 22px 44px;
-      font-size: 14.5px;
+      font-size: 16px;
       line-height: 2;
       color: var(--ink-2);
     }
@@ -1683,14 +1710,14 @@ html {
       display: block;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 15.5px;
+      font-size: 17px;
       color: var(--amber);
       margin-bottom: 6px;
     }
 
     span {
       display: block;
-      font-size: 14px;
+      font-size: 15.5px;
       line-height: 1.9;
       color: var(--ink-2);
     }
@@ -1699,7 +1726,7 @@ html {
   &__note {
     margin-top: 22px;
     text-align: center;
-    font-size: 14px;
+    font-size: 15.5px;
     color: var(--ink-2);
   }
 }
@@ -1722,7 +1749,7 @@ html {
 
   &__en {
     font-family: var(--font-en);
-    font-size: 13px;
+    font-size: 14.5px;
     font-weight: 600;
     letter-spacing: 0.22em;
     color: #8ddfd3;
@@ -1740,7 +1767,7 @@ html {
 
   &__text {
     color: #c8d6e2;
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 2.05;
 
     + .contact__text {
@@ -1752,7 +1779,7 @@ html {
     margin-top: 24px;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 13.5px;
+    font-size: 15px;
     line-height: 1.95;
     color: #8ddfd3;
   }
@@ -1768,7 +1795,7 @@ html {
 
   &__sns {
     margin-top: 24px;
-    font-size: 13.5px;
+    font-size: 15px;
     line-height: 1.9;
     color: #90a4b6;
     text-align: center;
@@ -1807,7 +1834,7 @@ html {
   }
 
   &__label {
-    font-size: 13.5px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.04em;
     color: #dfe8f0;
@@ -1816,7 +1843,7 @@ html {
   &__opt {
     display: block;
     margin-top: 3px;
-    font-size: 12.5px;
+    font-size: 14px;
     font-weight: 400;
     color: #8296a8;
   }
@@ -1829,7 +1856,7 @@ html {
     border-bottom: 1px solid rgba(255, 255, 255, 0.32);
     color: #fff;
     font-family: inherit;
-    font-size: 16px; /* iOSで拡大されないよう16px以上にする */
+    font-size: 17.5px; /* iOSで拡大されないよう16px以上にする */
     line-height: 1.8;
     transition: border-color 0.25s ease;
 
@@ -1855,7 +1882,7 @@ html {
   }
 
   &__privacy {
-    font-size: 12.5px;
+    font-size: 14px;
     line-height: 1.9;
     color: #8296a8;
   }
@@ -1871,7 +1898,7 @@ html {
     background: transparent;
     color: #fff;
     font-family: inherit;
-    font-size: 15px;
+    font-size: 16.5px;
     font-weight: 700;
     letter-spacing: 0.06em;
     cursor: pointer;
@@ -1895,7 +1922,7 @@ html {
   }
 
   &__result {
-    font-size: 14px;
+    font-size: 15.5px;
     line-height: 1.9;
 
     &:empty {
@@ -1977,7 +2004,7 @@ html {
     a {
       display: inline-block;
       padding: 3px 2px;
-      font-size: 13.5px;
+      font-size: 15px;
       color: #d3dfe9;
 
       &:hover {
@@ -1996,13 +2023,13 @@ html {
     margin-top: 22px;
     margin-bottom: 6px;
     font-family: var(--font-en);
-    font-size: 12.5px;
+    font-size: 14px;
     letter-spacing: 0.14em;
     color: #8296a8;
   }
 
   &__nav--sub a {
-    font-size: 13px;
+    font-size: 14.5px;
     color: #a9bccd;
   }
 
@@ -2017,7 +2044,7 @@ html {
   max-width: 720px;
   margin: 0 auto 10px;
   padding: 0 16px;
-  font-size: 11.5px;
+  font-size: 13px;
   line-height: 1.7;
   color: #a9bccd;
 
@@ -2029,7 +2056,7 @@ html {
 
 .copyright small {
   font-family: var(--font-en);
-  font-size: 12.5px;
+  font-size: 14px;
   letter-spacing: 0.06em;
   color: #a9bccd;
 }
@@ -2100,7 +2127,7 @@ html {
     gap: 7px;
     padding: 16px 8px;
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.4;
     text-align: center;
   }
@@ -2125,7 +2152,7 @@ html {
 /* ---------------- 制作実績の詳細ページ ---------------- */
 .pagehead__kind {
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 14.5px;
   letter-spacing: 0.06em;
   color: var(--ink-3);
 }
@@ -2146,7 +2173,7 @@ html {
   margin-top: 30px;
 
   p {
-    font-size: 15.5px;
+    font-size: 17px;
     line-height: 2.05;
     color: var(--ink-2);
 
@@ -2174,7 +2201,7 @@ html {
   &__ttl {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 16.5px;
+    font-size: 18px;
     color: var(--navy);
     margin-bottom: 14px;
     text-align: center;
@@ -2188,7 +2215,7 @@ html {
   &__list li {
     position: relative;
     padding-left: 24px;
-    font-size: 14.5px;
+    font-size: 16px;
     line-height: 1.85;
     color: var(--ink-2);
 
@@ -2223,7 +2250,7 @@ html {
 
   a {
     font-weight: 700;
-    font-size: 14.5px;
+    font-size: 16px;
     border-bottom: 2px solid var(--mint-pale);
     padding-bottom: 2px;
 
@@ -2283,5 +2310,335 @@ html {
   .faq__item[open] .faq__a {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* =========================================================
+   動き（11/20 追加）：見た人に「作り込まれている」と伝わる程度に。
+   どれも JS が動いてから付く。動きを減らす設定の人には出さない
+   ========================================================= */
+
+/* 最初の画面：見出しが1行ずつ下からせり上がる */
+/* 画像の開きが終わってから、文字だけを横方向のマスクで描く。 */
+.js-motion .mv__ttl-line > span {
+  display: inline-block;
+  animation: titleReveal 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(1.65s + var(--i, 0) * 0.13s);
+}
+
+@keyframes titleReveal {
+  from { clip-path: inset(0 100% 0 0); opacity: 0; }
+  to { clip-path: inset(0); opacity: 1; }
+}
+
+/* 見出しの下に、ミントの線が中央から伸びる */
+.sec-ttl__ja {
+  position: relative;
+  padding-bottom: 14px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 48px;
+    height: 3px;
+    margin-left: -24px;
+    background: var(--mint);
+    border-radius: 2px;
+  }
+}
+
+.js-fade-ready .sec-ttl.fade .sec-ttl__ja::after {
+  transform: scaleX(0);
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) 0.35s;
+}
+
+.js-fade-ready .sec-ttl.fade.is-shown .sec-ttl__ja::after {
+  transform: scaleX(1);
+}
+
+/* カード・料金・実績は、触ると少し浮く */
+.card,
+.plan,
+.promise__item,
+.pain__item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (hover: hover) {
+  .card:hover,
+  .plan:hover,
+  .promise__item:hover,
+  .pain__item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 28px rgba(10, 29, 51, 0.12);
+  }
+}
+
+/* .fade で出したあとも、触ったときの浮き上がりが効くように */
+.js-fade-ready .fade.is-shown.card,
+.js-fade-ready .fade.is-shown.plan,
+.js-fade-ready .fade.is-shown.promise__item,
+.js-fade-ready .fade.is-shown.pain__item {
+  transition: opacity 0.8s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ボタンに光が流れる */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    &:hover::after {
+      left: 130%;
+      transition: left 0.7s ease;
+    }
+  }
+}
+
+/* 画面の上に、どこまで読んだかの線 */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 100%;
+  height: 3px;
+  background: var(--mint);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .mv__ttl-line > span {
+    transform: none;
+    clip-path: none;
+    opacity: 1;
+    animation: none;
+  }
+
+  .js-fade-ready .sec-ttl.fade .sec-ttl__ja::after {
+    transform: none;
+    transition: none;
+  }
+
+  .card,
+  .plan,
+  .promise__item,
+  .pain__item,
+  .btn--primary::after {
+    transition: none !important;
+  }
+
+  .card:hover,
+  .plan:hover,
+  .promise__item:hover,
+  .pain__item:hover {
+    transform: none;
+  }
+
+  .progress {
+    display: none;
+  }
+}
+
+/* 行の最後に2〜3文字だけ残らないように（11/20 文字を大きくしたため） */
+p,
+li,
+dd,
+td {
+  text-wrap: pretty;
+}
+
+/* スマホでは、文字を大きくしたぶん「ほ／しい。」のような1〜2文字の取り残しが出る。
+   中央寄せの短い文は .nb（意味のかたまり）の切れ目でだけ折り返し、左寄せの短い文は字間を少し詰める */
+.nb {
+  display: inline-block;
+}
+
+@media screen and (max-width: 599px) {
+  .contact__intro p {
+    letter-spacing: 0.01em;
+  }
+}
+
+/* =========================================================
+   トップの最初の画面（11/20 ほめまろの参考：major-scale.jp/life-edit-renovation）
+   1. イラストが小さく現れて、画面いっぱいに広がる
+   2. 最初の画面はその場に止まり、メッセージがアーチ形のカードになってせり上がって重なる
+   3. 画像が開いてから、見出しを横方向のマスクで描く
+   どれも JS が動いたときだけ（.js-motion）。動きを減らす設定の人には出さない
+   ========================================================= */
+.hero {
+  position: relative;
+}
+
+.js-motion .hero {
+  .mv {
+    position: sticky;
+    /* 上のメニューの高さ（JS で --header-h に入れる）だけ下で止める。見出しがメニューの裏に隠れないように */
+    top: var(--header-h, 0px);
+    z-index: 0;
+  }
+
+  .message {
+    position: relative;
+    z-index: 1;
+    width: calc(100% - 24px);
+    max-width: 920px;
+    margin-inline: auto;
+    margin-top: -24px;
+    padding-top: 72px;
+    background: var(--paper);
+    border-radius: 50% 50% 0 0 / 64px 64px 0 0;
+    box-shadow: 0 -12px 32px rgba(10, 29, 51, 0.1);
+
+    @include mq(lg) {
+      margin-top: -64px;
+      padding-top: 120px;
+      border-radius: 50% 50% 0 0 / 140px 140px 0 0;
+    }
+  }
+
+}
+
+/* 紙面全体を舞台にし、文字とイラストを独立したレイヤーにする。
+   イラストの祖先には opacity / filter / will-change を付けない。 */
+.mv {
+  position: relative;
+  min-height: 560px;
+  height: calc(100svh - var(--header-h));
+  max-height: 920px;
+
+  &__inner {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    display: block;
+    padding-top: 32px;
+  }
+
+  &__text {
+    position: relative;
+    z-index: 1;
+    padding-block: 0;
+  }
+
+  &__illust {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    pointer-events: none;
+
+    img {
+      width: 145%;
+      max-width: none;
+      margin-left: -22.5%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center 85%;
+      transform-origin: 50% 70%;
+    }
+  }
+
+  @include mq(lg) {
+    min-height: 560px;
+
+    &__inner { display: flex; align-items: center; padding-top: 0; }
+    &__text { width: 58%; }
+    &__illust { left: 30%; right: -60px; }
+    &__illust img { width: 100%; margin-left: 0; object-position: center; }
+  }
+}
+
+.js-motion .hero .mv__illust img {
+  animation: illustOpen 1.45s cubic-bezier(0.65, 0, 0.25, 1) both,
+    illustDrift 3.4s ease-out 1.45s forwards;
+}
+
+@keyframes illustOpen {
+  0%, 12% {
+    clip-path: inset(calc(50% - 48px) calc(50% - 48px));
+    transform: scale(1);
+  }
+  100% {
+    clip-path: inset(0);
+    transform: scale(1);
+  }
+}
+
+/* ごく小さな余韻。自動再生を5秒以内で終え、読み続ける際は静止する。 */
+@keyframes illustDrift {
+  from { transform: scale(1); }
+  to { transform: scale(1.025); }
+}
+
+/* 見出しは、ぼかしからくっきり */
+.js-fade-ready {
+  .sec-ttl.fade,
+  .message__ttl.fade {
+    filter: blur(10px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 0.61, 0.36, 1), filter 1s ease;
+  }
+
+  .sec-ttl.fade.is-shown,
+  .message__ttl.fade.is-shown {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .hero .mv { position: relative; top: auto; }
+
+  .js-motion .hero .mv__illust img {
+    clip-path: none;
+    transform: none;
+    animation: none;
+  }
+
+  .js-fade-ready .sec-ttl.fade,
+  .js-fade-ready .message__ttl.fade {
+    filter: none;
+  }
+}
+
+/* ---------------- 取材記事 ---------------- */
+.media {
+  text-align: center;
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--navy);
+
+    @include mq(lg) {
+      font-size: 24px;
+    }
+  }
+
+  &__credit {
+    margin-block: 16px 28px;
+    font-size: 15.5px;
+    color: var(--ink-2);
   }
 }
