@@ -146,24 +146,22 @@
   }
 
   function updateText() {
-    // Timeline: anchor 0–16%, release 16–43%, message 39–70%, arch 73–94%.
+    // Timeline: anchor → waves → message; keep the message visible into SERVICE.
+    // The sticky scroll range is now 200svh instead of 300svh.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
-    stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.13, .29, progress)));
+    stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.195, .435, progress)));
     stage.style.setProperty('--intro-y', `${(1 - reveal) * 14}px`);
-    const message = smooth(.36, .45, progress) * (1 - smooth(.66, .76, progress));
+    const message = smooth(.54, .675, progress);
     stage.style.setProperty('--message-opacity', message);
-    stage.style.setProperty('--message-y', `${(1 - smooth(.36, .45, progress)) * 24}px`);
-    stage.style.setProperty('--arch-y', `${(1 - smooth(.73, .94, progress)) * 120}%`);
-    stage.style.setProperty('--cue-opacity', 1 - smooth(.05, .18, progress));
+    stage.style.setProperty('--message-y', `${(1 - smooth(.54, .675, progress)) * 24}px`);
+    stage.style.setProperty('--cue-opacity', 1 - smooth(.075, .27, progress));
     stage.style.setProperty('--progress', progress);
   }
 
   function draw() {
     if (debug.nodraw) return;
     ctx.clearRect(0, 0, width, height);
-    const dissolve = smooth(.16, .43, progress);
-    const fade = 1 - smooth(.80, .97, progress);
-    if (fade <= 0) return;
+    const dissolve = smooth(.24, .645, progress);
     const desktop = width >= 960;
     const cx = width * (desktop ? .72 : .5);
     const cy = anchorCenterY;
@@ -172,7 +170,6 @@
     const bob = fastSin(elapsed * .42) * 7;
     const spreadScale = fastSin(dissolve * Math.PI) * 65;
     const sizeScale = mix(.8, desktop ? 1.3 : 1, dissolve) * (32 / 14);
-    ctx.globalAlpha = fade;
     for (let color = 0; color < palette.length; color++) {
       const sprite = sprites[color];
       const batch = batches[color];
