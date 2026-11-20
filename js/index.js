@@ -130,6 +130,16 @@
       document.documentElement.classList.add("js-motion");
     }
 
+    // 最初の画面を止める位置＝上のメニューの高さ（画面幅で変わるので、幅が変わるたびに測り直す）
+    var header = document.querySelector(".header");
+    if (header) {
+      var setHeaderH = function () {
+        document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px");
+      };
+      setHeaderH();
+      window.addEventListener("resize", setHeaderH);
+    }
+
     // 料金の数字を、見えたときに0から数え上げる
     var nums = document.querySelectorAll(".plan__num");
     if (nums.length && "IntersectionObserver" in window) {

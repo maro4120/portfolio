@@ -2251,3 +2251,76 @@ td {
     letter-spacing: 0.01em;
   }
 }
+/* =========================================================
+   トップの最初の画面（11/20 ほめまろの参考：major-scale.jp/life-edit-renovation）
+   1. イラストが小さく現れて、画面いっぱいに広がる
+   2. 最初の画面はその場に止まり、メッセージがアーチ形のカードになってせり上がって重なる
+   3. 見出しがぼかしから、くっきり出てくる
+   どれも JS が動いたときだけ（.js-motion）。動きを減らす設定の人には出さない
+   ========================================================= */
+.hero {
+  position: relative;
+}
+
+.js-motion .hero .mv {
+  position: sticky;
+  /* 上のメニューの高さ（JS で --header-h に入れる）だけ下で止める。見出しがメニューの裏に隠れないように */
+  top: var(--header-h, 0px);
+  z-index: 0;
+}
+.js-motion .hero .message {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 24px);
+  max-width: 920px;
+  margin-inline: auto;
+  margin-top: -24px;
+  padding-top: 72px;
+  background: var(--paper);
+  border-radius: 50% 50% 0 0/64px 64px 0 0;
+  box-shadow: 0 -12px 32px rgba(10, 29, 51, 0.1);
+}
+@media screen and (min-width: 960px) {
+  .js-motion .hero .message {
+    margin-top: -64px;
+    padding-top: 120px;
+    border-radius: 50% 50% 0 0/140px 140px 0 0;
+  }
+}
+.js-motion .hero {
+  /* イラストは img 自体を動かす（親を動かすと mix-blend-mode が効かなくなるため） */
+}
+.js-motion .hero .mv__illust img {
+  animation: illustOpen 1.5s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes illustOpen {
+  from {
+    clip-path: inset(22% 26% round 24px);
+    transform: scale(1.12);
+  }
+  to {
+    clip-path: inset(0 round 0);
+    transform: none;
+  }
+}
+/* 見出しは、ぼかしからくっきり */
+.js-fade-ready .sec-ttl.fade,
+.js-fade-ready .message__ttl.fade {
+  filter: blur(10px);
+  transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 0.61, 0.36, 1), filter 1s ease;
+}
+.js-fade-ready .sec-ttl.fade.is-shown,
+.js-fade-ready .message__ttl.fade.is-shown {
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js-motion .hero .mv__illust img {
+    animation: none;
+  }
+  .js-fade-ready .sec-ttl.fade,
+  .js-fade-ready .message__ttl.fade {
+    filter: none;
+  }
+}
