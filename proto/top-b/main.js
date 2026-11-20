@@ -90,7 +90,7 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
     waves.forEach(wave => wave.classList.remove('is-in-view'));
   });
 }
-document.querySelector('#js-contact-form').addEventListener('submit', e => e.preventDefault());
+document.querySelector('#js-contact-form')?.addEventListener('submit', e => e.preventDefault());
 document.querySelectorAll('.placeholder-link').forEach(link => link.addEventListener('click', e => e.preventDefault()));
 document.querySelectorAll('.menu a').forEach(link => link.addEventListener('click', () => { document.querySelector('.menu').open = false; }));
 })();
