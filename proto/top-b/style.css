@@ -269,6 +269,34 @@ textarea { resize: vertical; }
  .contact__ttl { font-size: 36px; }
 }
 
-.card.rise-ready { transform: translateY(48px); opacity: 0; transition: transform .8s cubic-bezier(.2,.65,.3,1), opacity .8s ease; }
-.card.rise-ready.is-visible { transform: none; opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .card.rise-ready { transform: none; opacity: 1; } }
+/* Shared, one-time reveals; no JavaScript means no hidden content. */
+html, body { overflow-x: clip; }
+.section .rise-ready {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: transform .75s cubic-bezier(.2,.65,.3,1), opacity .75s ease-out;
+  transition-delay: var(--rise-delay, 0ms);
+}
+.section .rise-ready.is-visible { transform: none; opacity: 1; }
+.section .rise-ready:focus-within { transform: none; opacity: 1; transition: none; }
+
+/* A quiet ribbon in the section padding, clear of text. */
+.section-wave { position: relative; }
+.section-wave::before {
+  content: "";
+  position: absolute;
+  inset: 12px auto auto 0;
+  width: calc(100% + 320px);
+  height: 28px;
+  pointer-events: none;
+  opacity: .45;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='28' viewBox='0 0 320 28'%3E%3Cpath d='M0 14 Q80 -2 160 14 T320 14' fill='none' stroke='%2312776b' stroke-width='1'/%3E%3Cpath d='M0 19 Q80 3 160 19 T320 19' fill='none' stroke='%232bb3a3' stroke-width='1'/%3E%3C/svg%3E") repeat-x;
+  animation: section-wave-drift 32s linear infinite paused;
+}
+.section-wave.is-in-view::before { animation-play-state: running; }
+.paused .section-wave::before { animation-play-state: paused; }
+@keyframes section-wave-drift { to { transform: translateX(-320px); } }
+@media (prefers-reduced-motion: reduce) {
+  .section .rise-ready { transform: none; opacity: 1; transition: none; }
+  .section-wave::before { animation: none; }
+}
