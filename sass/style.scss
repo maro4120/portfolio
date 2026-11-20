@@ -710,15 +710,16 @@ html {
   gap: 18px;
 
   @include mq(md) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @include mq(lg) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 .card {
+  min-width: 0;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 4px;
@@ -726,6 +727,7 @@ html {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 
   &__ttl {
+    width: calc(100% + 48px);
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 18.5px;

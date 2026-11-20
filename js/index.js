@@ -216,6 +216,10 @@
       loop: false,
       // 枚数が表示数以下のときは操作を無効にする
       watchOverflow: true,
+      // 横ホイールだけで動かし、縦方向はページのスクロールに任せる
+      mousewheel: {
+        forceToAxis: true
+      },
       a11y: {
         prevSlideMessage: "前の実績",
         nextSlideMessage: "次の実績"
