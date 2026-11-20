@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Anchor Base｜Hero B 試作</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;700&display=swap" /></noscript>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./main.js" defer></script>
+  </head>
+  <body>
+    <main class="journey" id="top">
+      <div class="stage">
+        <header class="header">
+          <a class="logo" href="#top" aria-label="Anchor Base トップへ">
+            <img src="../../img/logo-horizontal-dark.webp" alt="Anchor Base" width="620" height="150" />
+          </a>
+          <details class="menu">
+            <summary><span>Menu</span><span class="menu-icon" aria-hidden="true"></span></summary>
+            <nav aria-label="メインメニュー">
+              <a href="../../index.html#service">できること</a>
+              <a href="../../index.html#works">制作実績</a>
+              <a href="../../profile.html">運営者情報</a>
+              <a href="../../index.html#contact">ご相談はこちら</a>
+            </nav>
+          </details>
+        </header>
+
+        <canvas class="particles" aria-hidden="true"></canvas>
+        <section class="intro" aria-labelledby="intro-title">
+          <svg class="static-anchor" viewBox="0 0 400 480" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="26" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="200" cy="76" r="40" />
+              <path d="M200 116V409 M120 170H280 M55 280C55 365 117 406 200 425C283 406 345 365 345 280 M28 312L55 277L89 309 M311 309L345 277L372 312" />
+            </g>
+          </svg>
+          <div class="intro-copy">
+            <p class="eyebrow">ANCHOR BASE</p>
+            <h1 id="intro-title">作って終わりに、<br />したくないんです。</h1>
+            <span class="copy-rule" aria-hidden="true"></span>
+          </div>
+        </section>
+
+        <section class="message" aria-label="ホームページづくりへの想い">
+          <p class="message-lead">ホームページで迷うのは、<br />デザインより先に<br class="mobile-break" />『中身』だと思います。</p>
+          <p class="message-body">お店や会社のことをお聞きして、<br />載せるべきことから一緒に整理します。</p>
+        </section>
+
+        <section class="arch" aria-labelledby="arch-title">
+          <div class="arch-inner">
+            <p class="eyebrow">ABOUT</p>
+            <span class="arch-line" aria-hidden="true"></span>
+            <h2 id="arch-title">迷っているところを<br />聞き出すのが、<br />いちばん得意です。</h2>
+            <p class="arch-body">警察官として10年間、聞き取りを仕事にしてきました。うまく言葉にできない話を整理して、形にするところから始めます。</p>
+          </div>
+        </section>
+
+        <div class="scene-controls">
+          <span class="scroll-cue">SCROLL <span aria-hidden="true"></span></span>
+          <button class="motion-toggle" type="button" aria-pressed="false">動きを止める</button>
+        </div>
+        <div class="ticker" aria-label="ホームページ制作／LP（1枚もののページ）／修正・改善／販売ページ・画像・図解／大阪・高槻">
+          <div class="ticker-track" aria-hidden="true">
+            <span>ホームページ制作 <i>／</i> LP（1枚もののページ） <i>／</i> 修正・改善 <i>／</i> 販売ページ・画像・図解 <i>／</i> 大阪・高槻 <i>／</i> </span>
+            <span>ホームページ制作 <i>／</i> LP（1枚もののページ） <i>／</i> 修正・改善 <i>／</i> 販売ページ・画像・図解 <i>／</i> 大阪・高槻 <i>／</i> </span>
+          </div>
+        </div>
+        <div class="progress" aria-hidden="true"><span></span></div>
+      </div>
+    </main>
+  </body>
+</html>
