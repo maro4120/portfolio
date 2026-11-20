@@ -13,7 +13,7 @@
     meter.className = 'debug-meter';
     meter.textContent = 'fps: — | ≥50ms: — | resize: 0';
     document.body.append(meter);
-    // Monitor browser frame callbacks, independently of the 30fps particle cap.
+    // Monitor browser frame callbacks, at the display refresh rate.
     let samples = [], previous = 0, lastReport = 0;
     function measureFrame(now) {
       if (previous) samples.push({ time: now, slow: now - previous >= 50 });
@@ -57,7 +57,12 @@
   const tau = Math.PI * 2;
   const sine = new Float32Array(4096);
   for (let i = 0; i < sine.length; i++) sine[i] = Math.sin(i * tau / sine.length);
-  const fastSin = angle => sine[Math.round(angle * (4096 / tau)) & 4095];
+  const fastSin = angle => {
+    const position = angle * (4096 / tau);
+    const index = Math.floor(position);
+    const fraction = position - index;
+    return sine[index & 4095] * (1 - fraction) + sine[(index + 1) & 4095] * fraction;
+  };
   const silhouette = new Path2D();
   silhouette.arc(200, 76, 40, 0, Math.PI * 2);
   silhouette.moveTo(200, 116); silhouette.lineTo(200, 409);
@@ -69,10 +74,11 @@
   const mask = document.createElement('canvas').getContext('2d');
   if (!mask) return;
   mask.lineWidth = 30; mask.lineCap = 'round'; mask.lineJoin = 'round';
-  let particles = [], batches = [], width = 0, height = 0, progress = 0;
+  let particles = [], batches = [], width = 0, height = 0, progress = 0, targetProgress = 0;
   let frame = 0, last = 0, elapsed = 0, introTime = 0;
-  let inView = true, paused = false, enabled = false, textDirty = true;
+  let inView = true, paused = false, enabled = false;
   let pixelRatio = 0, headerHeight = 0, copyTop = 0, anchorCenterY = 0;
+  let journeyTop = 0, scrollRange = 1;
   const clamp = value => Math.max(0, Math.min(1, value));
   const smooth = (start, end, value) => {
     const t = clamp((value - start) / (end - start));
@@ -89,6 +95,9 @@
     stage.style.setProperty('--content-top', `${nextHeaderHeight + 16}px`);
     // Layout position excludes the intro's animated translateY.
     const nextCopyTop = introCopy.offsetTop;
+    // Cache document geometry only on layout changes, never during scroll/tick.
+    journeyTop = journey.getBoundingClientRect().top + window.scrollY;
+    scrollRange = Math.max(1, journey.offsetHeight - nextHeight);
     const dpr = debug.lowres ? 1 : Math.min(window.devicePixelRatio || 1, nextWidth < 960 ? 1.5 : 2);
     // iPhone browser chrome can resize the window without changing the svh stage.
     if (width === nextWidth && height === nextHeight && pixelRatio === dpr && headerHeight === nextHeaderHeight && copyTop === nextCopyTop) {
@@ -101,7 +110,7 @@
     const desktop = width >= 960;
     const contentTop = headerHeight + 16;
     const contentBottom = desktop ? height - 145 : copyTop;
-    // Include rotation, 7px bobbing, particle radius and pixel rounding.
+    // Include rotation, 7px bobbing, the enlarged mobile particle radius.
     const verticalExtent = 220 + 190 * Math.sin(.055);
     const preferredScale = desktop ? Math.min(width * .0012, height * .00155, 1.65) : Math.min(width * .00195, height * .00115);
     const availableHeight = Math.max(0, contentBottom - contentTop);
@@ -114,14 +123,14 @@
     // Fixed seed preserves particle identity on resize and backward scrolling.
     let seed = 731;
     const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    const count = (width < 600 ? 1200 : width < 960 ? 1800 : 3100) / (debug.lowres ? 2 : 1);
+    const count = (width < 960 ? 800 : 3100) / (debug.lowres ? 2 : 1);
     particles = [];
     while (particles.length < count) {
       const x = 10 + random() * 380, y = 20 + random() * 430;
       if (!mask.isPointInStroke(silhouette, x, y)) continue;
       const tone = random();
       particles.push({ ax: (x - 200) * scale, ay: (y - 230) * scale, u: random(), v: random(), phase: random() * Math.PI * 2,
-        band: particles.length % 5, size: 2 + random() * 3,
+        band: particles.length % 5, size: (2 + random() * 3) * (desktop ? 1 : 1.3),
         color: toneColors[tone > .985 ? 7 : Math.floor(tone * 7)] });
     }
     batches = palette.map((_, color) => particles.filter(p => p.color === color));
@@ -130,16 +139,13 @@
 
   function updateScroll() {
     if (!enabled) return;
-    const bounds = journey.getBoundingClientRect();
-    progress = clamp(-bounds.top / Math.max(1, journey.offsetHeight - height));
-    textDirty = true;
-    if (paused) updateText();
+    targetProgress = clamp((window.scrollY - journeyTop) / scrollRange);
+    if (paused) { progress = targetProgress; updateText(); }
     if (paused && inView && !document.hidden) draw();
     start();
   }
 
   function updateText() {
-    textDirty = false;
     // Timeline: anchor 0–16%, release 16–43%, message 39–70%, arch 73–94%.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
     stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.13, .29, progress)));
@@ -186,8 +192,8 @@
           x = mix(anchorX, waveX, dissolve) + spreadScale * fastSin(p.phase + elapsed * .2);
           y = mix(anchorY, waveY, dissolve);
         }
-        const size = Math.round(p.size * sizeScale);
-        ctx.drawImage(sprite, Math.round(x - size / 2), Math.round(y - size / 2), size, size);
+        const size = p.size * sizeScale;
+        ctx.drawImage(sprite, x - size / 2, y - size / 2, size, size);
       }
     }
     ctx.globalAlpha = 1;
@@ -196,12 +202,14 @@
   function tick(now) {
     frame = 0;
     if (!enabled || paused || !inView || document.hidden) { last = 0; return; }
-    if (!last || now - last >= 1000 / 30) {
-      const delta = last ? Math.min((now - last) / 1000, .08) : 0;
-      elapsed += delta; introTime += delta; last = now;
-      if (textDirty || introTime - delta < 1.8) updateText();
-      draw();
-    }
+    const delta = last ? Math.max(0, (now - last) / 1000) : 0;
+    last = now;
+    elapsed += delta; introTime += delta;
+    // 0.1 at 60Hz; equal elapsed time gives equal pursuit at 60/120Hz.
+    const follow = 1 - Math.pow(1 - .1, delta * 60);
+    progress = mix(progress, targetProgress, follow);
+    updateText();
+    draw();
     frame = requestAnimationFrame(tick);
   }
   function start() {
@@ -211,7 +219,7 @@
   function syncMode() {
     stop(); enabled = !staticMode.matches;
     root.classList.toggle('enhanced', enabled);
-    if (enabled) { resize(); draw(); start(); }
+    if (enabled) { resize(); progress = targetProgress; updateText(); draw(); start(); }
     else ctx.clearRect(0, 0, width, height);
   }
   toggle.addEventListener('click', () => {
