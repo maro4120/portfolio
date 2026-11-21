@@ -128,7 +128,8 @@ if (menu && menuButton) {
       const startY = height * (row + .15 + Math.random() * .7) / rows;
       const proximity = Math.random();
       const startSize = 4 + proximity * 8;
-      const size = 10 + 130 * proximity * proximity;
+      // 近づいた時の最大の大きさ。粒どうしが重なるくらいまで大きくする（最大約330px・真ん中の近さで約120px）
+      const size = 14 + 320 * Math.pow(proximity, 1.6);
       const startScale = startSize / size;
       // Perspective projection: advancing toward a bubble reduces its depth.
       // Position and diameter share the same zoom; distant bubbles barely grow.
