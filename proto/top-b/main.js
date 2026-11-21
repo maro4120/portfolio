@@ -134,37 +134,29 @@ if (menu && menuButton) {
       // Perspective projection: advancing toward a bubble reduces its depth.
       // Position and diameter share the same zoom; distant bubbles barely grow.
       const travel = 1 - startScale;
-      const duration = 1520 - proximity * 240;
+      const duration = 1400 - proximity * 260;
       const sway = (Math.random() - .5) * 3;
       const tone = Math.random();
       const color = colors[toneColors[tone > .985 ? 7 : Math.floor(tone * 7)]];
       bubble.className = 'menu-bubble';
       // Rasterize at the final diameter, then start small to keep nearby dots crisp.
       bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;
-      // 1) Menu ボタンから一気に飛び散る（最初の約0.3〜0.4秒）
-      // 2) 散った位置から、近づくほど大きく見えてすり抜ける
+      // Menu ボタンを消失点にして、放射状に広がりながらブワッと近づいてくる（遠近法）
+      // 画面を埋める位置（startX/Y）への方向に、最初はゆっくり、だんだん速く飛び出し、画面の外まで抜ける
       const btnX = x - bounds.left;
       const btnY = y - bounds.top;
-      const burstEnd = .22 + Math.random() * .08;
+      const reach = 1.5 + proximity * .9;      // 近い粒ほど遠くまで（画面の外へ）抜ける
+      const k = .62;
+      const norm = reach * (1 - k);           // R(1) = reach になるように合わせる
       const keyframes = Array.from({ length: 41 }, (_, step) => {
         const t = step / 40;
-        const drift = Math.sin(t * Math.PI * 2) * sway;
-        let cx, cy, scale;
-        if (t <= burstEnd) {
-          const b = t / burstEnd;
-          const be = 1 - Math.pow(1 - b, 3);
-          cx = btnX + (startX - btnX) * be;
-          cy = btnY + (startY - btnY) * be;
-          scale = startScale * (.2 + .8 * be);
-        } else {
-          const t2 = (t - burstEnd) / (1 - burstEnd);
-          const eased = Math.pow(t2, .62);
-          const zoom = 1 / (1 - travel * eased);
-          cx = originX + (startX - originX) * zoom + drift;
-          cy = originY + (startY - originY) * zoom + drift * .5;
-          scale = startScale * zoom;
-        }
-        const fade = Math.max(0, (t - .84) / .16);
+        const R = norm * t / (1 - k * t);       // 遠近法の加速
+        const grow = Math.min(1, R / reach);
+        const drift = Math.sin(t * Math.PI * 2) * sway * grow;
+        const cx = btnX + (startX - btnX) * R + drift;
+        const cy = btnY + (startY - btnY) * R + drift * .5;
+        const scale = startScale * .25 + (1 - startScale * .25) * Math.pow(grow, 1.4);
+        const fade = Math.max(0, (t - .82) / .18);
         return {
           offset: t,
           opacity: 1 - fade * fade * (3 - 2 * fade),
