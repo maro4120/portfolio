@@ -282,3 +282,8 @@ html, body { overflow-x: clip; }
   .section .rise-ready { transform: none; opacity: 1; transition: none; }
   .section-wave::before { animation: none; }
 }
+
+/* お客様の感想の引用 */
+.voice-quote { margin: 0 0 24px; padding: 18px 18px 16px; background: #fff; border-left: 3px solid var(--green); }
+.voice-quote p { margin: 0 0 12px; line-height: 1.9; }
+.voice-quote cite { display: block; font-style: normal; font-size: 14px; color: #3d4d5c; }
