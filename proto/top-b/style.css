@@ -304,6 +304,7 @@ html, body { overflow-x: clip; }
 .is-open .menu-rise { opacity: 1; transform: none; transition: transform .48s cubic-bezier(.2,.65,.3,1), opacity .48s ease-out; transition-delay: calc(600ms + var(--menu-order) * 45ms); }
 .site-menu.is-closing::before { opacity: 1; clip-path: circle(0px at var(--menu-x) var(--menu-y)); transition: clip-path .55s cubic-bezier(.2,.65,.3,1) .12s; }
 .menu-bubbles { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+/* Final-size circles start scaled down; only transform and opacity animate. */
 .menu-bubble { position: absolute; left: 0; top: 0; width: var(--size); height: var(--size); border-radius: 50%; background: var(--bubble-color); opacity: 0; transform-origin: center; }
 .site-menu.menu-still::before { clip-path: none; opacity: 0; transition: opacity .18s ease !important; }
 .site-menu.menu-still.is-open::before { opacity: 1; }

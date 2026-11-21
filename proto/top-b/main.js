@@ -110,7 +110,9 @@ if (menu && menuButton) {
     // Use the rendered layer's coordinate system for both origin and destinations.
     const bounds = bubbles.getBoundingClientRect();
     const { width, height } = bounds;
-    const originX = x - bounds.left, originY = y - bounds.top;
+    // Keep the vanishing point near the center, slightly toward Menu.
+    const originX = width * .5 + (x - bounds.left - width * .5) * .18;
+    const originY = height * .5 + (y - bounds.top - height * .5) * .18;
     const count = width < 960 ? 210 : 260;
     const columns = Math.round(Math.sqrt(count * width / height));
     const rows = Math.ceil(count / columns);
@@ -120,42 +122,43 @@ if (menu && menuButton) {
       const row = Math.floor(i / columns);
       const rowCount = Math.min(columns, count - row * columns);
       const column = i % columns;
-      // Diameter in CSS pixels, independent of the hero canvas backing resolution.
-      const size = Math.random() < .12 ? 18 + Math.random() * 4 : 8 + Math.random() * 8;
-      // Anchor boundary rows/columns to the edges; jitter only interior cells.
-      const targetX = width *
-        (column === 0 ? 0 : column === rowCount - 1 ? 1 : (column + Math.random() * .6 - .3) / (rowCount - 1));
-      const targetY = height *
-        (row === 0 ? 0 : row === rows - 1 ? 1 : (row + Math.random() * .6 - .3) / (rows - 1));
+      // Stratified starting positions cover the viewport before the camera advances.
+      const startX = width * (column + .15 + Math.random() * .7) / rowCount;
+      const startY = height * (row + .15 + Math.random() * .7) / rows;
+      const proximity = Math.random();
+      const startSize = 4 + proximity * 8;
+      const size = 10 + 130 * proximity * proximity;
+      const startScale = startSize / size;
+      // Perspective projection: advancing toward a bubble reduces its depth.
+      // Position and diameter share the same zoom; distant bubbles barely grow.
+      const travel = 1 - startScale;
+      const duration = 1520 - proximity * 240;
+      const sway = (Math.random() - .5) * 3;
       const tone = Math.random();
       const color = colors[toneColors[tone > .985 ? 7 : Math.floor(tone * 7)]];
       bubble.className = 'menu-bubble';
+      // Rasterize at the final diameter, then start small to keep nearby dots crisp.
       bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;
-      const depth = targetY / height;
-      const duration = 1200 + Math.random() * 180 + depth * 160;
-      const delay = Math.random() * 40;
-      const riseStart = .38 + depth * .08;
-      const rise = 45 + Math.random() * 85;
-      const sway = (3 + Math.random() * 4) * (Math.random() < .5 ? -1 : 1);
-      // Only transform/opacity animate; alternate a small translateX while rising.
-      const transform = (cx, cy, scale, drift = 0) =>
-        `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) translateX(${drift}px) scale(${scale})`;
-      flights.push({ bubble, duration, delay, keyframes: [
-        { offset: 0, opacity: 0, transform: transform(originX, originY, .12), easing: 'cubic-bezier(.16,.7,.3,1)' },
-        { offset: .3, opacity: 1, transform: transform(targetX, targetY, 1) },
-        { offset: riseStart, opacity: 1, transform: transform(targetX, targetY, 1), easing: 'ease-in-out' },
-        { offset: .62, opacity: 1, transform: transform(targetX, targetY - rise * .3, .8, sway), easing: 'ease-in-out' },
-        { offset: .78, opacity: 1, transform: transform(targetX, targetY - rise * .62, .55, -sway), easing: 'ease-in-out' },
-        { offset: .9, opacity: 1, transform: transform(targetX, targetY - rise * .84, .3, sway * .5) },
-        { offset: .95, opacity: 1, transform: transform(targetX, targetY - rise * .92, .36) },
-        { offset: 1, opacity: 0, transform: transform(targetX, targetY - rise, .18, -sway * .25) }
-      ] });
+      const keyframes = Array.from({ length: 33 }, (_, step) => {
+        const t = step / 32;
+        const zoom = 1 / (1 - travel * t);
+        const drift = Math.sin(t * Math.PI * 2) * sway;
+        const cx = originX + (startX - originX) * zoom + drift;
+        const cy = originY + (startY - originY) * zoom + drift * .5;
+        const fade = Math.max(0, (t - .72) / .28);
+        return {
+          offset: t,
+          opacity: 1 - fade * fade * (3 - 2 * fade),
+          transform: `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${startScale * zoom})`
+        };
+      });
+      flights.push({ bubble, duration, keyframes });
       fragment.append(bubble);
     }
     bubbles.replaceChildren(fragment);
-    for (const { bubble, keyframes, duration, delay } of flights) {
+    for (const { bubble, keyframes, duration } of flights) {
       const animation = bubble.animate(keyframes, {
-        duration, delay, fill: 'both'
+        duration, easing: 'linear', fill: 'both'
       });
       animation.onfinish = () => bubble.remove();
     }
