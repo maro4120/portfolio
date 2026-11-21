@@ -113,7 +113,8 @@ if (menu && menuButton) {
     // Keep the vanishing point near the center, slightly toward Menu.
     const originX = width * .5 + (x - bounds.left - width * .5) * .18;
     const originY = height * .5 + (y - bounds.top - height * .5) * .18;
-    const count = width < 960 ? 210 : 260;
+    // 画面の広さから数を決めて、すき間なく埋める（24px四方に1個・重さのため上限700）
+    const count = Math.max(300, Math.min(700, Math.round(width * height / (24 * 24))));
     const columns = Math.round(Math.sqrt(count * width / height));
     const rows = Math.ceil(count / columns);
     const flights = [];
