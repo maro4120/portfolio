@@ -141,11 +141,13 @@ if (menu && menuButton) {
       bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;
       const keyframes = Array.from({ length: 33 }, (_, step) => {
         const t = step / 32;
-        const zoom = 1 / (1 - travel * t);
+        // 大きくなり始めを早めて、近づいていく様子が見えるようにする
+        const eased = Math.pow(t, .62);
+        const zoom = 1 / (1 - travel * eased);
         const drift = Math.sin(t * Math.PI * 2) * sway;
         const cx = originX + (startX - originX) * zoom + drift;
         const cy = originY + (startY - originY) * zoom + drift * .5;
-        const fade = Math.max(0, (t - .72) / .28);
+        const fade = Math.max(0, (t - .84) / .16);
         return {
           offset: t,
           opacity: 1 - fade * fade * (3 - 2 * fade),
