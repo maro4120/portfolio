@@ -103,21 +103,34 @@ if (menu && menuButton) {
     menu.classList.toggle('menu-still', still());
     if (still()) bubbles.replaceChildren();
   }
-  function burst() {
+  function burst(x, y) {
     const colors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
     const fragment = document.createDocumentFragment();
-    for (let i = 0; i < 24; i++) {
+    const count = innerWidth < 960 ? 140 : 200;
+    const columns = Math.round(Math.sqrt(count * innerWidth / innerHeight));
+    const rows = Math.ceil(count / columns);
+    // Stratified destinations cover the whole viewport, including its edges.
+    for (let i = 0; i < count; i++) {
       const bubble = document.createElement('span');
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 24 + Math.random() * 100;
+      const row = Math.floor(i / columns);
+      const rowCount = Math.min(columns, count - row * columns);
+      const column = i % columns;
+      const size = i % 3 === 0 ? 30 + Math.random() * 30 : 8 + Math.random() * 22;
+      const targetX = size / 4 + (innerWidth - size / 2) *
+        (column === 0 ? 0 : column === rowCount - 1 ? 1 : (column + Math.random() * .6 - .3) / (rowCount - 1));
+      const targetY = size / 4 + (innerHeight - size / 2) *
+        (row === 0 ? 0 : row === rows - 1 ? 1 : (row + Math.random() * .6 - .3) / (rows - 1));
       const color = colors[i % 9 === 0 ? 4 : i % 4];
       bubble.className = 'menu-bubble';
-      bubble.style.cssText = `--size:${4 + Math.random() * 9}px;--dx:${Math.cos(angle) * distance}px;--dy:${Math.sin(angle) * distance}px;--bubble-color:${color};--bubble-fill:${color}30;--delay:${Math.random() * 80}ms`;
+      bubble.style.cssText = `--size:${size}px;--dx:${targetX - x}px;--dy:${targetY - y}px;--bubble-color:${color};--bubble-fill:${color}30;--duration:${780 + Math.random() * 480}ms;--delay:${Math.random() * 40}ms`;
       fragment.append(bubble);
     }
+    fragment.childNodes.forEach(bubble => {
+      bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
+    });
     bubbles.replaceChildren(fragment);
     clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 800);
+    bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 1400);
   }
   function openMenu() {
     if (menu.open) return;
@@ -138,10 +151,10 @@ if (menu && menuButton) {
     menuButton.setAttribute('aria-expanded', 'true');
     menu.showModal();
     closeButton.focus({ preventScroll: true });
-    // Establish the collapsed surface before starting its transition.
+    // Establish the transparent surface before starting its transition.
     menu.getBoundingClientRect();
     menu.classList.add('is-open');
-    if (!still()) burst();
+    if (!still()) burst(x, y);
   }
   function finishClose(destination) {
     clearTimeout(closeTimer);
