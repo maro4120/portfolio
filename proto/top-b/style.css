@@ -24,7 +24,7 @@ p, h1, h2 { margin: 0; }
 }
 .header { background: rgb(243 246 244 / 65%); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); position: relative; z-index: 10; display: flex; align-items: center; justify-content: space-between; padding: 24px; }
 .logo { display: block; width: 144px; }
-.logo img { display: block; width: 100%; height: auto; clip-path: inset(1.5px); mix-blend-mode: multiply; }
+.logo img { display: block; width: 100%; height: auto; }
 .menu { position: relative; }
 .menu summary { display: flex; gap: 14px; align-items: center; min-height: 44px; cursor: pointer; list-style: none; font: 600 16px "Josefin Sans", sans-serif; }
 .menu summary::-webkit-details-marker { display: none; }
