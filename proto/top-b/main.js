@@ -92,5 +92,113 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
 }
 document.querySelector('#js-contact-form')?.addEventListener('submit', e => e.preventDefault());
 document.querySelectorAll('.placeholder-link').forEach(link => link.addEventListener('click', e => e.preventDefault()));
-document.querySelectorAll('.menu a').forEach(link => link.addEventListener('click', () => { document.querySelector('.menu').open = false; }));
+const menu = document.querySelector('#site-menu');
+const menuButton = document.querySelector('.header .menu-toggle');
+if (menu && menuButton) {
+  const bubbles = menu.querySelector('.menu-bubbles');
+  const closeButton = menu.querySelector('.menu-close');
+  let closing = false, savedY = 0, savedBodyStyle = '', closeTimer, bubbleTimer;
+  const still = () => motionPreference.matches || document.documentElement.classList.contains('paused');
+  function syncMotion() {
+    menu.classList.toggle('menu-still', still());
+    if (still()) bubbles.replaceChildren();
+  }
+  function burst() {
+    const colors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < 24; i++) {
+      const bubble = document.createElement('span');
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 24 + Math.random() * 100;
+      const color = colors[i % 9 === 0 ? 4 : i % 4];
+      bubble.className = 'menu-bubble';
+      bubble.style.cssText = `--size:${4 + Math.random() * 9}px;--dx:${Math.cos(angle) * distance}px;--dy:${Math.sin(angle) * distance}px;--bubble-color:${color};--bubble-fill:${color}30;--delay:${Math.random() * 80}ms`;
+      fragment.append(bubble);
+    }
+    bubbles.replaceChildren(fragment);
+    clearTimeout(bubbleTimer);
+    bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 800);
+  }
+  function openMenu() {
+    if (menu.open) return;
+    const rect = menuButton.getBoundingClientRect();
+    const x = rect.left + rect.width / 2, y = rect.top + rect.height / 2;
+    menu.style.setProperty('--menu-x', `${x}px`);
+    menu.style.setProperty('--menu-y', `${y}px`);
+    menu.style.setProperty('--menu-radius', `${Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y)) + 32}px`);
+    menu.style.setProperty('--button-top', `${rect.top}px`);
+    menu.style.setProperty('--button-right', `${innerWidth - rect.right}px`);
+    savedY = scrollY;
+    savedBodyStyle = document.body.style.cssText;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    syncMotion();
+    menuButton.setAttribute('aria-expanded', 'true');
+    menu.showModal();
+    closeButton.focus({ preventScroll: true });
+    // Establish the collapsed surface before starting its transition.
+    menu.getBoundingClientRect();
+    menu.classList.add('is-open');
+    if (!still()) burst();
+  }
+  function finishClose(destination) {
+    clearTimeout(closeTimer);
+    clearTimeout(bubbleTimer);
+    menu.close();
+    menu.classList.remove('is-open', 'is-closing');
+    bubbles.replaceChildren();
+    document.body.style.cssText = savedBodyStyle;
+    window.scrollTo({ top: savedY, behavior: 'instant' });
+    menuButton.setAttribute('aria-expanded', 'false');
+    closing = false;
+    menuButton.focus({ preventScroll: true });
+    if (destination) {
+      const target = document.querySelector(destination);
+      if (target) {
+        history.pushState(null, '', destination);
+        target.scrollIntoView({ behavior: 'instant', block: 'start' });
+        const previousTabindex = target.getAttribute('tabindex');
+        target.setAttribute('tabindex', '-1');
+        target.focus({ preventScroll: true });
+        target.addEventListener('blur', () => {
+          if (previousTabindex === null) target.removeAttribute('tabindex');
+          else target.setAttribute('tabindex', previousTabindex);
+        }, { once: true });
+      }
+    }
+  }
+  function closeMenu(destination) {
+    if (!menu.open || closing) return;
+    closing = true;
+    menu.classList.remove('is-open');
+    menu.classList.add('is-closing');
+    bubbles.replaceChildren();
+    closeTimer = setTimeout(() => finishClose(destination), still() ? 200 : 680);
+  }
+  menuButton.addEventListener('click', openMenu);
+  closeButton.addEventListener('click', () => closeMenu());
+  menu.addEventListener('cancel', event => { event.preventDefault(); closeMenu(); });
+  menu.addEventListener('keydown', event => {
+    if (event.key !== 'Tab') return;
+    const links = [...menu.querySelectorAll('button, a[href]')];
+    const first = links[0], last = links[links.length - 1];
+    if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+    else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+  });
+  menu.querySelectorAll('a').forEach(link => link.addEventListener('click', event => {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const href = link.getAttribute('href');
+    if (href.startsWith('#')) {
+      event.preventDefault();
+      closeMenu(href);
+    } else closeMenu();
+  }));
+  motionPreference.addEventListener('change', syncMotion);
+  new MutationObserver(syncMotion).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  window.addEventListener('resize', () => {
+    if (menu.open) menu.style.setProperty('--menu-radius', `${Math.hypot(innerWidth, innerHeight) * 2}px`);
+  });
+}
 })();
