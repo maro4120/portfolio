@@ -106,29 +106,47 @@ if (menu && menuButton) {
   function burst(x, y) {
     const colors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
     const fragment = document.createDocumentFragment();
-    const count = innerWidth < 960 ? 140 : 200;
-    const columns = Math.round(Math.sqrt(count * innerWidth / innerHeight));
+    // Use the rendered layer's coordinate system for both origin and destinations.
+    const bounds = bubbles.getBoundingClientRect();
+    const { width, height } = bounds;
+    const originX = x - bounds.left, originY = y - bounds.top;
+    const count = width < 960 ? 140 : 200;
+    const columns = Math.round(Math.sqrt(count * width / height));
     const rows = Math.ceil(count / columns);
-    // Stratified destinations cover the whole viewport, including its edges.
+    const flights = [];
     for (let i = 0; i < count; i++) {
       const bubble = document.createElement('span');
       const row = Math.floor(i / columns);
       const rowCount = Math.min(columns, count - row * columns);
       const column = i % columns;
       const size = i % 3 === 0 ? 30 + Math.random() * 30 : 8 + Math.random() * 22;
-      const targetX = size / 4 + (innerWidth - size / 2) *
+      // Anchor boundary rows/columns to the edges; jitter only interior cells.
+      const targetX = width *
         (column === 0 ? 0 : column === rowCount - 1 ? 1 : (column + Math.random() * .6 - .3) / (rowCount - 1));
-      const targetY = size / 4 + (innerHeight - size / 2) *
+      const targetY = height *
         (row === 0 ? 0 : row === rows - 1 ? 1 : (row + Math.random() * .6 - .3) / (rows - 1));
       const color = colors[i % 9 === 0 ? 4 : i % 4];
       bubble.className = 'menu-bubble';
-      bubble.style.cssText = `--size:${size}px;--dx:${targetX - x}px;--dy:${targetY - y}px;--bubble-color:${color};--bubble-fill:${color}30;--duration:${780 + Math.random() * 480}ms;--delay:${Math.random() * 40}ms`;
+      bubble.style.cssText = `--size:${size}px;--bubble-color:${color};--bubble-fill:${color}30`;
+      // Translation is in layer pixels, before scale, with no percentage mixing.
+      const transform = (cx, cy, scale) =>
+        `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${scale})`;
+      flights.push({ bubble, keyframes: [
+        { offset: 0, opacity: 0, transform: transform(originX, originY, .12), easing: 'cubic-bezier(.16,.7,.3,1)' },
+        { offset: .4, opacity: .8, transform: transform(targetX, targetY, 1) },
+        { offset: .76, opacity: .8, transform: transform(targetX, targetY, 1) },
+        { offset: .88, opacity: .6, transform: transform(targetX, targetY, 1.2) },
+        { offset: 1, opacity: 0, transform: transform(targetX, targetY, 1.55) }
+      ] });
       fragment.append(bubble);
     }
-    fragment.childNodes.forEach(bubble => {
-      bubble.addEventListener('animationend', () => bubble.remove(), { once: true });
-    });
     bubbles.replaceChildren(fragment);
+    for (const { bubble, keyframes } of flights) {
+      const animation = bubble.animate(keyframes, {
+        duration: 1000 + Math.random() * 260, delay: Math.random() * 40, fill: 'both'
+      });
+      animation.onfinish = () => bubble.remove();
+    }
     clearTimeout(bubbleTimer);
     bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 1400);
   }
