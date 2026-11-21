@@ -141,19 +141,34 @@ if (menu && menuButton) {
       bubble.className = 'menu-bubble';
       // Rasterize at the final diameter, then start small to keep nearby dots crisp.
       bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;
-      const keyframes = Array.from({ length: 33 }, (_, step) => {
-        const t = step / 32;
-        // 大きくなり始めを早めて、近づいていく様子が見えるようにする
-        const eased = Math.pow(t, .62);
-        const zoom = 1 / (1 - travel * eased);
+      // 1) Menu ボタンから一気に飛び散る（最初の約0.3〜0.4秒）
+      // 2) 散った位置から、近づくほど大きく見えてすり抜ける
+      const btnX = x - bounds.left;
+      const btnY = y - bounds.top;
+      const burstEnd = .22 + Math.random() * .08;
+      const keyframes = Array.from({ length: 41 }, (_, step) => {
+        const t = step / 40;
         const drift = Math.sin(t * Math.PI * 2) * sway;
-        const cx = originX + (startX - originX) * zoom + drift;
-        const cy = originY + (startY - originY) * zoom + drift * .5;
+        let cx, cy, scale;
+        if (t <= burstEnd) {
+          const b = t / burstEnd;
+          const be = 1 - Math.pow(1 - b, 3);
+          cx = btnX + (startX - btnX) * be;
+          cy = btnY + (startY - btnY) * be;
+          scale = startScale * (.2 + .8 * be);
+        } else {
+          const t2 = (t - burstEnd) / (1 - burstEnd);
+          const eased = Math.pow(t2, .62);
+          const zoom = 1 / (1 - travel * eased);
+          cx = originX + (startX - originX) * zoom + drift;
+          cy = originY + (startY - originY) * zoom + drift * .5;
+          scale = startScale * zoom;
+        }
         const fade = Math.max(0, (t - .84) / .16);
         return {
           offset: t,
           opacity: 1 - fade * fade * (3 - 2 * fade),
-          transform: `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${startScale * zoom})`
+          transform: `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${scale})`
         };
       });
       flights.push({ bubble, duration, keyframes });
