@@ -111,7 +111,7 @@ if (menu && menuButton) {
     const bounds = bubbles.getBoundingClientRect();
     const { width, height } = bounds;
     const originX = x - bounds.left, originY = y - bounds.top;
-    const count = width < 960 ? 140 : 200;
+    const count = width < 960 ? 210 : 260;
     const columns = Math.round(Math.sqrt(count * width / height));
     const rows = Math.ceil(count / columns);
     const flights = [];
@@ -120,9 +120,8 @@ if (menu && menuButton) {
       const row = Math.floor(i / columns);
       const rowCount = Math.min(columns, count - row * columns);
       const column = i % columns;
-      // hero.js: visible diameter = particle size * 2 * .8 at rest.
-      const size = (2 + Math.random() * 3) * (width < 960 ? 1.3 : 1) * 1.6
-        * (Math.random() < .12 ? 1.5 : 1);
+      // Diameter in CSS pixels, independent of the hero canvas backing resolution.
+      const size = Math.random() < .12 ? 18 + Math.random() * 4 : 8 + Math.random() * 8;
       // Anchor boundary rows/columns to the edges; jitter only interior cells.
       const targetX = width *
         (column === 0 ? 0 : column === rowCount - 1 ? 1 : (column + Math.random() * .6 - .3) / (rowCount - 1));
