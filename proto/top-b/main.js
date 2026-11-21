@@ -105,6 +105,7 @@ if (menu && menuButton) {
   }
   function burst(x, y) {
     const colors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
+    const toneColors = [0, 0, 1, 2, 2, 3, 3, 4];
     const fragment = document.createDocumentFragment();
     // Use the rendered layer's coordinate system for both origin and destinations.
     const bounds = bubbles.getBoundingClientRect();
@@ -119,36 +120,48 @@ if (menu && menuButton) {
       const row = Math.floor(i / columns);
       const rowCount = Math.min(columns, count - row * columns);
       const column = i % columns;
-      const size = i % 3 === 0 ? 30 + Math.random() * 30 : 8 + Math.random() * 22;
+      // hero.js: visible diameter = particle size * 2 * .8 at rest.
+      const size = (2 + Math.random() * 3) * (width < 960 ? 1.3 : 1) * 1.6
+        * (Math.random() < .12 ? 1.5 : 1);
       // Anchor boundary rows/columns to the edges; jitter only interior cells.
       const targetX = width *
         (column === 0 ? 0 : column === rowCount - 1 ? 1 : (column + Math.random() * .6 - .3) / (rowCount - 1));
       const targetY = height *
         (row === 0 ? 0 : row === rows - 1 ? 1 : (row + Math.random() * .6 - .3) / (rows - 1));
-      const color = colors[i % 9 === 0 ? 4 : i % 4];
+      const tone = Math.random();
+      const color = colors[toneColors[tone > .985 ? 7 : Math.floor(tone * 7)]];
       bubble.className = 'menu-bubble';
-      bubble.style.cssText = `--size:${size}px;--bubble-color:${color};--bubble-fill:${color}30`;
-      // Translation is in layer pixels, before scale, with no percentage mixing.
-      const transform = (cx, cy, scale) =>
-        `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${scale})`;
-      flights.push({ bubble, keyframes: [
+      bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;
+      const depth = targetY / height;
+      const duration = 1200 + Math.random() * 180 + depth * 160;
+      const delay = Math.random() * 40;
+      const riseStart = .38 + depth * .08;
+      const rise = 45 + Math.random() * 85;
+      const sway = (3 + Math.random() * 4) * (Math.random() < .5 ? -1 : 1);
+      // Only transform/opacity animate; alternate a small translateX while rising.
+      const transform = (cx, cy, scale, drift = 0) =>
+        `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) translateX(${drift}px) scale(${scale})`;
+      flights.push({ bubble, duration, delay, keyframes: [
         { offset: 0, opacity: 0, transform: transform(originX, originY, .12), easing: 'cubic-bezier(.16,.7,.3,1)' },
-        { offset: .4, opacity: .8, transform: transform(targetX, targetY, 1) },
-        { offset: .76, opacity: .8, transform: transform(targetX, targetY, 1) },
-        { offset: .88, opacity: .6, transform: transform(targetX, targetY, 1.2) },
-        { offset: 1, opacity: 0, transform: transform(targetX, targetY, 1.55) }
+        { offset: .3, opacity: 1, transform: transform(targetX, targetY, 1) },
+        { offset: riseStart, opacity: 1, transform: transform(targetX, targetY, 1), easing: 'ease-in-out' },
+        { offset: .62, opacity: 1, transform: transform(targetX, targetY - rise * .3, .8, sway), easing: 'ease-in-out' },
+        { offset: .78, opacity: 1, transform: transform(targetX, targetY - rise * .62, .55, -sway), easing: 'ease-in-out' },
+        { offset: .9, opacity: 1, transform: transform(targetX, targetY - rise * .84, .3, sway * .5) },
+        { offset: .95, opacity: 1, transform: transform(targetX, targetY - rise * .92, .36) },
+        { offset: 1, opacity: 0, transform: transform(targetX, targetY - rise, .18, -sway * .25) }
       ] });
       fragment.append(bubble);
     }
     bubbles.replaceChildren(fragment);
-    for (const { bubble, keyframes } of flights) {
+    for (const { bubble, keyframes, duration, delay } of flights) {
       const animation = bubble.animate(keyframes, {
-        duration: 1000 + Math.random() * 260, delay: Math.random() * 40, fill: 'both'
+        duration, delay, fill: 'both'
       });
       animation.onfinish = () => bubble.remove();
     }
     clearTimeout(bubbleTimer);
-    bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 1400);
+    bubbleTimer = setTimeout(() => bubbles.replaceChildren(), 1600);
   }
   function openMenu() {
     if (menu.open) return;
