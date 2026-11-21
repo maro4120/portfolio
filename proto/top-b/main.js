@@ -148,8 +148,11 @@ if (menu && menuButton) {
       const reach = 1.5 + proximity * .9;      // 近い粒ほど遠くまで（画面の外へ）抜ける
       const k = .62;
       const norm = reach * (1 - k);           // R(1) = reach になるように合わせる
+      // 粒ごとに飛び出すタイミングをずらして、ボタンから湧き出すようにする（四角いかたまりに見えないように）
+      const delay = Math.random() * .32;
       const keyframes = Array.from({ length: 41 }, (_, step) => {
-        const t = step / 40;
+        const tt = step / 40;
+        const t = Math.max(0, (tt - delay) / (1 - delay));
         const R = norm * t / (1 - k * t);       // 遠近法の加速
         const grow = Math.min(1, R / reach);
         const drift = Math.sin(t * Math.PI * 2) * sway * grow;
@@ -158,8 +161,8 @@ if (menu && menuButton) {
         const scale = startScale * .25 + (1 - startScale * .25) * Math.pow(grow, 1.4);
         const fade = Math.max(0, (t - .82) / .18);
         return {
-          offset: t,
-          opacity: 1 - fade * fade * (3 - 2 * fade),
+          offset: tt,
+          opacity: tt < delay ? 0 : 1 - fade * fade * (3 - 2 * fade),
           transform: `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${scale})`
         };
       });
