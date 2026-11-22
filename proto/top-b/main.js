@@ -162,8 +162,8 @@ if (menu && menuButton) {
         const fade = Math.max(0, (t - .82) / .18);
         return {
           offset: tt,
-          // 透過 10%（不透明度 0.9）
-          opacity: tt < delay ? 0 : .9 * (1 - fade * fade * (3 - 2 * fade)),
+          // 透過 30%（不透明度 0.7）
+          opacity: tt < delay ? 0 : .7 * (1 - fade * fade * (3 - 2 * fade)),
           transform: `translate3d(${cx - size / 2}px, ${cy - size / 2}px, 0) scale(${scale})`
         };
       });
