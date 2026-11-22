@@ -323,7 +323,7 @@ html, body { overflow-x: clip; }
   .menu-bubbles { display: none; }
 }
 
-/* One-time bubbles follow the heading as it rises. */
+/* Continuous bubbles beside headings currently in view. */
 .sec-ttl, .contact__en { position: relative; }
 .heading-bubbles { position: absolute; inset: 0; pointer-events: none; }
 .paused .heading-bubbles { display: none; }

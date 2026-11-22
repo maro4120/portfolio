@@ -53,28 +53,36 @@ function bubbleColor() {
   const tone = Math.random();
   return bubbleColors[bubbleTones[tone > .985 ? 7 : Math.floor(tone * 7)]];
 }
-const headingFlights = new Set();
-function clearHeadingBubbles() {
-  for (const animation of headingFlights) animation.cancel();
-  headingFlights.clear();
-  document.querySelectorAll('.heading-bubbles').forEach(layer => layer.remove());
+const headingStreams = new Map();
+function stopHeadingBubbles(state) {
+  clearTimeout(state.timer);
+  state.timer = null;
+  for (const animation of state.flights) animation.cancel();
+  state.flights.clear();
+  state.layer?.remove();
+  state.layer = null;
 }
-function headingBurst(target) {
+function canBubble(state) {
+  return state.inView && !still() && !document.hidden;
+}
+function headingBurst(target, state) {
+  if (!canBubble(state)) return;
   const line = target.querySelector('.sec-ttl__en') || (target.matches('.contact__en') ? target : null);
-  if (!line || still()) return;
-  // Range measures the text, including centered text inside a full-width block.
+  if (!line) return;
+  // Measure the text again for each bubble, including after viewport changes.
   const range = document.createRange();
   range.selectNodeContents(line);
   const text = range.getBoundingClientRect();
   const bounds = target.getBoundingClientRect();
   const room = text.left - 6;
-  if (room < 4) return;
-  const layer = document.createElement('span');
-  layer.className = 'heading-bubbles';
-  layer.setAttribute('aria-hidden', 'true');
-  target.append(layer);
-  let remaining = 8;
-  for (let i = 0; i < 8; i++) {
+  if (room >= 4 && state.flights.size < 5) {
+    if (!state.layer) {
+      state.layer = document.createElement('span');
+      state.layer.className = 'heading-bubbles';
+      state.layer.setAttribute('aria-hidden', 'true');
+      target.append(state.layer);
+    }
+    const layer = state.layer;
     const bubble = document.createElement('span');
     const size = Math.min(4 + Math.random() * 8, room);
     const sway = Math.min(3, Math.max(0, (room - size) / 2));
@@ -92,25 +100,54 @@ function headingBurst(target) {
       { opacity: .5, transform: `translate(${-sway}px, ${-rise * .18}px) scale(1)`, offset: .2 },
       { opacity: .5, transform: `translate(${sway}px, ${-rise * .55}px) scale(.8)`, offset: .55 },
       { opacity: 0, transform: `translate(0, ${-rise}px) scale(.15)`, offset: 1 }
-    ], { duration: 650, delay: i * 50, easing: 'ease-in-out', fill: 'both' });
-    headingFlights.add(animation);
+    ], { duration: 800 + Math.random() * 400, easing: 'ease-in-out', fill: 'both' });
+    state.flights.add(animation);
     animation.onfinish = () => {
-      headingFlights.delete(animation);
+      state.flights.delete(animation);
       bubble.remove();
-      if (--remaining === 0) layer.remove();
     };
+  }
+  state.timer = setTimeout(() => headingBurst(target, state), 250 + Math.random() * 200);
+}
+function syncHeadingBubbles() {
+  for (const [target, state] of headingStreams) {
+    if (!canBubble(state)) {
+      stopHeadingBubbles(state);
+    } else if (state.timer === null) {
+      // Let the heading's entrance finish before the first bubble rises.
+      const style = getComputedStyle(target);
+      const durations = style.transitionDuration.split(',').map(value => parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000));
+      const delays = style.transitionDelay.split(',').map(value => parseFloat(value) * (value.trim().endsWith('ms') ? 1 : 1000));
+      const wait = Math.max(0, ...durations.map((duration, i) => duration + delays[i % delays.length]));
+      state.timer = setTimeout(() => headingBurst(target, state), wait);
+    }
   }
 }
 function reveal(target) {
   if (target.classList.contains('is-visible')) return;
   target.classList.add('is-visible');
-  headingBurst(target);
 }
-motionPreference.addEventListener('change', () => { if (still()) clearHeadingBubbles(); });
-new MutationObserver(() => { if (still()) clearHeadingBubbles(); })
+motionPreference.addEventListener('change', syncHeadingBubbles);
+new MutationObserver(syncHeadingBubbles)
   .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-// Re-measure on the next reveal if the viewport changes during a burst.
-window.addEventListener('resize', clearHeadingBubbles);
+document.addEventListener('visibilitychange', syncHeadingBubbles);
+window.addEventListener('resize', () => {
+  for (const state of headingStreams.values()) stopHeadingBubbles(state);
+  syncHeadingBubbles();
+});
+// Keep observing headings after their one-time entrance, even in reduced motion.
+if ('IntersectionObserver' in window) {
+  const headingObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      headingStreams.get(entry.target).inView = entry.isIntersecting;
+    });
+    syncHeadingBubbles();
+  });
+  document.querySelectorAll('.section .sec-ttl, .contact__en').forEach(target => {
+    headingStreams.set(target, { inView: false, timer: null, layer: null, flights: new Set() });
+    headingObserver.observe(target);
+  });
+}
 
 if ('IntersectionObserver' in window && !motionPreference.matches) {
   const targets = document.querySelectorAll([
