@@ -46,6 +46,72 @@
 
 // Content stays readable unless the observer is successfully installed.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+const still = () => motionPreference.matches || document.documentElement.classList.contains('paused');
+const bubbleColors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
+const bubbleTones = [0, 0, 1, 2, 2, 3, 3, 4];
+function bubbleColor() {
+  const tone = Math.random();
+  return bubbleColors[bubbleTones[tone > .985 ? 7 : Math.floor(tone * 7)]];
+}
+const headingFlights = new Set();
+function clearHeadingBubbles() {
+  for (const animation of headingFlights) animation.cancel();
+  headingFlights.clear();
+  document.querySelectorAll('.heading-bubbles').forEach(layer => layer.remove());
+}
+function headingBurst(target) {
+  const line = target.querySelector('.sec-ttl__en') || (target.matches('.contact__en') ? target : null);
+  if (!line || still()) return;
+  // Range measures the text, including centered text inside a full-width block.
+  const range = document.createRange();
+  range.selectNodeContents(line);
+  const text = range.getBoundingClientRect();
+  const bounds = target.getBoundingClientRect();
+  const room = text.left - 6;
+  if (room < 4) return;
+  const layer = document.createElement('span');
+  layer.className = 'heading-bubbles';
+  layer.setAttribute('aria-hidden', 'true');
+  target.append(layer);
+  let remaining = 8;
+  for (let i = 0; i < 8; i++) {
+    const bubble = document.createElement('span');
+    const size = Math.min(4 + Math.random() * 8, room);
+    const sway = Math.min(3, Math.max(0, (room - size) / 2));
+    // Reserve the full diameter and sway on both sides, with a gap before text.
+    const right = text.left - 4 - size - sway;
+    const left = 2 + sway;
+    const x = Math.max(left, right - Math.random() * 12);
+    const y = text.bottom - bounds.top - size / 2 - Math.random() * 6;
+    const rise = 20 + Math.random() * 30;
+    bubble.className = 'heading-bubble';
+    bubble.style.cssText = `--size:${size}px;--bubble-color:${bubbleColor()};left:${x - bounds.left}px;top:${y}px`;
+    layer.append(bubble);
+    const animation = bubble.animate([
+      { opacity: 0, transform: 'translate(0, 0) scale(.2)', offset: 0 },
+      { opacity: .5, transform: `translate(${-sway}px, ${-rise * .18}px) scale(1)`, offset: .2 },
+      { opacity: .5, transform: `translate(${sway}px, ${-rise * .55}px) scale(.8)`, offset: .55 },
+      { opacity: 0, transform: `translate(0, ${-rise}px) scale(.15)`, offset: 1 }
+    ], { duration: 650, delay: i * 50, easing: 'ease-in-out', fill: 'both' });
+    headingFlights.add(animation);
+    animation.onfinish = () => {
+      headingFlights.delete(animation);
+      bubble.remove();
+      if (--remaining === 0) layer.remove();
+    };
+  }
+}
+function reveal(target) {
+  if (target.classList.contains('is-visible')) return;
+  target.classList.add('is-visible');
+  headingBurst(target);
+}
+motionPreference.addEventListener('change', () => { if (still()) clearHeadingBubbles(); });
+new MutationObserver(() => { if (still()) clearHeadingBubbles(); })
+  .observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+// Re-measure on the next reveal if the viewport changes during a burst.
+window.addEventListener('resize', clearHeadingBubbles);
+
 if ('IntersectionObserver' in window && !motionPreference.matches) {
   const targets = document.querySelectorAll([
     '.section .sec-ttl', '.section .sec-lead', '.card', '.evidence',
@@ -59,7 +125,7 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
     if (entry.target.classList.contains('section-wave')) {
       entry.target.classList.toggle('is-in-view', entry.isIntersecting);
     } else if (entry.isIntersecting) {
-      entry.target.classList.add('is-visible');
+      reveal(entry.target);
       observer.unobserve(entry.target);
     }
   }), { threshold: .08 });
@@ -79,7 +145,7 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
   document.addEventListener('focusin', event => {
     const target = event.target.closest('.rise-ready');
     if (target) {
-      target.classList.add('is-visible');
+      reveal(target);
       observer.unobserve(target);
     }
   });
@@ -98,14 +164,11 @@ if (menu && menuButton) {
   const bubbles = menu.querySelector('.menu-bubbles');
   const closeButton = menu.querySelector('.menu-close');
   let closing = false, savedY = 0, savedBodyStyle = '', closeTimer, bubbleTimer;
-  const still = () => motionPreference.matches || document.documentElement.classList.contains('paused');
   function syncMotion() {
     menu.classList.toggle('menu-still', still());
     if (still()) bubbles.replaceChildren();
   }
   function burst(x, y) {
-    const colors = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
-    const toneColors = [0, 0, 1, 2, 2, 3, 3, 4];
     const fragment = document.createDocumentFragment();
     // Use the rendered layer's coordinate system for both origin and destinations.
     const bounds = bubbles.getBoundingClientRect();
@@ -136,8 +199,7 @@ if (menu && menuButton) {
       const travel = 1 - startScale;
       const duration = 1400 - proximity * 260;
       const sway = (Math.random() - .5) * 3;
-      const tone = Math.random();
-      const color = colors[toneColors[tone > .985 ? 7 : Math.floor(tone * 7)]];
+      const color = bubbleColor();
       bubble.className = 'menu-bubble';
       // Rasterize at the final diameter, then start small to keep nearby dots crisp.
       bubble.style.cssText = `--size:${size}px;--bubble-color:${color}`;

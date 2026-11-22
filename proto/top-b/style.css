@@ -305,7 +305,7 @@ html, body { overflow-x: clip; }
 .site-menu.is-closing::before { opacity: 1; clip-path: circle(0px at var(--menu-x) var(--menu-y)); transition: clip-path .55s cubic-bezier(.2,.65,.3,1) .12s; }
 .menu-bubbles { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 /* Final-size circles start scaled down; only transform and opacity animate. */
-.menu-bubble { position: absolute; left: 0; top: 0; width: var(--size); height: var(--size); border-radius: 50%; background: var(--bubble-color); opacity: 0; transform-origin: center; }
+.menu-bubble, .heading-bubble { position: absolute; left: 0; top: 0; width: var(--size); height: var(--size); border-radius: 50%; background: var(--bubble-color); opacity: 0; transform-origin: center; }
 .site-menu.menu-still::before { clip-path: none; opacity: 0; transition: opacity .18s ease !important; }
 .site-menu.menu-still.is-open::before { opacity: 1; }
 .site-menu.menu-still .menu-rise { transform: none; transition: none; }
@@ -321,4 +321,12 @@ html, body { overflow-x: clip; }
   .site-menu.is-open::before { opacity: 1; }
   .site-menu .menu-rise { transform: none; }
   .menu-bubbles { display: none; }
+}
+
+/* One-time bubbles follow the heading as it rises. */
+.sec-ttl, .contact__en { position: relative; }
+.heading-bubbles { position: absolute; inset: 0; pointer-events: none; }
+.paused .heading-bubbles { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .heading-bubbles { display: none; }
 }
