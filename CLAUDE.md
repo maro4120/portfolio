@@ -35,7 +35,8 @@ npm start      # browser-sync + sass --watch
 ## ファイル構成
 
 ```
-index.html            トップ
+index.html            トップ（css/top.css・js/top.js・js/top-hero.js）
+agencies.html         制作会社・デザイナー向け（css/top.css・js/top.js）
 profile.html          運営者情報
 works-onomichi.html   制作実績の詳細（5本）
 works-moofc.html
@@ -49,7 +50,7 @@ img/*.webp            画像はすべて WebP
 ```
 
 - ヘッダー・フッターは各HTMLに**べた書きで重複**している。1か所直したら全ページに反映すること
-- CSSのキャッシュバスティングは `style.css?v=13` の数字を上げる（**全ページ揃える**）
+- CSSのキャッシュバスティングは `style.css?v=13` の数字を上げる（**使用ページで揃える**）。トップ・agencies.html は `top.css?v=1` の `?v` を上げる
 
 ## デザインの決めごと
 
