@@ -222,6 +222,9 @@ textarea { resize: vertical; }
  .sec-ttl { margin-bottom: 40px; }
  .sec-ttl__en { font-size: 54px; }
  .cards { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+ /* カードの中を4段（番号・見出し・本文・リスト）に分け、4枚で段の高さをそろえる。ミントの線とリストが同じ高さに並ぶ */
+ .card { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; }
+ .card__list { margin-top: 24px; }
  .card { padding-inline: 22px; border-radius: 50% 50% 8px 8px / 100px 100px 8px 8px; }
  .card__ttl { font-size: 20px; min-height: 68px; display: flex; align-items: center; justify-content: center; }
  .card__text { font-size: 16px; }

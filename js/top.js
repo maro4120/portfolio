@@ -433,3 +433,29 @@ if (menu && menuButton) {
   });
 }
 })();
+
+// 料金の数字を、見えたときに0から数え上げる（前のトップから引き継ぎ）
+(() => {
+  const nums = document.querySelectorAll('.plan__num');
+  if (!nums.length || !('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const el = entry.target;
+      const goal = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10);
+      if (!goal) return;
+      const DURATION = 1100;
+      let start = null;
+      const step = t => {
+        if (start === null) start = t;
+        const r = Math.min((t - start) / DURATION, 1);
+        el.textContent = Math.round(goal * (1 - Math.pow(1 - r, 3))).toLocaleString('ja-JP');
+        if (r < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }, { threshold: 0.6 });
+  nums.forEach(n => observer.observe(n));
+})();
