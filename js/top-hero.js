@@ -40,7 +40,6 @@
 
   // Short viewports use the same readable layout as reduced-motion mode.
   const staticMode = matchMedia('(prefers-reduced-motion: reduce), (max-height: 639px)');
-  const toggle = document.querySelector('.motion-toggle');
   const menu = document.querySelector('.menu');
   const palette = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
   const toneColors = [0, 0, 1, 2, 2, 3, 3, 4];
@@ -219,13 +218,6 @@
     if (enabled) { resize(); progress = targetProgress; updateText(); draw(); start(); }
     else ctx.clearRect(0, 0, width, height);
   }
-  toggle.addEventListener('click', () => {
-    paused = !paused;
-    root.classList.toggle('paused', paused);
-    toggle.setAttribute('aria-pressed', String(paused));
-    toggle.textContent = paused ? '動きを再開する' : '動きを止める';
-    if (paused) { stop(); updateText(); draw(); } else start();
-  });
   document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
   document.addEventListener('click', event => { if (!menu.contains(event.target)) menu.open = false; });
   window.addEventListener('scroll', updateScroll, { passive: true });
