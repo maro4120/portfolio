@@ -1530,7 +1530,7 @@ body { overflow-x:clip }
 /* 日本語の改行：見出し・ボタン・短い文は、文節（<wbr>・句読点）の所でだけ折り返す。
    長い本文は通常の折り返しのまま、最後の行に1〜2文字だけ残らないようにする */
 h1,h2,h3,summary,.button-label,.greeting,.hero-description,.closing p,.quiz-result,.contents,.study-steps p,
-.concern p,.feature-grid p,.voice-placeholder p,.assurance-list p,.faq-list p,.price-note,.proposal,.character-placeholder p,.philosophy p {
+.concern p,.feature-grid p,.voice-placeholder p,.assurance-list p,.faq-list p,.price-note,.proposal,.character-placeholder p,.philosophy p,.audience,.note,.footer-brand {
   word-break:keep-all;
   overflow-wrap:break-word}
 p,li,dd {
@@ -1548,3 +1548,10 @@ p,li,dd {
   .hero-character .character-placeholder { width:max-content!important; max-width:none; padding:8px 20px }
   .character-placeholder span { display:block; white-space:nowrap }
 }
+/* スマホ：巡回帽をロゴから離す。幅が狭いとランプと重なっていたので、真ん中を基準に置く */
+@media (max-width:760px) {
+  .hero-hat { top:102px; right:auto; left:calc(50% + 2px); width:44px }
+  .hero-lamp { top:116px; left:calc(50% - 34px); width:38px }
+}
+/* スマホのメニュー：画面の下まで白い板を伸ばさず、項目の分の高さで止める */
+.header.menu-ready nav { inset:0 0 auto auto; height:auto; max-height:100dvh; border-radius:0 0 0 24px; padding-bottom:32px }
