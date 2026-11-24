@@ -97,6 +97,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible,.course-grid:focus-vi
 fieldset{margin:0;padding:0;border:0;min-width:0;display:flex;flex-direction:column}
 legend{font-size:13px;font-weight:700;float:left;width:100%;min-height:96px}
 legend>span{display:block;font:24px Oswald,sans-serif;color:var(--red);margin-bottom:6px}
+.quiz-question-heading{display:flex;align-items:center;gap:10px}
+.quiz-lamp{width:auto;height:40px}
 .choices{display:flex;gap:10px;margin-top:auto}
 .choices label{position:relative;flex:1;cursor:pointer}
 .choices input{position:absolute;opacity:0}
@@ -129,6 +131,11 @@ legend>span{display:block;font:24px Oswald,sans-serif;color:var(--red);margin-bo
 .recommended{border-color:var(--yellow)}
 .recommend-label{position:absolute;right:15px;top:23px;background:var(--yellow);border-radius:50%;height:64px;width:64px;display:grid;place-items:center;font-size:11px;transform:rotate(12deg)}
 .is-selected{border-color:var(--red);box-shadow:0 0 0 5px var(--yellow)}
+/* Split the original illustration so only its light rays flash. */
+.course-lamp{position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);width:27px;height:32px;pointer-events:none}
+.course-lamp img{display:block;width:100%;height:100%;clip-path:polygon(0 28%,18% 28%,18% 18%,82% 18%,82% 28%,100% 28%,100% 100%,0 100%)}
+.course-lamp::before{content:'';position:absolute;inset:0;background:url('img/lamp-red.webp') center/100% 100% no-repeat;clip-path:polygon(0 0,100% 0,100% 28%,82% 28%,82% 18%,18% 18%,18% 28%,0 28%);transform-origin:50% 65%;animation:lamp-flash .65s ease-in-out 3}
+@keyframes lamp-flash{0%,100%{opacity:1;transform:scale(1)}45%{opacity:.2;transform:scale(.94)}65%{opacity:1;transform:scale(1.04)}}
 .match-label{position:absolute;left:0;right:0;bottom:calc(100% + 18px);color:var(--red);font-size:12px;font-weight:900}
 .single-courses{display:flex;gap:24px;align-items:flex-start;margin-top:35px;border-top:1px dashed #1f3a6b40;padding-top:25px;font-size:12px}
 .single-courses h3{font-size:13px}
