@@ -1535,3 +1535,16 @@ h1,h2,h3,summary,.button-label,.greeting,.hero-description,.closing p,.quiz-resu
   overflow-wrap:break-word}
 p,li,dd {
   text-wrap:pretty}
+/* スマホには本文の外の余白が無いので、端の飾りの形は切れ端（約14px）しか見えない。iPhone で「端に色がついている」と見えるため出さない */
+@media (max-width:760px) {
+  .section-shape { display:none }
+  /* パトカーの後ろの紺の形も、右端に半分だけ出て切れ端に見えるので出さない */
+  .hero-shape-navy { display:none }
+}
+/* PC：キャラクターの枠は幅を決め打ちせず、文字の長さに合わせて広げる。
+   Mac のフォントは Chromium より字の幅が広く、240px の枠から文字がはみ出していた */
+@media (min-width:761px) {
+  .hero-character { width:max-content; left:50%; translate:-50% 0 }
+  .hero-character .character-placeholder { width:max-content!important; max-width:none; padding:8px 20px }
+  .character-placeholder span { display:block; white-space:nowrap }
+}
