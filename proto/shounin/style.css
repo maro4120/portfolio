@@ -1523,3 +1523,7 @@ footer { position:relative; padding-top:120px }
   .course-card .price-area,.course-card .price { margin-top:8px }
   .course-card .button { margin-top:8px; width:100%; padding-inline:16px }
 }
+/* iPhone の Safari は html の overflow-x を無視して画面幅を広げることがあるので、はみ出す飾りは段ごとに横だけ切る（縦は切らない） */
+body { overflow-x:clip }
+.hero, .marquee, section, footer, .footer-ribbon { overflow-x:clip }
+@supports not (overflow:clip) { body { overflow-x:hidden } }
