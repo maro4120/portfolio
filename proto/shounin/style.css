@@ -1527,3 +1527,11 @@ footer { position:relative; padding-top:120px }
 body { overflow-x:clip }
 .hero, .marquee, section, footer, .footer-ribbon { overflow-x:clip }
 @supports not (overflow:clip) { body { overflow-x:hidden } }
+/* 日本語の改行：見出し・ボタン・短い文は、文節（<wbr>・句読点）の所でだけ折り返す。
+   長い本文は通常の折り返しのまま、最後の行に1〜2文字だけ残らないようにする */
+h1,h2,h3,summary,.button-label,.greeting,.hero-description,.closing p,.quiz-result,.contents,.study-steps p,
+.concern p,.feature-grid p,.voice-placeholder p,.assurance-list p,.faq-list p,.price-note,.proposal,.character-placeholder p,.philosophy p {
+  word-break:keep-all;
+  overflow-wrap:break-word}
+p,li,dd {
+  text-wrap:pretty}
