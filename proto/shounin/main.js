@@ -29,7 +29,7 @@ function closeMenu() {
   menuButton.setAttribute('aria-label', 'メニューを開く');
   nav.inert = mobileMenu.matches;
   menuButton.focus({preventScroll: true});
-  menuClosingTimer = window.setTimeout(finishMenuClose, reducedMotion.matches ? 0 : 1000);
+  menuClosingTimer = window.setTimeout(finishMenuClose, reducedMotion.matches ? 0 : 300);
 }
 function openMenu() {
   clearTimeout(menuClosingTimer);
@@ -92,7 +92,7 @@ document.querySelectorAll('.faq-list details').forEach(details => {
       details.classList.remove('faq-closing');
       return;
     }
-    animation = details.animate([{height: `${from}px`}, {height: `${to}px`}], {duration: 1000, easing: 'ease-in-out'});
+    animation = details.animate([{height: `${from}px`}, {height: `${to}px`}], {duration: 300, easing: 'ease-in-out'});
     animation.onfinish = () => {
       details.open = targetOpen;
       details.classList.remove('faq-closing');
@@ -210,3 +210,24 @@ async function prepareConcept() {
   reducedMotion.addEventListener('change', event => { if (event.matches) finishConcept(); });
 }
 prepareConcept();
+
+// Observe sections so tall sections also reveal their edge decoration on entry.
+if ('IntersectionObserver' in window && !reducedMotion.matches) {
+  const shapes = [...document.querySelectorAll('.section-shape')];
+  const shapeObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.querySelector('.section-shape').classList.remove('shape-pending');
+      shapeObserver.unobserve(entry.target);
+    });
+  }, {threshold:0});
+  shapes.forEach(shape => {
+    shape.classList.add('shape-pending');
+    shapeObserver.observe(shape.parentElement);
+  });
+  reducedMotion.addEventListener('change', event => {
+    if (!event.matches) return;
+    shapeObserver.disconnect();
+    shapes.forEach(shape => shape.classList.remove('shape-pending'));
+  });
+}

@@ -219,7 +219,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible+s
   background:var(--navy);
   height:2px;
   margin:5px 0;
-  transition:transform 1s}
+  transition:transform .3s}
 .hero {
   position:relative;
   min-height:800px;
@@ -797,10 +797,10 @@ legend {
 .icon-plus {
   color:var(--red);
   margin-top:8px;
-  transition:transform 1s}
+  transition:transform .3s}
 .plus-vertical {
   transform-origin:12px 12px;
-  transition:transform 1s}
+  transition:transform .3s}
 .faq-list details[open]:not(.faq-closing) .icon-plus {
   transform:rotate(180deg)}
 .faq-list details[open]:not(.faq-closing) .plus-vertical {
@@ -984,7 +984,7 @@ to {
   background:#1116;
   opacity:0;
   visibility:hidden;
-  transition:opacity 1s,visibility 0s 1s}
+  transition:opacity .3s,visibility 0s .3s}
 @media(min-width:701px) {
   .menu-toggle {
   display:none}
@@ -1049,13 +1049,13 @@ body {
   gap:24px;
   transform:translateX(100%);
   visibility:hidden;
-  transition:transform 1s ease,visibility 0s 1s;
+  transition:transform .3s ease,visibility 0s .3s;
   overflow-y:auto;
   z-index:21}
 .header.menu-ready.menu-open nav {
   transform:translateX(0);
   visibility:visible;
-  transition:transform 1s ease,visibility 0s}
+  transition:transform .3s ease,visibility 0s}
 .header nav a {
   font-size:20px}
 .menu-toggle {
@@ -1068,7 +1068,7 @@ body {
 body.menu-active .menu-backdrop {
   opacity:1;
   visibility:visible;
-  transition:opacity 1s,visibility 0s}
+  transition:opacity .3s,visibility 0s}
 html:not(.js) .header {
   position:relative}
 .hero {
@@ -1381,3 +1381,37 @@ footer {
 
 /* 11/24 クロコ：PCの最初の画面の細かい直し */
 @media(min-width:761px){.header-cta .button-label{white-space:nowrap;font-size:16px}.character-placeholder{width:auto!important;max-width:none}.character-placeholder span{white-space:nowrap}.brand{background:#fffdf8;border-radius:999px;padding:8px 18px 8px 12px;box-shadow:0 2px 0 #0000000d}}
+
+/* Clip decorations to the outer gutter, never to the content column.
+   At least 60% of each SVG stays outside the viewport. */
+.section-shape {
+  position:absolute;
+  top:0;
+  bottom:0;
+  width:min(128px, max(18px, calc((100% - 720px) / 2 - 16px)));
+  overflow:hidden;
+  pointer-events:none;
+}
+.section-shape--left { left:0 }
+.section-shape--right { right:0 }
+.section-shape svg {
+  position:absolute;
+  top:24%;
+  width:320px;
+  height:360px;
+  fill:var(--yellow);
+  transform-origin:center;
+}
+.section-shape--left svg { right:0 }
+.section-shape--right svg { left:0; rotate:180deg }
+.section-shape--red svg { fill:var(--red) }
+.section-shape--navy svg { fill:var(--navy) }
+@media (max-width:760px) {
+  .section-shape { width:18px }
+  .section-shape svg { width:100px; height:112px; top:-56px }
+  .section-shape--left svg { top:auto; bottom:-56px }
+}
+@media (prefers-reduced-motion:no-preference) {
+  .section-shape svg { transition:opacity .6s ease-out, scale .6s ease-out }
+  .section-shape.shape-pending svg { opacity:0; scale:.88 }
+}
