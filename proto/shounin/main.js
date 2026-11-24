@@ -109,31 +109,6 @@ document.querySelectorAll('.faq-list details').forEach(details => {
 });
 const track = document.querySelector('.course-grid');
 const cards = [...track.querySelectorAll('.course-card')];
-const prev = document.querySelector('.slide-prev');
-const next = document.querySelector('.slide-next');
-document.querySelector('.slider-controls').hidden = false;
-function currentIndex() {
-  const left = track.getBoundingClientRect().left + 8;
-  return cards.reduce((best, card, index) => Math.abs(card.getBoundingClientRect().left - left) < Math.abs(cards[best].getBoundingClientRect().left - left) ? index : best, 0);
-}
-function goToCard(card) {
-  track.scrollTo({left: track.scrollLeft + card.getBoundingClientRect().left - track.getBoundingClientRect().left - 8, behavior: behavior()});
-}
-function updateSlider() {
-  prev.disabled = track.scrollLeft < 2;
-  next.disabled = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
-  document.querySelector('.slide-count').textContent = `${currentIndex() + 1} / ${cards.length}`;
-}
-prev.addEventListener('click', () => goToCard(cards[Math.max(0, currentIndex() - 1)]));
-next.addEventListener('click', () => goToCard(cards[Math.min(cards.length - 1, currentIndex() + 1)]));
-track.addEventListener('scroll', updateSlider, {passive: true});
-window.addEventListener('resize', updateSlider);
-track.addEventListener('keydown', event => {
-  if (event.target !== track || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
-  event.preventDefault();
-  goToCard(cards[Math.max(0, Math.min(cards.length - 1, currentIndex() + (event.key === 'ArrowRight' ? 1 : -1)))]);
-});
-updateSlider();
 const form = document.querySelector('#course-quiz');
 const result = document.querySelector('#quiz-result');
 form.addEventListener('change', () => {
@@ -146,7 +121,7 @@ form.addEventListener('change', () => {
   const label = document.createElement('p');
   label.className = 'match-label';
   label.textContent = 'あなたにおすすめ';
-  card.prepend(label);
+  card.querySelector(".course-copy").prepend(label);
   const lamp = document.createElement('span');
   lamp.className = 'course-lamp';
   lamp.setAttribute('aria-hidden', 'true');
@@ -161,8 +136,7 @@ form.addEventListener('change', () => {
   card.classList.remove('is-pending');
   result.textContent = `あなたにおすすめ：${card.querySelector('h3').textContent}`;
   card.focus({preventScroll: true});
-  goToCard(card);
-  window.scrollTo({top: window.scrollY + track.getBoundingClientRect().top - 55, behavior: behavior()});
+  card.scrollIntoView({block: "center", behavior: behavior()});
 });
 if ('IntersectionObserver' in window && !reducedMotion.matches) {
   const observer = new IntersectionObserver(entries => {
@@ -170,23 +144,24 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
       if (entry.isIntersecting) { entry.target.classList.remove('is-pending'); observer.unobserve(entry.target); }
     });
   }, {threshold: 0.06});
-  document.querySelectorAll('.reveal:not(.course-card):not(#philosophy .reveal)').forEach(element => { element.classList.add('is-pending'); observer.observe(element); });
+  document.querySelectorAll('.reveal:not(.course-card):not(#worries .reveal)').forEach(element => { element.classList.add('is-pending'); observer.observe(element); });
   reducedMotion.addEventListener('change', event => {
     if (event.matches) { observer.disconnect(); document.querySelectorAll('.is-pending').forEach(element => element.classList.remove('is-pending')); }
   });
 }
 
 // Measure real rendered lines after fonts settle; reflow remains natural on resize.
-const philosophy = document.querySelector('#philosophy');
+const philosophy = document.querySelector('#worries');
 async function prepareConcept() {
   if (!('IntersectionObserver' in window) || reducedMotion.matches) return;
   await document.fonts.ready;
   if (reducedMotion.matches) return;
-  const textBlocks = [...philosophy.querySelectorAll('h2, .prose p')];
+  const textBlocks = [...philosophy.querySelectorAll('h2, .concern h3, .concern p')];
   const originals = textBlocks.map(element => element.innerHTML);
   function buildLines() {
     textBlocks.forEach((element, index) => {
       element.innerHTML = originals[index];
+      element.textContent = element.textContent;
       const nodes = [...element.childNodes];
       for (const node of nodes) {
         if (node.nodeType !== Node.TEXT_NODE) continue;
@@ -211,7 +186,7 @@ async function prepareConcept() {
       }
       element.querySelectorAll('br').forEach(br => br.remove());
     });
-    const pieces = philosophy.querySelectorAll('.section-en, .eyebrow, .concept-line, .concept, .concept-building, .concept-dog, .text-link');
+    const pieces = philosophy.querySelectorAll('.section-en, .concept-line, .text-link');
     pieces.forEach((element, index) => {
       element.classList.add('concept-piece');
       element.style.setProperty('--line-index', index);
