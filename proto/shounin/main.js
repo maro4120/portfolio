@@ -72,10 +72,10 @@ document.addEventListener('keydown', event => {
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   }
 });
-window.setTimeout(() => document.documentElement.classList.remove('intro-motion'), 3100);
+window.setTimeout(() => document.documentElement.classList.remove('intro-motion'), 1200);
 
 // Retain native details semantics and animate the measured height in both directions.
-document.querySelectorAll('.faq-list details').forEach(details => {
+document.querySelectorAll('.faq-list details, .course-details').forEach(details => {
   const summary = details.querySelector('summary');
   let animation;
   let targetOpen = details.open;
@@ -189,7 +189,7 @@ async function prepareConcept() {
     const pieces = philosophy.querySelectorAll('.section-en, .concept-line, .text-link');
     pieces.forEach((element, index) => {
       element.classList.add('concept-piece');
-      element.style.setProperty('--line-index', index);
+      element.style.setProperty('--line-delay', `${pieces.length > 1 ? index / (pieces.length - 1) * 0.3 : 0}s`);
     });
   }
   buildLines();
