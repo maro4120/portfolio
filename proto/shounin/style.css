@@ -1447,23 +1447,25 @@ footer { position:relative; padding-top:120px }
   .footer-ribbon { margin-top:88px }
 }
 
-/* Optional production notes never participate in the page layout. */
-.intent-toggle { position:fixed; right:24px; bottom:24px; z-index:110; width:104px; height:104px; padding:8px; border:2px solid white; border-radius:50%; background:var(--navy); color:white; font-size:14px; font-weight:700; line-height:1.6; box-shadow:0 4px 18px #0002 }
-.intent-toggle[aria-pressed="true"] { outline:3px solid var(--red); outline-offset:3px }
+/* Optional production notes never participate in the page layout. 見本の外の道具なので、サイトの4色（赤・黄・紺・灰）以外の紫で区別する */
+:root { --intent:#7b3fe4 }
+.intent-toggle { position:fixed; right:24px; bottom:24px; z-index:110; width:104px; height:104px; padding:8px; border:2px solid white; border-radius:50%; background:var(--intent); color:white; font-size:14px; font-weight:700; line-height:1.6; box-shadow:0 4px 18px #0002 }
+.intent-toggle[aria-pressed="true"] { outline:3px solid var(--intent); outline-offset:3px }
 .intent-anchor { position:relative }
-.intent-marker { position:absolute; top:-24px; left:max(4px,calc(50% - 416px)); z-index:10; width:44px; height:44px; border:2px solid white; border-radius:50%; color:white; background:var(--red); font-weight:700; line-height:1 }
+.intent-marker { position:absolute; top:-24px; left:max(4px,calc(50% - 416px)); z-index:10; width:44px; height:44px; border:2px solid white; border-radius:50%; color:white; background:var(--intent); font-weight:700; box-shadow:0 2px 8px #0003; line-height:1 }
 .hero>.intent-marker { top:100px }
+@media (min-width:761px) { .hero>.intent-marker { top:auto; bottom:120px } }
 .intent-band-anchor { position:absolute; top:100%; left:0; width:100%; pointer-events:none }
 .intent-band-anchor .intent-marker { pointer-events:auto }
 .intent-panel { position:fixed; z-index:120; width:min(720px,calc(100% - 56px)); max-height:calc(100dvh - 64px); overflow-y:auto; padding:40px; border:1px solid #1f3a6b30; border-radius:24px; background:white; color:var(--ink); box-shadow:0 12px 64px #1f3a6b40; opacity:0; transform:translateY(16px); transition:opacity .3s,transform .3s }
 .intent-panel.is-open { opacity:1; transform:translateY(0) }
 .intent-panel h2 { padding-right:48px; font-size:24px; margin-bottom:24px }
-.intent-panel dt { color:var(--navy); font-weight:700; margin-top:24px }
+.intent-panel dt { color:var(--intent); font-weight:700; margin-top:24px }
 .intent-panel dd { margin:8px 0 0 }
 .intent-panel dl { margin:0 }
-.intent-close { position:absolute; top:16px; right:16px; width:44px; height:44px; border:0; border-radius:50%; background:var(--navy); color:white; font-size:24px }
+.intent-close { position:absolute; top:16px; right:16px; width:44px; height:44px; border:0; border-radius:50%; background:var(--intent); color:white; font-size:24px }
 .intent-greeting { left:50%; top:50%; translate:-50% -50% }
-.intent-note { left:50%; translate:-50% 0; border-top:4px solid var(--red) }
+.intent-note { left:50%; translate:-50% 0; border-top:4px solid var(--intent) }
 @media (max-width:760px) {
   .intent-toggle { right:16px; bottom:calc(16px + env(safe-area-inset-bottom)); width:96px; height:96px; padding:6px; font-size:14px; line-height:1.4 }
   .intent-marker { left:4px; top:-48px }
@@ -1481,3 +1483,4 @@ footer { position:relative; padding-top:120px }
 }
 /* Keep the drawer's keyboard loop and controls independent of the notes. */
 .menu-active .intent-toggle { visibility:hidden }
+.nowrap{white-space:nowrap;display:inline-block}

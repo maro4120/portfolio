@@ -36,7 +36,16 @@ const intentContent = [
     ]
   },
   {
-    "title": "③ こんな迷い、ありませんか？",
+    "title": "③ 読みやすさ（文字の大きさと余白）",
+    "items": [
+      {
+        "label": "狙い",
+        "text": "読む方の多くは、通勤や休憩の合間にスマホで見る現職の警察官です。目が疲れないよう本文は大きめの文字にし、文は真ん中の1本の柱に収めて、目を左右に動かさずに読めるようにしています"
+      }
+    ]
+  },
+  {
+    "title": "④ こんな迷い、ありませんか？",
     "items": [
       {
         "label": "思い",
@@ -49,7 +58,7 @@ const intentContent = [
     ]
   },
   {
-    "title": "④ このチャンネルの考え方",
+    "title": "⑤ このチャンネルの考え方",
     "items": [
       {
         "label": "思い",
@@ -58,7 +67,7 @@ const intentContent = [
     ]
   },
   {
-    "title": "⑤ あなたに合う講座の選び方",
+    "title": "⑥ あなたに合う講座の選び方",
     "items": [
       {
         "label": "狙い",
@@ -71,20 +80,11 @@ const intentContent = [
     ]
   },
   {
-    "title": "⑥ 勉強の順番",
+    "title": "⑦ 勉強の順番",
     "items": [
       {
         "label": "狙い",
         "text": "動画「勉強の優先順位」の順番を、そのまま道のりとして見せています"
-      }
-    ]
-  },
-  {
-    "title": "⑦ 読みやすさ（文字の大きさと余白）",
-    "items": [
-      {
-        "label": "狙い",
-        "text": "読む方の多くは、通勤や休憩の合間にスマホで見る現職の警察官です。目が疲れないよう本文は大きめの文字にし、文は真ん中の1本の柱に収めて、目を左右に動かさずに読めるようにしています"
       }
     ]
   },
@@ -126,7 +126,7 @@ const intentContent = [
   const band = document.createElement('div');
   band.className = 'intent-band-anchor';
   document.querySelector('.hero').append(band);
-  const targets = ['.hero', null, '#worries', '#philosophy', '#courses', '#study', '#intro', 'footer'];
+  const targets = ['.hero', null, '#intro', '#worries', '#philosophy', '#courses', '#study', 'footer'];
   let enabled = false, active = null, timer, opener = toggle;
   const markers = targets.map((selector, index) => {
     const target = selector ? document.querySelector(selector) : band;
@@ -140,7 +140,7 @@ const intentContent = [
     button.setAttribute('aria-expanded', 'false');
     button.setAttribute('aria-controls', panel.id);
     button.addEventListener('click', () => active === button ? hide() : show(index + 1, button));
-    target.append(button);
+    index === 0 ? target.prepend(button) : target.append(button);
     return button;
   });
   function position() {
