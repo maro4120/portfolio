@@ -217,7 +217,7 @@ if ('IntersectionObserver' in window && !reducedMotion.matches) {
   const shapeObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.querySelector('.section-shape').classList.remove('shape-pending');
+      entry.target.querySelectorAll('.section-shape').forEach(shape => shape.classList.remove('shape-pending'));
       shapeObserver.unobserve(entry.target);
     });
   }, {threshold:0});
