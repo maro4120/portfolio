@@ -70,8 +70,12 @@ function headingBurst(target, state) {
   const line = target.querySelector('.sec-ttl__en') || (target.matches('.contact__en') ? target : null);
   if (!line) return;
   // Measure the text again for each bubble, including after viewport changes.
+  // Measure the heading text only. For CONTACT the bubble layer lives inside the same element,
+  // so measuring the whole element would include earlier bubbles and drift further left each time.
+  const textNode = [...line.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+  if (!textNode) return;
   const range = document.createRange();
-  range.selectNodeContents(line);
+  range.selectNodeContents(textNode);
   const text = range.getBoundingClientRect();
   const bounds = target.getBoundingClientRect();
   const room = text.left - 6;
@@ -459,3 +463,28 @@ if (menu && menuButton) {
   }, { threshold: 0.6 });
   nums.forEach(n => observer.observe(n));
 })();
+
+// Q&A: open and close in 0.3s by animating the measured height, keeping native <details>.
+document.querySelectorAll('.faq__item').forEach(details => {
+  const summary = details.querySelector('summary');
+  if (!summary) return;
+  let animation = null;
+  let targetOpen = details.open;
+  summary.addEventListener('click', event => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { targetOpen = !details.open; return; }
+    event.preventDefault();
+    const from = details.getBoundingClientRect().height;
+    animation?.cancel();
+    targetOpen = !targetOpen;
+    details.open = true;
+    const to = targetOpen ? details.getBoundingClientRect().height
+      : summary.getBoundingClientRect().height + parseFloat(getComputedStyle(details).paddingTop) + parseFloat(getComputedStyle(details).paddingBottom);
+    details.style.overflow = 'hidden';
+    animation = details.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: 300, easing: 'ease-in-out' });
+    animation.onfinish = () => {
+      details.open = targetOpen;
+      details.style.overflow = '';
+      animation = null;
+    };
+  });
+});
