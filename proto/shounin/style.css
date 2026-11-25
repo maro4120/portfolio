@@ -1716,3 +1716,7 @@ footer { padding-bottom:56px }
 @media (max-width:700px) {
   .faq-question,.feature-grid p { font-size:16px; overflow-wrap:normal }
 }
+
+/* v22: 迷いのカード（PC）：文と矢印のボタンの塊をカードの真ん中に置き、右側だけ空く見え方をなくす（11/25 ほめまろ指摘） */
+@media (min-width:761px) { .concern { display:grid; justify-content:center; align-content:start } }
+#course-quiz legend { word-break:keep-all; overflow-wrap:break-word }
