@@ -40,7 +40,6 @@
 
   // Short viewports use the same readable layout as reduced-motion mode.
   const staticMode = matchMedia('(prefers-reduced-motion: reduce), (max-height: 639px)');
-  const menu = document.querySelector('.menu');
   const palette = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
   const toneColors = [0, 0, 1, 2, 2, 3, 3, 4];
   // One cached, translucent circle per actual color; no paths in the draw loop.
@@ -96,7 +95,8 @@
     const nextCopyTop = introCopy.offsetTop;
     // Cache document geometry only on layout changes, never during scroll/tick.
     journeyTop = journey.getBoundingClientRect().top + window.scrollY;
-    scrollRange = Math.max(1, journey.offsetHeight - nextHeight);
+    // Normalize against the actual shortened sticky travel (500px at 800px height).
+    scrollRange = Math.max(1, journey.getBoundingClientRect().height - nextHeight);
     const dpr = debug.lowres ? 1 : Math.min(window.devicePixelRatio || 1, nextWidth < 960 ? 1.5 : 2);
     // iPhone browser chrome can resize the window without changing the svh stage.
     if (width === nextWidth && height === nextHeight && pixelRatio === dpr && headerHeight === nextHeaderHeight && copyTop === nextCopyTop) {
@@ -146,7 +146,7 @@
 
   function updateText() {
     // Timeline: anchor → waves → message; keep the message visible into SERVICE.
-    // The sticky scroll range is now 200svh instead of 300svh.
+    // The normalized timeline adapts to the 1300px journey.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
     stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.195, .435, progress)));
     stage.style.setProperty('--intro-y', `${(1 - reveal) * 14}px`);
@@ -218,8 +218,6 @@
     if (enabled) { resize(); progress = targetProgress; updateText(); draw(); start(); }
     else ctx.clearRect(0, 0, width, height);
   }
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
-  document.addEventListener('click', event => { if (!menu.contains(event.target)) menu.open = false; });
   window.addEventListener('scroll', updateScroll, { passive: true });
   window.addEventListener('resize', () => { if (enabled) resize(); }, { passive: true });
   document.addEventListener('visibilitychange', () => {

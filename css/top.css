@@ -41,7 +41,7 @@ h1 { margin-top: 20px; font-size: clamp(28px, 7.4vw, 54px); font-weight: 700; li
 .ticker i { font-style: normal; color: var(--green); padding: 0 22px; }
 .progress { display: none; }
 /* All content is readable by default. Only successfully initialized JS opts in. */
-.enhanced .journey { height: 300vh; height: 300svh; }
+.enhanced .journey { height: 1300px; height: max(1300px, calc(100svh + 400px)); }
 .enhanced .stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
 .enhanced .particles { display: block; }
 .enhanced .static-anchor { display: none; }
@@ -235,7 +235,7 @@ textarea { resize: vertical; }
  .feature h3 { font-size: 28px; }
  .about-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; align-items: center; max-width: 720px; margin: auto; }
  .about-grid h3 { font-size: 34px; }
- .works:not(.swiper-initialized) .swiper-wrapper { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+ .works:not(.swiper-initialized) .swiper-wrapper { grid-template-columns: minmax(0, 1fr); }
  .plans { grid-template-columns: minmax(0, 1fr); gap: 24px; }
  .flow { grid-template-columns: minmax(0, 1fr); }
  .agency .sec-ttl__en { font-size: 48px; }
@@ -362,3 +362,34 @@ html, body { overflow-x: clip; }
 /* 1文字だけ次の行に落ちる改行を防ぐ（見出しは行の長さをそろえ、本文は最後の行を短くしすぎない） */
 h1,h2,h3,h4 { text-wrap:balance }
 p,li,dd,dt,summary,label { text-wrap:pretty }
+
+/* Persistent consultation access, independent of the hero's sticky scene. */
+.header { position: fixed; inset: 0 0 auto; z-index: 20; padding: 16px 24px; gap: 8px; }
+.header-actions { display: flex; align-items: center; gap: 12px; flex: none; }
+.header-cta { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 14px; background: #c2410c; color: #fff; font-size: 14px; white-space: nowrap; letter-spacing: 0; }
+.header .logo { flex: 0 1 144px; min-width: 0; }
+.header .logo img { width: 100%; height: auto; }
+.stage { padding-top: 80px; }
+.header + main > .agency { padding-top: 140px; }
+html { scroll-padding-top: 96px; }
+button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle, .menu-item, .menu-en, .menu-ja, .menu-contact, label, .cform__label { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; font-weight: 600; }
+#service .card__text, #service .card__list, .agency p, .agency__box span, .footer p { font-weight: 600; }
+.voice-excerpt { overflow: hidden; transition: height .3s ease; }
+.voice-quote .voice-excerpt p { margin: 0; }
+.voice-more { display: block; margin: 12px 0; padding: 6px 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--green); font-size: 15px; cursor: pointer; }
+@media (max-width: 599px) {
+ .header { padding: 12px 16px; }
+ .header-actions { gap: 8px; }
+ .header .logo { flex-basis: 110px; }
+ .header-cta { padding-inline: 8px; }
+ .header .menu-toggle { gap: 6px; font-size: 14px; letter-spacing: 0; }
+ .header .menu-icon { width: 18px; }
+ .header .menu-icon::before, .header .menu-icon::after { width: 18px; }
+}
+@media (min-width: 960px) {
+ .header { padding: 20px 52px; }
+ .header .logo { flex-basis: 198px; }
+ .header-actions { gap: 24px; }
+ .header-cta { padding-inline: 24px; font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .voice-excerpt { transition: none; } }

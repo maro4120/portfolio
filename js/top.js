@@ -28,7 +28,7 @@
       },
       breakpoints: {
         600: { slidesPerView: 1, spaceBetween: 24 },
-        960: { slidesPerView: 2, spaceBetween: 24 }
+        960: { slidesPerView: 1, spaceBetween: 24 }
       }
     });
 
@@ -43,6 +43,34 @@
     if (ctrl) ctrl.hidden = false;
   }
 
+
+// Keep complete quotations readable if JavaScript is unavailable.
+document.querySelectorAll('.voice-quote').forEach((quote, index) => {
+  const paragraph = quote.querySelector('p');
+  const excerpt = document.createElement('div');
+  excerpt.className = 'voice-excerpt';
+  excerpt.id = `voice-excerpt-${index + 1}`;
+  paragraph.before(excerpt);
+  excerpt.append(paragraph);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'voice-more';
+  button.textContent = '続きを読む';
+  button.setAttribute('aria-controls', excerpt.id);
+  button.setAttribute('aria-expanded', 'false');
+  excerpt.after(button);
+  const sync = () => {
+    const collapsedHeight = parseFloat(getComputedStyle(paragraph).lineHeight) * 3;
+    button.hidden = paragraph.scrollHeight <= collapsedHeight;
+    excerpt.style.height = `${button.getAttribute('aria-expanded') === 'true' ? paragraph.scrollHeight : Math.min(collapsedHeight, paragraph.scrollHeight)}px`;
+  };
+  button.addEventListener('click', () => {
+    button.setAttribute('aria-expanded', String(button.getAttribute('aria-expanded') !== 'true'));
+    sync();
+  });
+  new ResizeObserver(sync).observe(paragraph);
+  sync();
+});
 
 // Content stays readable unless the observer is successfully installed.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
