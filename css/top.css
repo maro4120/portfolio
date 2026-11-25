@@ -567,3 +567,4 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 .work__body { flex: 1; display: flex; flex-direction: column; }
 .work__text { margin-bottom: 20px; }
 .work__link { margin-top: auto; align-self: flex-start; }
+.profile-page .profile__pull .phrase { display: inline-block; }
