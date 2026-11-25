@@ -448,3 +448,57 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
   .home #works .sec-ttl, .home #works .sec-lead { margin: 0; }
   .home .about-grid { max-width: 1120px; }
 }
+
+/* 運営者情報：共通の見出し・余白を使い、本文の柱を720pxにそろえる。 */
+.profile-page { --profile-gap: 32px; }
+.profile-page .pagehead { padding-top: 156px; padding-bottom: 0; }
+.profile-page .sec-ttl { margin: 0 auto var(--profile-gap); max-width: 720px; }
+.profile-page .pagehead .sec-ttl { margin-bottom: 0; }
+.profile-page .sec-ttl:has(+ .sec-lead) { margin-bottom: 16px; }
+.profile-page .sec-lead { margin: 0 auto var(--profile-gap); }
+.profile-page .section--alt { background: #e8eeea; }
+.profile-page .profile { display: grid; gap: 32px; align-items: center; }
+.profile-page .profile__photo { text-align: center; }
+.profile-page .profile__photo img { display: block; width: 100%; max-width: 360px; height: auto; margin: auto; border-radius: 48% 48% 2px 2px; }
+.profile-page .profile__name { font-size: 23px; margin-top: 24px; }
+.profile-page .profile__name span { display: block; font-size: 15px; margin-top: 6px; }
+.profile-page :is(.profile__body, .profile__pull, .closing, .datatable) { max-width: 720px; margin-inline: auto; width: 100%; }
+.profile-page :is(.profile__body, .promise__body, .closing) p + p { margin-top: 20px; }
+.profile-page .profile__pull { margin-block: var(--profile-gap); padding-block: 24px; border-block: 1px solid #16324f25; font-weight: 700; }
+.profile-page .promise { list-style: none; padding: 0; margin: 0; display: grid; gap: 24px; }
+.profile-page .promise__item { min-width: 0; padding: 24px; background: #fff; border-top: 2px solid var(--green); }
+.profile-page .promise__num { font: 600 30px/1.5 "Josefin Sans", sans-serif; color: var(--green); }
+.profile-page .promise__ttl { font-size: 20px; font-weight: 700; margin-block: 16px; }
+.profile-page .datatable table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.profile-page .datatable :is(th, td) { padding: 20px 0; border-bottom: 1px solid #16324f25; text-align: left; vertical-align: top; text-wrap: pretty; overflow-wrap: anywhere; }
+.profile-page .datatable th { width: 112px; padding-right: 16px; font-weight: 700; }
+.profile-page .closing__sign { text-align: right; }
+.profile-page .closing__label { text-align: center; margin-top: var(--profile-gap); font-size: 15px; text-wrap: balance; }
+.profile-page .closing__btns { margin-top: 16px; text-align: center; }
+.profile-page .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 18px 20px; max-width: 100%; background: var(--navy); color: #fff; font: 600 16px/1.9 "Hiragino Sans", "Noto Sans JP", sans-serif; letter-spacing: 0; }
+.profile-page .btn:hover { background: var(--green); }
+.profile-page .icon-bubble { width: 22px; height: 22px; flex: none; fill: currentColor; }
+.profile-page .profile-notice { padding: 32px 24px; }
+.profile-page .profile-note { max-width: 720px; margin: auto; font-size: 14px; }
+.profile-page .profile-note a { text-decoration: underline; text-underline-offset: 3px; }
+.profile-page .breadcrumb { padding: 24px; font-size: 14px; }
+.profile-page .breadcrumb ol { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; list-style: none; }
+.profile-page .breadcrumb li + li::before { content: '/'; margin-right: 12px; }
+.profile-page .breadcrumb a { text-decoration: underline; }
+@media (max-width: 599px) {
+  .profile-page .datatable :is(th, td) { display: block; width: 100%; }
+  .profile-page .datatable th { padding: 20px 0 8px; border-bottom: 0; }
+  .profile-page .datatable td { padding-top: 0; }
+}
+@media (min-width: 960px) {
+  .profile-page { --profile-gap: 48px; }
+  .profile-page .pagehead { padding-top: 204px; }
+  .profile-page .profile-wide { max-width: 1120px; }
+  .profile-page .profile { grid-template-columns: minmax(0, 1fr) minmax(480px, 540px); gap: 56px; }
+  .profile-page .promise { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* 約束の見出しは読点の後でだけ折る */
+.profile-page .promise__ttl { word-break: keep-all; overflow-wrap: break-word; }
+.profile-page .promise__ttl .phrase { display: inline-block; }
+@media (max-width: 359px), (min-width: 960px) and (max-width: 1099px) { .profile-page .promise__ttl { font-size: 18px; } }
