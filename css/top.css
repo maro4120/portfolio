@@ -615,3 +615,9 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 
 /* 錨の演出：言葉（作って終わりにせず…）が出たあと、スクロールしても画面がしばらく止まって見えるように、演出の区間を延ばす（11/25 ほめまろ） */
 .enhanced .journey { height: 1600px; height: max(1600px, calc(100svh + 800px)); }
+
+/* 制作のポイント（PC）：文と画面は1組なので離さない。間は64pxで固定し、組（560+64+300=924px）を中央に置く。区切りの線も組の幅にそろえる（11/25 ほめまろ指摘） */
+@media (min-width: 960px) {
+  .works-page .works-points .promise { max-width: 924px; margin-inline: auto; }
+  .works-page .works-points .promise__item { grid-template-columns: minmax(0, 560px) 300px; column-gap: 64px; justify-content: start; }
+}
