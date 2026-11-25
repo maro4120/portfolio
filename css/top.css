@@ -428,3 +428,6 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
   .hero-proof { font-size: 15px; }
 }
 .hero-proof span { display: inline-block; }
+
+/* 見出しの一言は読点の後（<wbr>）でだけ折る */
+.sec-ttl__ja { word-break: keep-all; overflow-wrap: break-word; }
