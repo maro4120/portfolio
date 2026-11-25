@@ -1650,3 +1650,69 @@ footer { padding-bottom:56px }
 @media (min-width:761px) {
   .hero { --hero-height:max(740px,calc(min(6.5vw,104px) * 2.6 + 580px)) }
 }
+
+/* v21: 選び方リンクの流れ込みを右区画内に収め、共通の矢印を追加 */
+.hero-tags>a {
+  position:relative; isolation:isolate; overflow:hidden;
+  display:inline-flex; align-items:center; justify-content:center; gap:12px;
+  color:var(--navy); transition:color .35s;
+}
+.hero-tags>a:before {
+  content:''; position:absolute; inset:0; z-index:-1;
+  background:var(--navy); transform:scaleX(0); transform-origin:left;
+  transition:transform .35s;
+}
+.hero-tags>a:focus-visible { color:var(--white) }
+.hero-tags>a:focus-visible:before { transform:scaleX(1) }
+.hero-tags>a:focus-visible .icon-arrow { transform:translateX(4px) }
+@media (hover:hover) {
+  .hero-tags>a:hover { background:transparent; color:var(--white) }
+  .hero-tags>a:hover:before { transform:scaleX(1) }
+  .hero-tags>a:hover .icon-arrow { transform:translateX(4px) }
+}
+@media (min-width:761px) {
+  .hero-tags>a { border-radius:0 40px 40px 0 }
+}
+
+/* v21: 声の注記を一か所へ集約、見出しの副題と比較カードの上端を統一 */
+.voice-note { margin-top:20px; font-size:14px; word-break:keep-all; overflow-wrap:break-word; text-wrap:pretty }
+.section-heading .eyebrow { margin-bottom:16px }
+.concept>div:nth-child(2) { translate:none }
+
+/* v21: 非フォーカス時のスキップリンクを確実に描画範囲から隠す */
+.skip:not(:focus) { clip-path:inset(50%); width:1px; height:1px; padding:0; overflow:hidden; white-space:nowrap }
+.skip:focus { clip-path:none; width:auto; height:auto }
+
+/* v21: PCの重複メニューを削減し、フッターの関連リンクを横一列へ */
+@media (min-width:701px) {
+  .header nav a[href="#courses"] { display:none }
+  footer { padding-top:64px }
+  .footer-top { gap:16px }
+  .footer-top>div { flex-direction:row; justify-content:center; gap:24px }
+  .proposal { margin-top:24px }
+  .footer-ribbon { margin-top:48px }
+}
+
+/* v21: スマホの空枠を圧縮、質問と特長には本文の横幅を確保 */
+.faq-question,.feature-grid p { word-break:keep-all; overflow-wrap:break-word; text-wrap:pretty }
+@media (max-width:700px) {
+  .voice-grid { gap:12px }
+  .voice-grid .voice-placeholder { display:flex; align-items:center; gap:12px; padding:16px 20px; min-height:100px; text-align:left }
+  .voice-placeholder>span { flex:none; font-size:48px; line-height:1 }
+  .voice-grid .voice-placeholder p { flex:1 }
+  .faq-list,.feature-grid { padding-inline:16px }
+  .faq-list summary { display:grid; grid-template-columns:1fr 20px; gap:8px; }
+  .faq-question { grid-column:1 / -1; grid-row:2 }
+  .faq-list .icon-plus { grid-column:2; grid-row:1 }
+  .feature-grid li { display:grid; grid-template-columns:1fr; gap:12px }
+  .feature-icon { width:40px }
+  .closing { padding-block:40px 64px }
+  .closing>.wrap { padding-top:84px }
+  .closing-dog,.closing-car { top:0; bottom:auto; width:72px; left:8px; height:72px }
+  .closing-car { left:auto; right:8px; width:88px }
+}
+/* v21: 最小幅でも文節を保ち、グリッドの最小内容幅によるはみ出しを防ぐ */
+.feature-grid p { min-width:0 }
+@media (max-width:700px) {
+  .faq-question,.feature-grid p { font-size:16px; overflow-wrap:normal }
+}
