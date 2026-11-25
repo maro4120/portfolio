@@ -4,7 +4,7 @@
 
   if (worksEl && typeof Swiper !== "undefined") {
     var worksSwiper = new Swiper(worksEl, {
-      slidesPerView: 1.1,
+      slidesPerView: 1,
       spaceBetween: 16,
       // 端まで来たら止める（無限ループにしない）
       loop: false,
@@ -27,8 +27,8 @@
         clickable: true
       },
       breakpoints: {
-        600: { slidesPerView: 2, spaceBetween: 20 },
-        960: { slidesPerView: 3, spaceBetween: 24 }
+        600: { slidesPerView: 1, spaceBetween: 24 },
+        960: { slidesPerView: 2, spaceBetween: 24 }
       }
     });
 

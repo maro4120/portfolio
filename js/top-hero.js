@@ -108,7 +108,7 @@
     copyTop = nextCopyTop;
     const desktop = width >= 960;
     const contentTop = headerHeight + 16;
-    const contentBottom = desktop ? height - 145 : copyTop;
+    const contentBottom = copyTop;
     // Include rotation, 7px bobbing, the enlarged mobile particle radius.
     const verticalExtent = 220 + 190 * Math.sin(.055);
     const preferredScale = desktop ? Math.min(width * .0012, height * .00155, 1.65) : Math.min(width * .00195, height * .00115);
@@ -162,7 +162,7 @@
     ctx.clearRect(0, 0, width, height);
     const dissolve = smooth(.24, .645, progress);
     const desktop = width >= 960;
-    const cx = width * (desktop ? .72 : .5);
+    const cx = width * .5;
     const cy = anchorCenterY;
     const angle = fastSin(elapsed * .32) * .055;
     const cos = Math.cos(angle), sin = Math.sin(angle);
