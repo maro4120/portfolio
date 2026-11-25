@@ -40,7 +40,6 @@
 
   // Short viewports use the same readable layout as reduced-motion mode.
   const staticMode = matchMedia('(prefers-reduced-motion: reduce), (max-height: 639px)');
-  const menu = document.querySelector('.menu');
   const palette = ['#16324f', '#0a1d33', '#12776b', '#2bb3a3', '#bb9238'];
   const toneColors = [0, 0, 1, 2, 2, 3, 3, 4];
   // One cached, translucent circle per actual color; no paths in the draw loop.
@@ -79,6 +78,9 @@
   let pixelRatio = 0, headerHeight = 0, copyTop = 0, anchorCenterY = 0;
   let journeyTop = 0, scrollRange = 1;
   const clamp = value => Math.max(0, Math.min(1, value));
+  // 11/25: finish anchor → waves → message within the first 62% of the scroll,
+  // then hold the message still for the rest so it is read before SERVICE.
+  const HOLD = .62;
   const smooth = (start, end, value) => {
     const t = clamp((value - start) / (end - start));
     return t * t * (3 - 2 * t);
@@ -96,7 +98,8 @@
     const nextCopyTop = introCopy.offsetTop;
     // Cache document geometry only on layout changes, never during scroll/tick.
     journeyTop = journey.getBoundingClientRect().top + window.scrollY;
-    scrollRange = Math.max(1, journey.offsetHeight - nextHeight);
+    // Normalize against the actual shortened sticky travel (500px at 800px height).
+    scrollRange = Math.max(1, journey.getBoundingClientRect().height - nextHeight);
     const dpr = debug.lowres ? 1 : Math.min(window.devicePixelRatio || 1, nextWidth < 960 ? 1.5 : 2);
     // iPhone browser chrome can resize the window without changing the svh stage.
     if (width === nextWidth && height === nextHeight && pixelRatio === dpr && headerHeight === nextHeaderHeight && copyTop === nextCopyTop) {
@@ -108,7 +111,7 @@
     copyTop = nextCopyTop;
     const desktop = width >= 960;
     const contentTop = headerHeight + 16;
-    const contentBottom = desktop ? height - 145 : copyTop;
+    const contentBottom = copyTop;
     // Include rotation, 7px bobbing, the enlarged mobile particle radius.
     const verticalExtent = 220 + 190 * Math.sin(.055);
     const preferredScale = desktop ? Math.min(width * .0012, height * .00155, 1.65) : Math.min(width * .00195, height * .00115);
@@ -146,23 +149,26 @@
 
   function updateText() {
     // Timeline: anchor → waves → message; keep the message visible into SERVICE.
-    // The sticky scroll range is now 200svh instead of 300svh.
+    // The normalized timeline adapts to the 1300px journey.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
-    stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.195, .435, progress)));
+    const introOpacity = reveal * (1 - smooth(HOLD * .195, HOLD * .435, progress));
+    stage.style.setProperty('--intro-opacity', introOpacity);
+    // Faded links must not intercept clicks or keyboard focus over the next scene.
+    introCopy.inert = introOpacity < .05;
     stage.style.setProperty('--intro-y', `${(1 - reveal) * 14}px`);
-    const message = smooth(.54, .675, progress);
+    const message = smooth(HOLD * .54, HOLD * .675, progress);
     stage.style.setProperty('--message-opacity', message);
-    stage.style.setProperty('--message-y', `${(1 - smooth(.54, .675, progress)) * 24}px`);
-    stage.style.setProperty('--cue-opacity', 1 - smooth(.075, .27, progress));
+    stage.style.setProperty('--message-y', `${(1 - smooth(HOLD * .54, HOLD * .675, progress)) * 24}px`);
+    stage.style.setProperty('--cue-opacity', 1 - smooth(HOLD * .075, HOLD * .27, progress));
     stage.style.setProperty('--progress', progress);
   }
 
   function draw() {
     if (debug.nodraw) return;
     ctx.clearRect(0, 0, width, height);
-    const dissolve = smooth(.24, .645, progress);
+    const dissolve = smooth(HOLD * .24, HOLD * .645, progress);
     const desktop = width >= 960;
-    const cx = width * (desktop ? .72 : .5);
+    const cx = width * .5;
     const cy = anchorCenterY;
     const angle = fastSin(elapsed * .32) * .055;
     const cos = Math.cos(angle), sin = Math.sin(angle);
@@ -218,8 +224,6 @@
     if (enabled) { resize(); progress = targetProgress; updateText(); draw(); start(); }
     else ctx.clearRect(0, 0, width, height);
   }
-  document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });
-  document.addEventListener('click', event => { if (!menu.contains(event.target)) menu.open = false; });
   window.addEventListener('scroll', updateScroll, { passive: true });
   window.addEventListener('resize', () => { if (enabled) resize(); }, { passive: true });
   document.addEventListener('visibilitychange', () => {

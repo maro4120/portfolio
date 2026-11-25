@@ -1,48 +1,32 @@
 (() => {
 'use strict';
-  var worksEl = document.getElementById("js-works");
-
-  if (worksEl && typeof Swiper !== "undefined") {
-    var worksSwiper = new Swiper(worksEl, {
-      slidesPerView: 1.1,
-      spaceBetween: 16,
-      // 端まで来たら止める（無限ループにしない）
-      loop: false,
-      // 枚数が表示数以下のときは操作を無効にする
-      watchOverflow: true,
-      // 横ホイールだけで動かし、縦方向はページのスクロールに任せる
-      mousewheel: {
-        forceToAxis: true
-      },
-      a11y: {
-        prevSlideMessage: "前の実績",
-        nextSlideMessage: "次の実績"
-      },
-      navigation: {
-        prevEl: "#js-works-prev",
-        nextEl: "#js-works-next"
-      },
-      pagination: {
-        el: "#js-works-pagination",
-        clickable: true
-      },
-      breakpoints: {
-        600: { slidesPerView: 2, spaceBetween: 20 },
-        960: { slidesPerView: 3, spaceBetween: 24 }
-      }
-    });
-
-    // Swiper の CSS は表示を止めないように後から読み込むので、
-    // 読み込み終わった時点で幅を計算し直す
-    window.addEventListener("load", function () {
-      worksSwiper.update();
-    });
-
-    // 動くと分かってから矢印とドットを出す
-    var ctrl = document.getElementById("js-works-ctrl");
-    if (ctrl) ctrl.hidden = false;
-  }
-
+// Keep complete quotations readable if JavaScript is unavailable.
+document.querySelectorAll('.voice-quote').forEach((quote, index) => {
+  const paragraph = quote.querySelector('p');
+  const excerpt = document.createElement('div');
+  excerpt.className = 'voice-excerpt';
+  excerpt.id = `voice-excerpt-${index + 1}`;
+  paragraph.before(excerpt);
+  excerpt.append(paragraph);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'voice-more';
+  button.textContent = '続きを読む';
+  button.setAttribute('aria-controls', excerpt.id);
+  button.setAttribute('aria-expanded', 'false');
+  excerpt.after(button);
+  const sync = () => {
+    const collapsedHeight = parseFloat(getComputedStyle(paragraph).lineHeight) * 3;
+    button.hidden = paragraph.scrollHeight <= collapsedHeight;
+    excerpt.style.height = `${button.getAttribute('aria-expanded') === 'true' ? paragraph.scrollHeight : Math.min(collapsedHeight, paragraph.scrollHeight)}px`;
+  };
+  button.addEventListener('click', () => {
+    button.setAttribute('aria-expanded', String(button.getAttribute('aria-expanded') !== 'true'));
+    sync();
+  });
+  new ResizeObserver(sync).observe(paragraph);
+  sync();
+});
 
 // Content stays readable unless the observer is successfully installed.
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
@@ -70,8 +54,12 @@ function headingBurst(target, state) {
   const line = target.querySelector('.sec-ttl__en') || (target.matches('.contact__en') ? target : null);
   if (!line) return;
   // Measure the text again for each bubble, including after viewport changes.
+  // Measure the heading text only. For CONTACT the bubble layer lives inside the same element,
+  // so measuring the whole element would include earlier bubbles and drift further left each time.
+  const textNode = [...line.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+  if (!textNode) return;
   const range = document.createRange();
-  range.selectNodeContents(line);
+  range.selectNodeContents(textNode);
   const text = range.getBoundingClientRect();
   const bounds = target.getBoundingClientRect();
   const room = text.left - 6;
@@ -168,7 +156,7 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
   }), { threshold: .08 });
 
   // Stagger sibling cards and steps by 100ms.
-  document.querySelectorAll('.cards, .trust-grid, .swiper-wrapper, .plans, .flow, .faq, .agency__grid').forEach(group => {
+  document.querySelectorAll('.cards, .trust-grid, .works-grid, .plans, .flow, .faq, .agency__grid').forEach(group => {
     Array.from(group.children).forEach((item, index) => {
       item.style.setProperty('--rise-delay', `${index * 100}ms`);
     });
@@ -459,3 +447,28 @@ if (menu && menuButton) {
   }, { threshold: 0.6 });
   nums.forEach(n => observer.observe(n));
 })();
+
+// Q&A: open and close in 0.3s by animating the measured height, keeping native <details>.
+document.querySelectorAll('.faq__item').forEach(details => {
+  const summary = details.querySelector('summary');
+  if (!summary) return;
+  let animation = null;
+  let targetOpen = details.open;
+  summary.addEventListener('click', event => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { targetOpen = !details.open; return; }
+    event.preventDefault();
+    const from = details.getBoundingClientRect().height;
+    animation?.cancel();
+    targetOpen = !targetOpen;
+    details.open = true;
+    const to = targetOpen ? details.getBoundingClientRect().height
+      : summary.getBoundingClientRect().height + parseFloat(getComputedStyle(details).paddingTop) + parseFloat(getComputedStyle(details).paddingBottom);
+    details.style.overflow = 'hidden';
+    animation = details.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: 300, easing: 'ease-in-out' });
+    animation.onfinish = () => {
+      details.open = targetOpen;
+      details.style.overflow = '';
+      animation = null;
+    };
+  });
+});
