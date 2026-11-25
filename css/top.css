@@ -568,3 +568,47 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 .work__text { margin-bottom: 20px; }
 .work__link { margin-top: auto; align-self: flex-start; }
 .profile-page .profile__pull .phrase { display: inline-block; }
+
+/* Point screenshots: a consistent reading column and a quiet, actual-size preview. */
+.works-page .works-points .promise { gap: 48px; }
+.works-page .works-points .promise__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+}
+.works-page .works-points .promise__body { min-width: 0; max-width: 560px; }
+.works-page .works-points .promise__body p { text-wrap: pretty; }
+.works-page .works-points__image {
+  display: block;
+  width: min(100%, 280px);
+  height: auto;
+  max-height: 480px;
+  margin: 28px auto 0;
+  object-fit: cover;
+  object-position: top;
+  border: 1px solid #16324f26;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px #16324f0a;
+}
+@media (min-width: 960px) {
+  .works-page .works-points .promise { gap: 64px; }
+  .works-page .works-points .promise__item {
+    grid-template-columns: minmax(480px, 560px) 300px;
+    grid-template-rows: auto 1fr;
+    column-gap: clamp(48px, 6vw, 96px);
+    justify-content: space-between;
+    padding-top: 32px;
+  }
+  .works-page .works-points .promise__num { grid-column: 1; grid-row: 1; }
+  .works-page .works-points .promise__body { grid-column: 1; grid-row: 2; }
+  .works-page .works-points__image {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    width: 300px;
+    max-height: 560px;
+    margin: 0;
+  }
+}
+
+/* 下に出るボタンを見せたい画面は、上限で切る時に下側を残す */
+.works-page .works-points__image[src*="piano-point4"], .works-page .works-points__image[src*="moofc-point2"] { object-position: bottom; }
