@@ -78,6 +78,9 @@
   let pixelRatio = 0, headerHeight = 0, copyTop = 0, anchorCenterY = 0;
   let journeyTop = 0, scrollRange = 1;
   const clamp = value => Math.max(0, Math.min(1, value));
+  // 11/25: finish anchor → waves → message within the first 62% of the scroll,
+  // then hold the message still for the rest so it is read before SERVICE.
+  const HOLD = .62;
   const smooth = (start, end, value) => {
     const t = clamp((value - start) / (end - start));
     return t * t * (3 - 2 * t);
@@ -148,22 +151,22 @@
     // Timeline: anchor → waves → message; keep the message visible into SERVICE.
     // The normalized timeline adapts to the 1300px journey.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
-    const introOpacity = reveal * (1 - smooth(.195, .435, progress));
+    const introOpacity = reveal * (1 - smooth(HOLD * .195, HOLD * .435, progress));
     stage.style.setProperty('--intro-opacity', introOpacity);
     // Faded links must not intercept clicks or keyboard focus over the next scene.
     introCopy.inert = introOpacity < .05;
     stage.style.setProperty('--intro-y', `${(1 - reveal) * 14}px`);
-    const message = smooth(.54, .675, progress);
+    const message = smooth(HOLD * .54, HOLD * .675, progress);
     stage.style.setProperty('--message-opacity', message);
-    stage.style.setProperty('--message-y', `${(1 - smooth(.54, .675, progress)) * 24}px`);
-    stage.style.setProperty('--cue-opacity', 1 - smooth(.075, .27, progress));
+    stage.style.setProperty('--message-y', `${(1 - smooth(HOLD * .54, HOLD * .675, progress)) * 24}px`);
+    stage.style.setProperty('--cue-opacity', 1 - smooth(HOLD * .075, HOLD * .27, progress));
     stage.style.setProperty('--progress', progress);
   }
 
   function draw() {
     if (debug.nodraw) return;
     ctx.clearRect(0, 0, width, height);
-    const dissolve = smooth(.24, .645, progress);
+    const dissolve = smooth(HOLD * .24, HOLD * .645, progress);
     const desktop = width >= 960;
     const cx = width * .5;
     const cy = anchorCenterY;

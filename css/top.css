@@ -612,3 +612,6 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 
 /* 下に出るボタンを見せたい画面は、上限で切る時に下側を残す */
 .works-page .works-points__image[src*="piano-point4"], .works-page .works-points__image[src*="moofc-point2"] { object-position: bottom; }
+
+/* 錨の演出：言葉（作って終わりにせず…）が出たあと、スクロールしても画面がしばらく止まって見えるように、演出の区間を延ばす（11/25 ほめまろ） */
+.enhanced .journey { height: 1600px; height: max(1600px, calc(100svh + 800px)); }
