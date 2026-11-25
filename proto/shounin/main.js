@@ -114,7 +114,8 @@ const result = document.querySelector('#quiz-result');
 form.addEventListener('change', () => {
   const answers = new FormData(form);
   if (!['q1', 'q2', 'q3'].every(key => answers.has(key))) return;
-  const id = answers.get('q3') === 'yes' ? 'career' : answers.get('q2') === 'yes' ? 'premium' : answers.get('q1') === 'no' ? 'complete' : 'complete';
+  // Q1 自分に合う道から → 診断／Q2 二次試験が管理論文（論文対策は不要とショップが案内）→ 完全版／Q3 論文も動画で → プレミアム
+  const id = answers.get('q1') === 'yes' ? 'career' : answers.get('q2') === 'yes' ? 'complete' : answers.get('q3') === 'yes' ? 'premium' : 'complete';
   cards.forEach(card => card.classList.remove('is-selected'));
   document.querySelectorAll('.match-label, .course-lamp').forEach(label => label.remove());
   const card = document.getElementById(id);
