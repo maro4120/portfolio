@@ -431,3 +431,20 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 
 /* 見出しの一言は読点の後（<wbr>）でだけ折る */
 .sec-ttl__ja { word-break: keep-all; overflow-wrap: break-word; }
+
+/* 余白のものさし（11/25 クロコ）：見出し→導入文 16px／導入文・見出し→中身 スマホ32px・PC48px／段の上下 スマホ88px・PC120px */
+.home .sec-ttl { margin-bottom: 32px; }
+.home .sec-ttl:has(+ .sec-lead) { margin-bottom: 16px; }
+.home .sec-lead { margin-top: 0; margin-bottom: 32px; }
+.home .sec-ttl + *:not(.sec-lead), .home .sec-lead + * { margin-top: 0; }
+.home #service { padding-top: 88px; }
+@media (min-width: 960px) {
+  .home .sec-ttl { margin-bottom: 48px; }
+  .home .sec-ttl:has(+ .sec-lead) { margin-bottom: 16px; }
+  .home .sec-lead { margin-bottom: 48px; }
+  .home #service { padding-top: 120px; }
+  .home #works { padding-block: 120px; }
+  .home #works > .inner { row-gap: 48px; }
+  .home #works .sec-ttl, .home #works .sec-lead { margin: 0; }
+  .home .about-grid { max-width: 1120px; }
+}
