@@ -114,7 +114,7 @@ const result = document.querySelector('#quiz-result');
 form.addEventListener('change', () => {
   const answers = new FormData(form);
   if (!['q1', 'q2', 'q3'].every(key => answers.has(key))) return;
-  const id = answers.get('q3') === 'yes' ? 'career' : answers.get('q2') === 'yes' ? 'premium' : answers.get('q1') === 'no' ? 'start' : 'complete';
+  const id = answers.get('q3') === 'yes' ? 'career' : answers.get('q2') === 'yes' ? 'premium' : answers.get('q1') === 'no' ? 'complete' : 'complete';
   cards.forEach(card => card.classList.remove('is-selected'));
   document.querySelectorAll('.match-label, .course-lamp').forEach(label => label.remove());
   const card = document.getElementById(id);
