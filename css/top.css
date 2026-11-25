@@ -502,3 +502,68 @@ button, summary, .text-link, .work__link, .work__hint, .header-cta, .menu-toggle
 .profile-page .promise__ttl { word-break: keep-all; overflow-wrap: break-word; }
 .profile-page .promise__ttl .phrase { display: inline-block; }
 @media (max-width: 359px), (min-width: 960px) and (max-width: 1099px) { .profile-page .promise__ttl { font-size: 18px; } }
+
+/* Linked work details: two columns of measure, shared with the home/profile pages. */
+.works-page { --works-gap: 32px; font-family: "Josefin Sans", "Shippori Mincho", "Yu Mincho", serif; }
+.works-page .section { padding: 88px 24px; }
+.works-page .works-wide { max-width: 1120px; }
+.works-page .sec-ttl { max-width: 720px; margin: 0 auto var(--works-gap); }
+.works-page .sec-ttl:has(+ .sec-lead) { margin-bottom: 16px; }
+.works-page .sec-lead { margin: 0 auto var(--works-gap); }
+.works-page .sec-ttl__en { color: var(--green); }
+.works-page .sec-ttl__ja { font-family: "Shippori Mincho", "Yu Mincho", serif; letter-spacing: .04em; }
+.works-page .section--alt { background: #e8eeea; }
+.works-page .workmain { margin: 0; }
+.works-page .workmain img { display: block; width: 100%; height: auto; border: 0; }
+.works-page :is(.worklead, .forwho) { max-width: 720px; margin: var(--works-gap) auto 0; }
+.works-page :is(.worklead, .promise__body, .closing) p + p { margin-top: 20px; }
+.works-page .forwho { padding-block: 24px; border-block: 1px solid #16324f25; }
+.works-page .forwho__ttl { font-weight: 700; }
+.works-page .forwho__list { margin: 16px 0 0; padding-left: 1.25em; }
+.works-page .datatable table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.works-page .datatable :is(th, td) { padding: 20px 0; border-bottom: 1px solid #16324f25; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
+.works-page .datatable th { width: 144px; padding-right: 16px; font-weight: 700; }
+.works-page .datatable a { text-decoration: underline; text-underline-offset: 4px; }
+.works-page .workbtns { margin-top: var(--works-gap); text-align: center; }
+.works-page .promise { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--works-gap); }
+.works-page .promise__item { min-width: 0; padding-top: 24px; border-top: 2px solid var(--green); }
+.works-page .promise__num { font: 600 30px/1.5 "Josefin Sans", sans-serif; color: var(--green); }
+.works-page .promise__ttl { font-size: 20px; font-weight: 700; margin-block: 16px; word-break: keep-all; overflow-wrap: break-word; text-wrap: balance; }
+.works-page .closing { text-align: left; }
+.works-page .closing__label { text-align: center; margin-top: 0; font-size: 15px; text-wrap: balance; }
+.works-page .closing__btns { margin-top: 16px; text-align: center; }
+.works-page .btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 18px 20px; max-width: 100%; background: var(--navy); color: #fff; font: 600 16px/1.9 "Hiragino Sans", "Noto Sans JP", sans-serif; letter-spacing: 0; }
+.works-page .btn:hover { background: var(--green); }
+.works-page :is(.icon-bubble, .icon-arrow) { width: 22px; height: 22px; flex: none; fill: currentColor; }
+.works-page .works-related { background: var(--deep); color: var(--paper); }
+.works-page .works-related .sec-ttl__en { color: var(--mint); }
+.works-page .work { min-width: 0; color: var(--navy); }
+.works-page .work__ttl { text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }
+.works-page :is(.work__hint, .work__link) { font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; }
+.works-page .works-notice { padding: 32px 24px; }
+.works-page .works-note { max-width: 720px; margin: auto; font-size: 14px; }
+.works-page .works-note a { text-decoration: underline; text-underline-offset: 3px; }
+.works-page .breadcrumb { padding: 24px; font-size: 14px; }
+.works-page .breadcrumb ol { display: flex; flex-wrap: wrap; gap: 12px; padding: 0; list-style: none; }
+.works-page .breadcrumb li + li::before { content: '/'; margin-right: 12px; }
+.works-page .breadcrumb a { text-decoration: underline; }
+@media (max-width: 599px) {
+  .works-page .datatable :is(th, td) { display: block; width: 100%; }
+  .works-page .datatable th { padding: 20px 0 8px; border-bottom: 0; }
+  .works-page .datatable td { padding-top: 0; }
+}
+@media (min-width: 960px) {
+  .works-page { --works-gap: 48px; }
+  .works-page .section { padding-block: 120px; }
+  .works-page .works-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .works-page .work__body { padding: 28px; }
+}
+/* Reserve the fixed header's space without changing section padding. */
+.works-page main { padding-top: 68px; }
+@media (min-width: 960px) { .works-page main { padding-top: 84px; } }
+
+/* 実績カードの「制作の詳細を見る」を、説明文の長さによらずカードの下端にそろえる（トップ・実績ページ共通） */
+.work { display: flex; flex-direction: column; }
+.work__body { flex: 1; display: flex; flex-direction: column; }
+.work__text { margin-bottom: 20px; }
+.work__link { margin-top: auto; align-self: flex-start; }
