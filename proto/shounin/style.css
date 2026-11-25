@@ -1554,7 +1554,7 @@ p,li,dd {
   .hero-lamp { top:116px; left:calc(50% - 34px); width:38px }
 }
 /* スマホのメニュー：画面の下まで白い板を伸ばさず、項目の分の高さで止める */
-.header.menu-ready nav { inset:0 0 auto auto; height:auto; max-height:100dvh; border-radius:0 0 0 24px; padding-bottom:32px }
+@media (max-width:700px) { .header.menu-ready nav { inset:0 0 auto auto; height:auto; max-height:100dvh; border-radius:0 0 0 24px; padding-bottom:32px } }
 
 /* v17: 迷いの段のカードが中身に押し広げられないように／フッターの帯の下に余白 */
 .concern-grid { grid-template-columns:minmax(0,1fr) }
