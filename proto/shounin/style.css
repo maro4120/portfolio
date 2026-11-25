@@ -1562,3 +1562,17 @@ p,li,dd {
 footer { padding-bottom:112px }
 @media (min-width:761px) { .concern-grid { grid-template-columns:repeat(2,minmax(0,1fr)) } }
 @media (max-width:359px) { .concern .text-link { font-size:14px; padding-inline:12px; gap:4px } }
+
+/* v18: 傾いた帯の外接高さを確保し、左右の端まで文字を欠けずに流す */
+.footer-ribbon {
+  /* 幅110vw × sin(3deg) ÷ 2 ≒ 2.88vw を上下それぞれに確保 */
+  padding-block:calc(3vw + 4px);
+  overflow-x:clip;
+  overflow-y:visible;
+}
+.footer-ribbon .marquee-row {
+  width:110%;
+  margin-left:-5%;
+  rotate:-3deg;
+}
+footer { padding-bottom:56px }
