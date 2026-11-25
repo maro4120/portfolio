@@ -160,7 +160,7 @@ async function prepareConcept() {
   const originals = textBlocks.map(element => element.innerHTML);
   function buildLines() {
     textBlocks.forEach((element, index) => {
-      element.innerHTML = originals[index];
+      element.innerHTML = originals[index].replace(/<wbr>/g, '\u200B');
       element.textContent = element.textContent;
       const nodes = [...element.childNodes];
       for (const node of nodes) {

@@ -1555,3 +1555,10 @@ p,li,dd {
 }
 /* スマホのメニュー：画面の下まで白い板を伸ばさず、項目の分の高さで止める */
 .header.menu-ready nav { inset:0 0 auto auto; height:auto; max-height:100dvh; border-radius:0 0 0 24px; padding-bottom:32px }
+
+/* v17: 迷いの段のカードが中身に押し広げられないように／フッターの帯の下に余白 */
+.concern-grid { grid-template-columns:minmax(0,1fr) }
+.concern { min-width:0 }
+footer { padding-bottom:112px }
+@media (min-width:761px) { .concern-grid { grid-template-columns:repeat(2,minmax(0,1fr)) } }
+@media (max-width:359px) { .concern .text-link { font-size:14px; padding-inline:12px; gap:4px } }
