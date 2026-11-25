@@ -148,7 +148,10 @@
     // Timeline: anchor → waves → message; keep the message visible into SERVICE.
     // The normalized timeline adapts to the 1300px journey.
     const reveal = paused ? 1 : smooth(.55, 1.8, introTime);
-    stage.style.setProperty('--intro-opacity', reveal * (1 - smooth(.195, .435, progress)));
+    const introOpacity = reveal * (1 - smooth(.195, .435, progress));
+    stage.style.setProperty('--intro-opacity', introOpacity);
+    // Faded links must not intercept clicks or keyboard focus over the next scene.
+    introCopy.inert = introOpacity < .05;
     stage.style.setProperty('--intro-y', `${(1 - reveal) * 14}px`);
     const message = smooth(.54, .675, progress);
     stage.style.setProperty('--message-opacity', message);

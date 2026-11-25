@@ -1,49 +1,5 @@
 (() => {
 'use strict';
-  var worksEl = document.getElementById("js-works");
-
-  if (worksEl && typeof Swiper !== "undefined") {
-    var worksSwiper = new Swiper(worksEl, {
-      slidesPerView: 1,
-      spaceBetween: 16,
-      // 端まで来たら止める（無限ループにしない）
-      loop: false,
-      // 枚数が表示数以下のときは操作を無効にする
-      watchOverflow: true,
-      // 横ホイールだけで動かし、縦方向はページのスクロールに任せる
-      mousewheel: {
-        forceToAxis: true
-      },
-      a11y: {
-        prevSlideMessage: "前の実績",
-        nextSlideMessage: "次の実績"
-      },
-      navigation: {
-        prevEl: "#js-works-prev",
-        nextEl: "#js-works-next"
-      },
-      pagination: {
-        el: "#js-works-pagination",
-        clickable: true
-      },
-      breakpoints: {
-        600: { slidesPerView: 1, spaceBetween: 24 },
-        960: { slidesPerView: 1, spaceBetween: 24 }
-      }
-    });
-
-    // Swiper の CSS は表示を止めないように後から読み込むので、
-    // 読み込み終わった時点で幅を計算し直す
-    window.addEventListener("load", function () {
-      worksSwiper.update();
-    });
-
-    // 動くと分かってから矢印とドットを出す
-    var ctrl = document.getElementById("js-works-ctrl");
-    if (ctrl) ctrl.hidden = false;
-  }
-
-
 // Keep complete quotations readable if JavaScript is unavailable.
 document.querySelectorAll('.voice-quote').forEach((quote, index) => {
   const paragraph = quote.querySelector('p');
@@ -200,7 +156,7 @@ if ('IntersectionObserver' in window && !motionPreference.matches) {
   }), { threshold: .08 });
 
   // Stagger sibling cards and steps by 100ms.
-  document.querySelectorAll('.cards, .trust-grid, .swiper-wrapper, .plans, .flow, .faq, .agency__grid').forEach(group => {
+  document.querySelectorAll('.cards, .trust-grid, .works-grid, .plans, .flow, .faq, .agency__grid').forEach(group => {
     Array.from(group.children).forEach((item, index) => {
       item.style.setProperty('--rise-delay', `${index * 100}ms`);
     });

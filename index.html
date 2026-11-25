@@ -84,13 +84,11 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Shippori+Mincho:wght@400;500;600;700&display=swap" /></noscript>
-    <link rel="stylesheet" href="./css/top.css?v=5" />
-    <script src="./js/top-hero.js?v=5" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.js" defer></script>
-    <script src="./js/top.js?v=5" defer></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="./css/top.css?v=7" />
+    <script src="./js/top-hero.js?v=6" defer></script>
+    <script src="./js/top.js?v=6" defer></script>
   </head>
-  <body>
+  <body class="home">
         <header class="header">
           <a class="logo" href="#top" aria-label="Anchor Base トップへ">
             <img src="./img/logo-clear.webp" alt="Anchor Base" width="620" height="150" />
@@ -116,6 +114,7 @@
             <p class="eyebrow">ANCHOR BASE</p>
             <h1 id="intro-title">元警察官のWeb制作者。</h1>
             <p class="intro-note">「Webの防犯係」として、<br />制作から公開後の安心まで。</p><span class="copy-rule" aria-hidden="true"></span>
+            <div class="intro-actions"><a class="header-cta hero-cta" href="#contact">無料で相談する</a><a class="hero-proof" href="#trust"><span>取材掲載：ツバメ編集室 ／ </span><span>戸締まり点検の実例あり</span></a></div>
           </div>
         </section>
 
@@ -209,9 +208,9 @@
 <span class="nb">それぞれ</span><span class="nb">「何を狙って、どう作ったか」を</span><span class="nb">まとめました。</span>
           </p>
 
-          <div class="works swiper" id="js-works">
-            <div class="swiper-wrapper">
-            <article class="work swiper-slide">
+          <div class="works">
+            <div class="works-grid">
+            <article class="work">
               <a class="work__thumb" href="./works-shaken.html">
                 <img
                   src="./img/works-shaken.webp"
@@ -231,7 +230,7 @@
                 <a class="work__link" href="./works-shaken.html">制作の詳細を見る</a>
               </div>
             </article>
-            <article class="work swiper-slide">
+            <article class="work">
               <a class="work__thumb" href="./works-piano.html">
                 <img
                   src="./img/works-piano.webp"
@@ -251,7 +250,7 @@
                 <a class="work__link" href="./works-piano.html">制作の詳細を見る</a>
               </div>
             </article>
-            <article class="work swiper-slide">
+            <article class="work">
               <a class="work__thumb" href="./works-moofc.html">
                 <img
                   src="./img/works-moofc.webp"
@@ -271,7 +270,7 @@
                 <a class="work__link" href="./works-moofc.html">制作の詳細を見る</a>
               </div>
             </article>
-            <article class="work swiper-slide">
+            <article class="work">
               <a class="work__thumb" href="./works-sweets.html">
                 <img
                   src="./img/works-sweets.webp"
@@ -294,23 +293,7 @@
             </div>
           </div>
 
-          <div class="works__ctrl" id="js-works-ctrl" hidden>
-            <button class="works__arrow" id="js-works-prev" type="button" aria-label="前の実績を見る">
-              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-                <path
-                  d="M30.9 35.3 17.8 22.2c-.6-.6-.6-1.6 0-2.2l13.1-13c.8-.8 2-.8 2.8 0 .8.8.8 2 0 2.8L22.4 21.1l11.3 11.3c.8.8.8 2 0 2.8-.8.9-2 .9-2.8.1z"
-                />
-              </svg>
-            </button>
-            <div class="works__pagination" id="js-works-pagination"></div>
-            <button class="works__arrow" id="js-works-next" type="button" aria-label="次の実績を見る">
-              <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-                <path
-                  d="m33 25.1-13.1 13c-.8.8-2 .8-2.8 0-.8-.8-.8-2 0-2.8L28.4 24 17.1 12.7c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l13.1 13c.6.6.6 1.6 0 2.2z"
-                />
-              </svg>
-            </button>
-          </div>
+
         </div>
       </section><section class="section section--alt" id="price">
         <div class="inner">
